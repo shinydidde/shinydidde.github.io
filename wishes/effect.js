@@ -205,7 +205,8 @@ const second = 1000,
 
 let countDown = new Date('Dec 20, 2018 00:00:00').getTime(),
     x = setInterval(function() {
-
+		var audio = $('.song')[0];
+		audio.play();
       let now = new Date().getTime(),
           distance = countDown - now;
 
