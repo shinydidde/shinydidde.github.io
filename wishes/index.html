@@ -5,17 +5,10 @@
 <!--[if gt IE 8]> <html> <![endif]-->
 <!--[if !IE]><!--><html lang="en"><!-- <![endif]-->
 <head>
-	<title>Happy Birthday</title>
+	<title>Countdown</title>
 	<meta charset="UTF-8" />
-	<meta name="description" content="Happy Birthday">
+	<meta name="description" content="Countdown">
 	<meta name="robots" content="index, follow" />
-	<link rel="author" href="https://plus.google.com/u/1/+AyushSharma1/" /> 
-    <meta name="keywords" content="Birthday, Happy">
-    <!-- Strat of Facebook Meta -->
-    <meta property="og:type" content="E-Greeting" />
-    <meta property="og:image" content="favicon.ico" />
-    <meta property="og:description" content="Wish you a very Happy Birthday">
-    <!-- End of Facebook Meta Tags -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -31,7 +24,16 @@
 
 <body>
 	<div class="loading"></div>
-	<audio class="song" controls loop>
+	<div class="container">
+		<h1 id="head">Countdown to Fatty's Birthday</h1>
+		<ul>
+		  <li><span id="days"></span>days</li>
+		  <li><span id="hours"></span>Hours</li>
+		  <li><span id="minutes"></span>Minutes</li>
+		  <li><span id="seconds"></span>Seconds</li>
+		</ul>
+	  </div>
+	<!-- <audio class="song" controls loop>
         <source src="hbd.mp3"></source>
 	   Your browser isn't invited for super fun audio time.
     </audio>
@@ -53,9 +55,9 @@
     <div class="balloons text-center" id="b6">
     	<h2 style="color:#99C96A;">U</h2>
     </div>
-    <!-- <div class="balloons text-center" id="b7">
+    <div class="balloons text-center" id="b7">
     	<h2 style="color:#20CFB4;">t</h2>
-    </div> -->
+    </div>
 
     <img src="Balloon-Border.png" width="100%" class="balloon-border">
  
@@ -87,9 +89,9 @@
 				<img src="banner.png" class="bannar">
 			</div>
 		</div>
-		<!-- <div class="row message">
+		<div class="row message">
 			<div class="col-md-12"><p>Khushbu</p></div>
-		</div> -->
+		</div>
 		<div class="row cake-cover">
 			<div class="col-md-12 texr-center">
 				<div class="cake">
@@ -169,11 +171,9 @@
 					<button class="btn btn-primary" id="light_candle"> Light Candle</button>
 					<button class="btn btn-primary" id="wish_message">Happy Birthday</button>
 					<button class="btn btn-primary" id="story">A mesage for you</button>
-					<!-- <button class="btn btn-primary" id="cake_cut">Lrt's Cut the Cake</button> -->
+					<button class="btn btn-primary" id="cake_cut">Lrt's Cut the Cake</button>
 				</div>
 			</div>
-			<!-- <div class="col-md-2">
-			</div>
 			<div class="col-md-2">
 			</div>
 			<div class="col-md-2">
@@ -181,11 +181,13 @@
 			<div class="col-md-2">
 			</div>
 			<div class="col-md-2">
-			</div> -->
+			</div>
+			<div class="col-md-2">
+			</div>
 		</div>
 
 
-	</div>
+	</div> -->
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
