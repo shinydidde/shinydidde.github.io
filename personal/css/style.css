@@ -664,6 +664,11 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
   width: 100%;
 }
+@media screen and (max-width: 425px) {
+  #qbootstrap-countdown {
+    background-position: -650px 0px !important;
+  }
+}
 #qbootstrap-countdown .section-heading {
   margin-bottom: 0 !important;
 }
