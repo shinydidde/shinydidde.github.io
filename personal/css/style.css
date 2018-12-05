@@ -342,8 +342,14 @@ h1, h2, h3, h4, h5, h6 {
 @media screen and (max-width: 768px) {
   .qbootstrap-cover,
   .video-hero {
-    heifght: inherit;
+    height: inherit;
     padding: 3em 0;
+  }
+}
+@media screen and (max-width: 425px) {
+  .qbootstrap-cover,
+  .video-hero {
+    background-position: -270px 0 !important; 
   }
 }
 .qbootstrap-cover .display-t,
