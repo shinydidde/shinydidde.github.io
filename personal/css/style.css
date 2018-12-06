@@ -348,6 +348,12 @@ h1, h2, h3, h4, h5, h6 {
     background-position: -85px 0 !important; 
   }
 }
+@media screen and (max-width: 557px) {
+  .qbootstrap-cover,
+  .video-hero {
+    background-position: -200px 0 !important; 
+  }
+}
 @media screen and (max-width: 480px) {
   .qbootstrap-cover,
   .video-hero {
