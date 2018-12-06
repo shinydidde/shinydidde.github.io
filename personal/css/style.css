@@ -1498,7 +1498,8 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-transform: rotate(-45deg);
   -moz-transform: rotate(-45deg);
   -m-transform: rotate(-45deg);
-  transform: rotate(-45deg)
+  transform: rotate(-45deg);
+  opacity: 0.4;
 }
 
 .heart:before {
@@ -1527,19 +1528,19 @@ h1, h2, h3, h4, h5, h6 {
 
 @-webkit-keyframes love {
 from {top: 0%}
-    to {top: 100%}
+    to {top: 150%}
 }
 @-moz-keyframes love {
 from {top: 0%}
-    to {top: 100%}
+    to {top: 150%}
 }
 @-ms-keyframes love {
 from {top: 0%}
-    to {top: 100%}
+    to {top: 150%}
 }
 @keyframes love {
 from {top: 0%}
-    to {top: 100%}
+    to {top: 150%}
 }
 
 .button {
