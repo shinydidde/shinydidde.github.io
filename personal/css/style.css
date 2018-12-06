@@ -78,6 +78,7 @@ h1, h2, h3, h4, h5, h6 {
   }
   #qbootstrap-header .navbar-brand {
     color: #FF847C !important;
+    font-size: 28px !important;
   }
   #qbootstrap-header #navbar li a {
     color: rgba(0, 0, 0, 0.5) !important;
@@ -344,12 +345,31 @@ h1, h2, h3, h4, h5, h6 {
   .video-hero {
     height: inherit;
     padding: 3em 0;
+    background-position: -85px 0 !important; 
+  }
+}
+@media screen and (max-width: 480px) {
+  .qbootstrap-cover,
+  .video-hero {
+    background-position: -235px 0 !important; 
   }
 }
 @media screen and (max-width: 425px) {
   .qbootstrap-cover,
   .video-hero {
-    background-position: -270px 0 !important; 
+    background-position: -260px 0 !important; 
+  }
+}
+@media screen and (max-width: 375px) {
+  .qbootstrap-cover,
+  .video-hero {
+    background-position: -280px 0 !important; 
+  }
+}
+@media screen and (max-width: 320px) {
+  .qbootstrap-cover,
+  .video-hero {
+    background-position: -305px 0 !important; 
   }
 }
 .qbootstrap-cover .display-t,
@@ -664,11 +684,32 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
   width: 100%;
 }
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 768px) {
   #qbootstrap-countdown {
-    background-position: -650px 0px !important;
+    background-position: -255px 0px !important;
   }
 }
+@media screen and (max-width: 480px) {
+  #qbootstrap-countdown {
+    background-position: -525px 0px !important;
+  }
+}
+@media screen and (max-width: 425px) {
+  #qbootstrap-countdown {
+    background-position: -545px 0px !important;
+  }
+}
+@media screen and (max-width: 375px) {
+  #qbootstrap-countdown {
+    background-position: -740px 0px !important;
+  }
+}
+@media screen and (max-width: 320px) {
+  #qbootstrap-countdown {
+    background-position: -945px 0px !important;
+  }
+}
+
 #qbootstrap-countdown .section-heading {
   margin-bottom: 0 !important;
 }
@@ -1508,7 +1549,7 @@ h1, h2, h3, h4, h5, h6 {
   width: 44px;
   border-bottom: none !important;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   .qbootstrap-nav-toggle {
     display: block;
   }
