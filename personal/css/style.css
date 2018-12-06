@@ -1035,10 +1035,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 .wedding-events .ceremony-bg {
   background-size: cover;
-  background-position: center center;
+  background-position: center top;
   background-repeat: no-repeat;
   position: relative;
-  height: 400px;
+  height: 200px;
 }
 .wedding-events .desc {
   padding: 2em;
