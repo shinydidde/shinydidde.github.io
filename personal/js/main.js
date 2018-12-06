@@ -305,6 +305,7 @@
 		contentWayPoint();
 		inlineSVG();
 		bgVideo();
+		$(".audioDemo").trigger('play');
 	});
 
 
@@ -330,3 +331,9 @@
 				}
 			});
 		}, 500);
+		
+		$(".button").click(function toggleMuteAudio(){
+			$(".audioDemo").prop("muted",!$(".audioDemo").prop("muted"));
+			$(".button").toggleClass("paused");
+		});
+
