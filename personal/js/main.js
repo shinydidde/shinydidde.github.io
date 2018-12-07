@@ -337,3 +337,11 @@
 			$(".button").toggleClass("paused");
 		});
 
+		$(document).ready(function() {
+			// pause after 2 seconds.
+			setTimeout(function() {
+			  var audio = $(".audioDemo")
+			  audio[0].play()
+			}, 500)
+		  })
+
