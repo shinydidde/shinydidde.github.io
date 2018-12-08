@@ -333,15 +333,13 @@
 		}, 500);
 		
 		$(".button").click(function toggleMuteAudio(){
-			$(".audioDemo").prop("muted",!$(".audioDemo").prop("muted"));
+			if($(".audioDemo").prop("paused")){
+				var audio = $(".audioDemo")
+				audio[0].play();
+			} else{
+				$(".audioDemo").prop("muted",!$(".audioDemo").prop("muted"));
+			}
 			$(".button").toggleClass("paused");
 		});
-
-		$(document).ready(function() {
-			// pause after 2 seconds.
-			setTimeout(function() {
-			  var audio = $(".audioDemo")
-			  audio[0].play()
-			}, 500)
-		  })
+		
 
