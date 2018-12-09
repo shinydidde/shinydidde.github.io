@@ -1311,4 +1311,24 @@ from {top: 0%}
   border-color: transparent transparent transparent #FF847C;
 }
 
+.addeventatc{
+  position: fixed !important;
+  top: 10px;
+  right: 10px;
+  outline: none;
+  display:none;
+  background: #ffffff !important;
+}
+
+@media screen and (max-width: 767px) {
+  .addeventatc{
+    padding: 15px!important;
+    border-radius: 50% !important;
+  }
+  .addeventatc .addeventatc_icon{
+    top: 6px !important;
+    left: 6px !important;
+  }
+}
+
 

@@ -342,4 +342,6 @@
 			$(".button").toggleClass("paused");
 		});
 		
-
+		$(document).ready(function(){
+			$(".addeventatc").show();
+		});
