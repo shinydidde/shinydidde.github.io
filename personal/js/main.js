@@ -322,13 +322,13 @@ var dynamicContent = getParameterByName('timer');
 			});
 		}, 500);
 		
-		$(".button").click(function toggleMuteAudio(){
-			if($(".audioDemo").prop("paused")){
-				var audio = $(".audioDemo")
-				audio[0].play();
-			} else{
-				$(".audioDemo").prop("muted",!$(".audioDemo").prop("muted"));
-			}
-			$(".button").toggleClass("paused");
-		});
+		// $(".button").click(function toggleMuteAudio(){
+		// 	if($(".audioDemo").prop("paused")){
+		// 		var audio = $(".audioDemo")
+		// 		audio[0].play();
+		// 	} else{
+		// 		$(".audioDemo").prop("muted",!$(".audioDemo").prop("muted"));
+		// 	}
+		// 	$(".button").toggleClass("paused");
+		// });
 		
