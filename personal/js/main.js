@@ -1,8 +1,8 @@
 $(document).ready(function(){
-	$(".addeventatc").show();
 	if (dynamicContent == 'yes') {
-	$('#qbootstrap-countdown').show();
+		$('#qbootstrap-countdown').show();
 	} 
+	$(".addeventatc").show();
 });
 
 // Parse the URL parameter

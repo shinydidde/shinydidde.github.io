@@ -206,15 +206,11 @@ h1, h2, h3, h4, h5, h6 {
 .section-heading {
   float: left;
   width: 100%;
-  padding-bottom: 50px;
-  margin-bottom: 50px;
   clear: both;
 }
 @media screen and (max-width: 768px) {
   .section-heading {
     margin-top: 0px;
-    padding-bottom: 0px;
-    margin-bottom: 0px;
   }
 }
 .section-heading.svg-sm-2 .svg {
@@ -270,7 +266,7 @@ h1, h2, h3, h4, h5, h6 {
 #qbootstrap-gallery,
 #qbootstrap-testimonials,
 #qbootstrap-press {
-  padding: 7em 0;
+  padding: 2em 0;
 }
 @media screen and (max-width: 767px) {
   #qbootstrap-couple,
@@ -521,29 +517,9 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
   padding-bottom: 5em;
 }
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 767px) {
   #qbootstrap-countdown {
-    background-position: -255px 0px !important;
-  }
-}
-@media screen and (max-width: 480px) {
-  #qbootstrap-countdown {
-    background-position: -525px 0px !important;
-  }
-}
-@media screen and (max-width: 425px) {
-  #qbootstrap-countdown {
-    background-position: -270px 0px !important;
-  }
-}
-@media screen and (max-width: 375px) {
-  #qbootstrap-countdown {
-    background-position: -300px 0px !important;
-  }
-}
-@media screen and (max-width: 320px) {
-  #qbootstrap-countdown {
-    background-position: -330px 0px !important;
+    background-position: 0px 0px !important;
   }
 }
 
@@ -651,13 +627,19 @@ h1, h2, h3, h4, h5, h6 {
   z-index: -1;
 }
 .couple img {
-  width: 100%;
+  width: 25%;
   margin-top: -96px;
   border: 3px solid #fff;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   border-radius: 50%;
+}
+
+@media screen and (max-width: 425px) {
+  .couple img {
+    width: 100%;
+  }
 }
 .couple .desc {
   z-index: 1;
@@ -1178,7 +1160,9 @@ from {top: 0%}
 }
 
 .addeventatc{
-  animation: colorchange 2s infinite; /* animation-name followed by duration in seconds*//* you could also use milliseconds (ms) or something like 2.5s */
+  display:none;
+  top: -5px;
+  animation: colorchange 2s infinite;
  -webkit-animation: colorchange 2s infinite;
 }
 
@@ -1191,8 +1175,6 @@ from {top: 0%}
       100% {background: #FF847C;}
     }
 
-
-@media screen and (max-width: 767px) {
   
   #container {
     z-index: 99;
@@ -1249,6 +1231,5 @@ from {top: 0%}
     top: 6px !important;
     left: 6px !important;
   }
-}
 
 
