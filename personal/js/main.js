@@ -1,3 +1,17 @@
+// Parse the URL parameter
+function getParameterByName(name, url) {
+	if (!url) url = window.location.href;
+	name = name.replace(/[\[\]]/g, "\\$&");
+	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+		results = regex.exec(url);
+	if (!results) return null;
+	if (!results[2]) return '';
+	return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+// Give the parameter a variable name
+var dynamicContent = getParameterByName('timer');
+console.log(dynamicContent)
+
 ;(function () {
 	
 	'use strict';
@@ -156,30 +170,6 @@
 	};
 
 
-	// Window Scroll
-	var windowScroll = function() {
-		var lastScrollTop = 0;
-
-		$(window).scroll(function(event){
-
-		   	var header = $('#qbootstrap-header'),
-				scrlTop = $(this).scrollTop();
-
-			if ( scrlTop > 500 && scrlTop <= 2000 ) {
-				header.addClass('navbar-fixed-top qbootstrap-animated slideInDown');
-			} else if ( scrlTop <= 500) {
-				if ( header.hasClass('navbar-fixed-top') ) {
-					header.addClass('navbar-fixed-top qbootstrap-animated slideOutUp');
-					setTimeout(function(){
-						header.removeClass('navbar-fixed-top qbootstrap-animated slideInDown slideOutUp');
-					}, 100 );
-				}
-			} 
-			
-		});
-	};
-
-
 
 	// Animations
 	var contentWayPoint = function() {
@@ -284,12 +274,7 @@
 		 clearInterval(x);
 		 document.getElementById("countdown").innerHTML = "It's Today !!!";
 		}
-		}, 1000);	
-	
-		
-	var bgVideo = function() {
-		$('.player').mb_YTPlayer();
-	};
+		}, 1000);
         
 
 	// Document on load.
@@ -304,7 +289,6 @@
 		navigationSection();
 		contentWayPoint();
 		inlineSVG();
-		bgVideo();
 		$(".audioDemo").trigger('play');
 	});
 
@@ -344,4 +328,7 @@
 		
 		$(document).ready(function(){
 			$(".addeventatc").show();
+			if (dynamicContent == 'yes') {
+			$('#qbootstrap-countdown').show();
+			} 
 		});

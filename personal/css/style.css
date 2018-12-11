@@ -210,6 +210,13 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 50px;
   clear: both;
 }
+@media screen and (max-width: 768px) {
+  .section-heading {
+    margin-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+  }
+}
 .section-heading.svg-sm-2 .svg {
   height: 150px;
   margin-bottom: 0;
@@ -277,6 +284,7 @@ h1, h2, h3, h4, h5, h6 {
   #qbootstrap-testimonials,
   #qbootstrap-press {
     padding: 5em 0;
+    padding-bottom: 0;
   }
 }
 
@@ -510,6 +518,8 @@ h1, h2, h3, h4, h5, h6 {
   background-repeat: no-repeat;
   z-index: 0;
   width: 100%;
+  display: none;
+  padding-bottom: 5em;
 }
 @media screen and (max-width: 768px) {
   #qbootstrap-countdown {
@@ -608,9 +618,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .couple {
-  border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 40px;
-  margin-top: 110px;
+  margin-top: 85px;
 }
 .couple.groom {
   position: relative;
@@ -641,11 +650,9 @@ h1, h2, h3, h4, h5, h6 {
   z-index: -1;
 }
 .couple img {
-  width: 300px;
-  margin: 0 auto;
-  margin-bottom: 40px;
-  margin-top: -190px;
-  border: 10px solid #fff;
+  width: 100%;
+  margin-top: -96px;
+  border: 3px solid #fff;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
@@ -1317,8 +1324,18 @@ from {top: 0%}
   right: 10px;
   outline: none;
   display:none;
-  background: #ffffff !important;
+  animation: colorchange 2s infinite; /* animation-name followed by duration in seconds*//* you could also use milliseconds (ms) or something like 2.5s */
+ -webkit-animation: colorchange 2s infinite;
 }
+
+@keyframes colorchange
+    {
+      0%   {background: #ffffff;}
+      25%  {background: rgb(247, 170, 164);}
+      50%  {background: rgb(245, 149, 142);}
+      75%  {background: rgb(243, 126, 117);}
+      100% {background: #FF847C;}
+    }
 
 @media screen and (max-width: 767px) {
   .addeventatc{
