@@ -320,7 +320,7 @@ var dynamicContent = getParameterByName('timer');
 					$(this).detach();
 				}
 			});
-		}, 500);
+		}, 1500);
 		
 		// $(".button").click(function toggleMuteAudio(){
 		// 	if($(".audioDemo").prop("paused")){
