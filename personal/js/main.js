@@ -2,7 +2,7 @@ $(document).ready(function(){
 	if (dynamicContent == 'yes') {
 		$('#qbootstrap-countdown').show();
 	} 
-	$(".addeventatc").show();
+	$(".outer-container").show();
 });
 
 // Parse the URL parameter
