@@ -1,3 +1,10 @@
+$(document).ready(function(){
+	$(".addeventatc").show();
+	if (dynamicContent == 'yes') {
+	$('#qbootstrap-countdown').show();
+	} 
+});
+
 // Parse the URL parameter
 function getParameterByName(name, url) {
 	if (!url) url = window.location.href;
@@ -10,7 +17,6 @@ function getParameterByName(name, url) {
 }
 // Give the parameter a variable name
 var dynamicContent = getParameterByName('timer');
-console.log(dynamicContent)
 
 ;(function () {
 	
@@ -326,9 +332,3 @@ console.log(dynamicContent)
 			$(".button").toggleClass("paused");
 		});
 		
-		$(document).ready(function(){
-			$(".addeventatc").show();
-			if (dynamicContent == 'yes') {
-			$('#qbootstrap-countdown').show();
-			} 
-		});

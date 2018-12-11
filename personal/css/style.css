@@ -1319,11 +1319,6 @@ from {top: 0%}
 }
 
 .addeventatc{
-  position: fixed !important;
-  top: 10px;
-  right: 10px;
-  outline: none;
-  display:none;
   animation: colorchange 2s infinite; /* animation-name followed by duration in seconds*//* you could also use milliseconds (ms) or something like 2.5s */
  -webkit-animation: colorchange 2s infinite;
 }
@@ -1337,7 +1332,56 @@ from {top: 0%}
       100% {background: #FF847C;}
     }
 
+
 @media screen and (max-width: 767px) {
+  
+  #container {
+    z-index: 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: fixed !important;
+    top: -15px;
+    right: -15px;
+    outline: none;
+    position: relative;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(.5, .5);
+      opacity: .5;
+    }
+    to {
+      transform: scale(2.5, 2.5);
+      opacity: 0;
+    }
+  }
+
+  .circle {
+    border-radius: 50%;
+    background-color: #ff847c;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    opacity: 0;
+    top: 20px;
+    animation: scaleIn 4s infinite cubic-bezier(.36, .11, .89, .32);
+
+  }
+
+  .item {
+    z-index: 100;
+    padding: 5px;
+  }
+
+  .item img {
+    width: 150px;
+  }
   .addeventatc{
     padding: 15px!important;
     border-radius: 50% !important;
