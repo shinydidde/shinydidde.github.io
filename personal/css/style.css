@@ -566,7 +566,7 @@ h6 {
 	background-repeat: no-repeat;
 }
 
-#qbootstrap-countdown {
+#qbootstrap-countdown, #qbootstrap-family, #qbootstrap-friends {
 	background-size: cover;
 	position: relative;
 	background-repeat: no-repeat;
