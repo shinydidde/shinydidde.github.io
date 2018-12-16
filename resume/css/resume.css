@@ -157,7 +157,6 @@ section.resume-section {
 
 section.resume-section .resume-item .resume-date {
   min-width: none;
-  margin-top: 30px;
 }
 
 @media (min-width: 768px) {
