@@ -1342,6 +1342,9 @@ h6 {
 	-webkit-animation: colorchange 2s infinite;
 	border-radius: 50% !important;
 }
+.addeventatc .start,.addeventatc .end,.addeventatc .timezone,.addeventatc .title,.addeventatc .description,.addeventatc .location, .addeventatc .alarm_reminder{
+	visibility: hidden;
+}
 
 .addeventatc .addeventatc_icon {
 	left: 6px !important;
