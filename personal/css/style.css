@@ -1350,6 +1350,12 @@ h6 {
     width: 100%;
 }
 
+@media screen and (max-width: 425px) {
+	.addeventatc {
+		right: 56px;
+	}
+}
+
 .addeventatc div{
 	left: -115px !important;
 }
