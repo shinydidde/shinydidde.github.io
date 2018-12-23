@@ -1,12 +1,8 @@
 $(document).ready(function () {
-	if (dynamicContent == 'yes') {
-		$('#qbootstrap-countdown').show();
-	}
 	if (family == 'yes'){
-		$('#qbootstrap-family').show();
-	}
-	if(friends == 'yes'){
-		$('#qbootstrap-friends').show();
+		$('.family').show();
+	} else {
+		$('.friends').show();
 	}
 	$(".outer-container").show();
 });
@@ -25,8 +21,8 @@ function getParameterByName(name, url) {
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 // Give the parameter a variable name
-var dynamicContent = getParameterByName('timer');
-var friends = getParameterByName('friends');
+// var dynamicContent = getParameterByName('timer');
+// var friends = getParameterByName('friends');
 var family = getParameterByName('family');
 
 ;

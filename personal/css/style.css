@@ -535,14 +535,14 @@ h6 {
 	}
 }
 
-#qbootstrap-couple span {
+/* #qbootstrap-couple span {
 	color: #FF847C;
 	letter-spacing: 10px;
 	text-transform: uppercase;
 	font-size: 14px;
 	border: 1px solid rgba(255, 132, 124, 0.3);
 	padding: 2px 5px;
-}
+} */
 
 #qbootstrap-couple .amp-center {
 	font-size: 60px;
@@ -566,7 +566,11 @@ h6 {
 	background-repeat: no-repeat;
 }
 
-#qbootstrap-countdown, #qbootstrap-family, #qbootstrap-friends {
+.family, .friends {
+	display: none;
+}
+
+#qbootstrap-countdown{
 	background-size: cover;
 	position: relative;
 	background-repeat: no-repeat;
@@ -1335,20 +1339,24 @@ h6 {
 }
 
 .addeventatc {
-	padding: 15px !important;
+	position: absolute;
 	right: 19px;
 	top: 29px;
 	animation: colorchange 2s infinite;
 	-webkit-animation: colorchange 2s infinite;
 	border-radius: 50% !important;
-}
-.addeventatc .start,.addeventatc .end,.addeventatc .timezone,.addeventatc .title,.addeventatc .description,.addeventatc .location, .addeventatc .alarm_reminder{
-	visibility: hidden;
+	z-index: 999;
 }
 
-.addeventatc .addeventatc_icon {
-	left: 6px !important;
-	top: 6px !important;
+.addeventatc div{
+	left: -115px !important;
+}
+
+.addeventatc #customAddToCalendar {
+	border: none;
+    background: transparent;
+	color: white;
+	outline: none;
 }
 
 #container {
