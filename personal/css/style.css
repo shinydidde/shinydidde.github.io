@@ -1340,12 +1340,14 @@ h6 {
 
 .addeventatc {
 	position: absolute;
-	right: 19px;
-	top: 29px;
-	animation: colorchange 2s infinite;
-	-webkit-animation: colorchange 2s infinite;
-	border-radius: 50% !important;
-	z-index: 999;
+    right: 51px;
+    top: 28px;
+    animation: colorchange 2s infinite;
+    -webkit-animation: colorchange 2s infinite;
+    border-radius: 50% !important;
+    z-index: 999;
+    background: transparent;
+    width: 100%;
 }
 
 .addeventatc div{
@@ -1357,6 +1359,7 @@ h6 {
     background: transparent;
 	color: white;
 	outline: none;
+	height: auto;
 }
 
 #container {
