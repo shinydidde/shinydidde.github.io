@@ -1339,34 +1339,41 @@ h6 {
 }
 
 .addeventatc {
-	position: absolute;
-    right: 51px;
-    top: 28px;
-    animation: colorchange 2s infinite;
-    -webkit-animation: colorchange 2s infinite;
-    border-radius: 50% !important;
-    z-index: 999;
-    background: transparent;
-    width: 100%;
+	padding: 15px !important;
+	/* position: absolute; */
+	right: 19px;
+	top: 29px;
+	animation: colorchange 2s infinite;
+	-webkit-animation: colorchange 2s infinite;
+	border-radius: 50% !important;
 }
 
-@media screen and (max-width: 425px) {
+.addeventatc .addeventatc_icon {
+	left: 6px !important;
+	top: 6px !important;
+}
+
+.addeventatc .start,.addeventatc .end,.addeventatc .timezone,.addeventatc .title,.addeventatc .description,.addeventatc .location, .addeventatc .alarm_reminder{
+	visibility: hidden;
+}
+
+/* @media screen and (max-width: 425px) {
 	.addeventatc {
 		right: 62px;
 	}
-}
+} */
 
-.addeventatc div{
+/* .addeventatc div{
 	left: -115px !important;
-}
+} */
 
-.addeventatc #customAddToCalendar {
+/* .addeventatc #customAddToCalendar {
 	border: none;
     background: transparent;
 	color: white;
 	outline: none;
 	height: auto;
-}
+} */
 
 #container {
 	z-index: 99;
