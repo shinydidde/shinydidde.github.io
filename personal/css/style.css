@@ -348,6 +348,10 @@ h6 {
 	background-repeat: no-repeat;
 }
 
+.qbootstrap-cover.friends {
+	background-position: 0px 0px !important;
+}
+
 @media screen and (max-width: 768px) {
 	.qbootstrap-cover,
 	.video-hero {
@@ -362,12 +366,18 @@ h6 {
 	.video-hero {
 		background-position: -270px 0 !important;
 	}
+	.qbootstrap-cover.friends {
+		background-position: -40px 0px !important;
+	}
 }
 
 @media screen and (max-width: 480px) {
 	.qbootstrap-cover,
 	.video-hero {
 		background-position: -300px 0 !important;
+	}
+	.qbootstrap-cover.friends {
+		background-position: -90px 0px !important;
 	}
 }
 
@@ -376,6 +386,9 @@ h6 {
 	.video-hero {
 		background-position: -320px 0 !important;
 	}
+	.qbootstrap-cover.friends {
+		background-position: -115px 0px !important;
+	}
 }
 
 @media screen and (max-width: 375px) {
@@ -383,12 +396,18 @@ h6 {
 	.video-hero {
 		background-position: -340px 0 !important;
 	}
+	.qbootstrap-cover.friends {
+		background-position: -142px 0px !important;
+	}
 }
 
 @media screen and (max-width: 320px) {
 	.qbootstrap-cover,
 	.video-hero {
 		background-position: -370px 0 !important;
+	}
+	.qbootstrap-cover.friends {
+		background-position: -172px 0px !important;
 	}
 }
 
