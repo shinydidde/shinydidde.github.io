@@ -359,6 +359,9 @@ h6 {
 		padding: 3em 0;
 		background-position: -140px 0 !important;
 	}
+	.qbootstrap-cover.friends  .display-tc{
+		vertical-align: bottom;
+	}
 }
 
 @media screen and (max-width: 557px) {
@@ -435,10 +438,6 @@ h6 {
 .video-hero .display-tc {
 	display: table-cell;
 	vertical-align: middle;
-}
-
-.qbootstrap-cover.friends  .display-tc{
-	vertical-align: bottom;
 }
 
 .qbootstrap-cover .display-tc .holder,
