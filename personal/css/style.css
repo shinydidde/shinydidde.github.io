@@ -437,6 +437,10 @@ h6 {
 	vertical-align: middle;
 }
 
+.qbootstrap-cover.friends  .display-tc{
+	vertical-align: bottom;
+}
+
 .qbootstrap-cover .display-tc .holder,
 .video-hero .display-tc .holder {
 	color: #fff;
