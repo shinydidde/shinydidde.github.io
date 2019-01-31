@@ -7,9 +7,6 @@ $(document).ready(function () {
 	$(".outer-container").show();
 });
 
-var audio = $('.audioDemo')[0];
-		audio.play();
-
 // Parse the URL parameter
 function getParameterByName(name, url) {
 	if (!url) url = window.location.href;
