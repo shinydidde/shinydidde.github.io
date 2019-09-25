@@ -15,6 +15,40 @@
       <link rel='shortcut icon' type='image/x-icon' href='favicon.ico' />
       <!-- Custom styles for this template -->
       <link href="css/resume.min.css" rel="stylesheet">
+      <!-- The core Firebase JS SDK is always required and must be listed first -->
+      <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+      <!-- Add Firebase products that you want to use -->
+      <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+
+      <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+      <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+         apiKey: "AIzaSyB3TpjND15IXtY4oV4-7FQTJRfOpjsLrpc",
+         authDomain: "portfolio-4ad8b.firebaseapp.com",
+         databaseURL: "https://portfolio-4ad8b.firebaseio.com",
+         projectId: "portfolio-4ad8b",
+         storageBucket: "",
+         messagingSenderId: "601043154557",
+         appId: "1:601043154557:web:ecbf44661588f267202314"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      var firestore = firebase.firestore();
+      var docRef = firestore.doc("me/resume");
+
+      docRef.get().then(function(doc) {
+         if (doc.exists) {
+            document.getElementById("years").innerHTML = doc.data().years;
+         } else {
+            console.log("No such document!");
+         }
+      }).catch(function(error) {
+         console.log("Error getting document:", error);
+      });
+      </script>
    </head>
    <body id="page-top">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
@@ -61,7 +95,7 @@
                   <a href="tel:+91 9492405173">Mobile: +91-9492405173</a><br/>
                   <a href="mailto:shinymrudula@hotmail.com">Email: shinymrudula@hotmail.com</a>
                </div>
-               <p class="lead mb-5">A self-motivated and organised professional with more than 5.2 years of experience in web development and responsive designing using React js & Angular Js, who wants to be associated with an organisation that provides career development opportunities as a Frontend Developer and an environment to enable me to contribute to its growth. I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.<br><br>I'm a seasoned front-end developer with a strong sense for aesthetics and interaction.</p>
+               <p class="lead mb-5">A self-motivated and organised professional with more than <span id="years"></span> years of experience in web development and responsive designing using React js & Angular Js, who wants to be associated with an organisation that provides career development opportunities as a Frontend Developer and an environment to enable me to contribute to its growth. I am experienced in leveraging agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.<br><br>I'm a seasoned front-end developer with a strong sense for aesthetics and interaction.</p>
                <div class="social-icons">
                   <a href="https://www.linkedin.com/in/mruduladidde/" target="_blank">
                   <i class="fab fa-linkedin-in"></i>
