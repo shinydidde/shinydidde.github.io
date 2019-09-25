@@ -16,38 +16,38 @@
       <!-- Custom styles for this template -->
       <link href="css/resume.min.css" rel="stylesheet">
       <!-- The core Firebase JS SDK is always required and must be listed first -->
-      <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script>
+      <!-- <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-app.js"></script> -->
       <!-- Add Firebase products that you want to use -->
-      <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script>
+      <!-- <script src="https://www.gstatic.com/firebasejs/6.6.2/firebase-firestore.js"></script> -->
 
       <!-- TODO: Add SDKs for Firebase products that you want to use
          https://firebase.google.com/docs/web/setup#available-libraries -->
 
       <script>
       // Your web app's Firebase configuration
-      var firebaseConfig = {
-         apiKey: "AIzaSyB3TpjND15IXtY4oV4-7FQTJRfOpjsLrpc",
-         authDomain: "portfolio-4ad8b.firebaseapp.com",
-         databaseURL: "https://portfolio-4ad8b.firebaseio.com",
-         projectId: "portfolio-4ad8b",
-         storageBucket: "",
-         messagingSenderId: "601043154557",
-         appId: "1:601043154557:web:ecbf44661588f267202314"
-      };
+      // var firebaseConfig = {
+      //    apiKey: "AIzaSyB3TpjND15IXtY4oV4-7FQTJRfOpjsLrpc",
+      //    authDomain: "portfolio-4ad8b.firebaseapp.com",
+      //    databaseURL: "https://portfolio-4ad8b.firebaseio.com",
+      //    projectId: "portfolio-4ad8b",
+      //    storageBucket: "",
+      //    messagingSenderId: "601043154557",
+      //    appId: "1:601043154557:web:ecbf44661588f267202314"
+      // };
       // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      var firestore = firebase.firestore();
-      var docRef = firestore.doc("me/resume");
+      // firebase.initializeApp(firebaseConfig);
+      // var firestore = firebase.firestore();
+      // var docRef = firestore.doc("me/resume");
 
-      docRef.get().then(function(doc) {
-         if (doc.exists) {
-            document.getElementById("years").innerHTML = doc.data().years;
-         } else {
-            console.log("No such document!");
-         }
-      }).catch(function(error) {
-         console.log("Error getting document:", error);
-      });
+      // docRef.get().then(function(doc) {
+      //    if (doc.exists) {
+      //       console.log("Success!");
+      //    } else {
+      //       console.log("No such document!");
+      //    }
+      // }).catch(function(error) {
+      //    console.log("Error getting document:", error);
+      // });
       </script>
    </head>
    <body id="page-top">
@@ -377,5 +377,9 @@
       <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
       <!-- Custom scripts for this template -->
       <script src="js/resume.min.js"></script>
+      <script type="text/javascript">
+         var x = (((parseInt((new Date() - new Date("08/24/2014")) / (1000 * 60 * 60 * 24), 10))/356).toString()).substring(0,1);
+         document.getElementById("years").innerHTML = x
+      </script>
    </body>
 </html>
