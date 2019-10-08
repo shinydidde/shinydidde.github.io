@@ -1,0 +1,130 @@
+{
+    "mails": [
+        {
+          "from": "george@foo.com",
+          "to": "Wordpress.com.news",
+          "subject": "Test mail",
+          "snippet": "This is a test mail",
+          "date": "0:20",
+          "attachment": true,
+          "total": 2  
+        },
+        {
+          "from": "paul@goo.com",
+          "to": "Wordpress.com.news",
+          "subject": "[New po]Longreads best of…”,",
+          "snippet": "Mark Armstrong posted",
+          "date": "0:10",
+          "attachment": false,
+          "total": 0 
+        },
+        {
+          "from": "Eliseo@gardner.biz",
+          "to": "Sochet Thea",
+          "subject": "I like to add you to my Profession",
+          "snippet": "Linkedin Sachet Thea Global",
+          "date": "Jan 01",
+          "attachment": false,
+          "total": 1 
+        },
+        {
+          "from": "Nikita@garfield.biz",
+          "to": "biggtech",
+          "subject": "[Tech free]please moderate",
+          "snippet": "A new ping back on the  post",
+          "date": "2017-10-18",
+          "attachment": true,
+          "total": 3 
+        },
+        {
+          "from": "Lew@alysha.tv",
+          "to": "000webhost India",
+          "subject": "Free hosting in India",
+          "snippet": "Hosting Information",
+          "date": "2017-10-16",
+          "attachment": false,
+          "total": 0 
+        },
+        {
+          "from": "Hayden@althea.biz",
+          "to": "000webhost India",
+          "subject": "Free hosting in India",
+          "snippet": "Hosting Information",
+          "date": "2017-10-16",
+          "attachment": false,
+          "total": 0 
+        },
+        {
+          "from": "Presley@myrl.com",
+          "to": "vero eaque aliquid doloribus et culpa",
+          "subject": "harum non quasi et ratione",
+          "snippet": "tempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et",
+          "date": "0:00",
+          "attachment": true,
+          "total": 1
+        },
+        {
+          "from": "george@foo.com",
+          "to": "Wordpress.com.news",
+          "subject": "Test mail",
+          "snippet": "This is a test mail",
+          "date": "0:20",
+          "attachment": true,
+          "total": 2  
+        },
+        {
+          "from": "paul@goo.com",
+          "to": "Wordpress.com.news",
+          "subject": "[New po]Longreads best of…”,",
+          "snippet": "Mark Armstrong posted",
+          "date": "0:10",
+          "attachment": false,
+          "total": 0 
+        },
+        {
+          "from": "Eliseo@gardner.biz",
+          "to": "Sochet Thea",
+          "subject": "I like to add you to my Profession",
+          "snippet": "Linkedin Sachet Thea Global",
+          "date": "Jan 01",
+          "attachment": false,
+          "total": 1 
+        },
+        {
+          "from": "Nikita@garfield.biz",
+          "to": "biggtech",
+          "subject": "[Tech free]please moderate",
+          "snippet": "A new ping back on the  post",
+          "date": "2017-10-18",
+          "attachment": true,
+          "total": 3 
+        },
+        {
+          "from": "Lew@alysha.tv",
+          "to": "000webhost India",
+          "subject": "Free hosting in India",
+          "snippet": "Hosting Information",
+          "date": "2017-10-16",
+          "attachment": false,
+          "total": 0 
+        },
+        {
+          "from": "Hayden@althea.biz",
+          "to": "000webhost India",
+          "subject": "Free hosting in India",
+          "snippet": "Hosting Information",
+          "date": "2017-10-16",
+          "attachment": false,
+          "total": 0 
+        },
+        {
+          "from": "Presley@myrl.com",
+          "to": "vero eaque aliquid doloribus et culpa",
+          "subject": "harum non quasi et ratione",
+          "snippet": "tempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et",
+          "date": "0:00",
+          "attachment": true,
+          "total": 1
+        }
+      ]
+}
