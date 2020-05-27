@@ -255,7 +255,7 @@ var family = getParameterByName('family');
 
 
 	// Set the date we're counting down to
-	var countDownDate = new Date("Jan 30, 2020 08:30:00").getTime();
+	var countDownDate = new Date("Jan 30, 2022 08:30:00").getTime();
 
 	// Update the count down every 1 second
 	var x = setInterval(function () {
