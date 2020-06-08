@@ -1,0 +1,163 @@
+[
+   {
+      "title":"Description project 6",
+      "slug":"description-project-6",
+      "categories":[
+         8
+      ],
+      "meta":{
+         "site_url":"https:\/\/olena-stotska.github.io\/test-site\/"
+      },
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2018\/04\/site.png",
+      "tags":[
+         "landing"
+      ]
+   },
+   {
+      "title":"Freelancer",
+      "slug":"freelancer",
+      "categories":[
+         5
+      ],
+      "meta":{
+         "year":"06.2016 - Present"
+      },
+      "content":"<p>Front-End Developer<\/p>\n"
+   },
+   {
+      "title":"Desctioption project5",
+      "slug":"desctioption-project5",
+      "categories":[
+         8
+      ],
+      "meta":{
+         "site_url":"https:\/\/rawgit.com\/Olena-Stotska\/tinyone.github.io\/master\/index.html"
+      },
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2017\/07\/5.png",
+      "tags":[
+         "landing"
+      ]
+   },
+   {
+      "title":"Desctioption project4",
+      "slug":"description4",
+      "categories":[
+         8
+      ],
+      "meta":{
+         "site_url":"https:\/\/olena-stotska.github.io\/form-with-validation\/"
+      },
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2017\/07\/4.png",
+      "tags":[
+         "landing"
+      ]
+   },
+   {
+      "title":"UkrInSoft",
+      "slug":"frontend",
+      "categories":[
+         5
+      ],
+      "meta":{
+         "year":"09.2017 - 04.12.2017"
+      },
+      "content":"<p> Junior Front-end developer<\/p>\n"
+   },
+   {
+      "title":"Desctioption project3",
+      "slug":"desctioption-project3",
+      "categories":[
+         8
+      ],
+      "meta":{
+         "site_url":"http:\/\/ruba4ok.com"
+      },
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2017\/03\/1-2.jpg",
+      "tags":[
+         "shop"
+      ]
+   },
+   {
+      "title":"Description project2",
+      "slug":"description-project2",
+      "categories":[
+         8
+      ],
+      "meta":{
+         "site_url":"http:\/\/ruba4ok.com\/blog"
+      },
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2017\/03\/2-1.jpg",
+      "tags":[
+         "blog"
+      ]
+   },
+   {
+      "title":"Description projects1",
+      "slug":"description-projects",
+      "categories":[
+         8
+      ],
+      "meta":{
+         "site_url":"http:\/\/test.freaksidea.com"
+      },
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2017\/03\/03-1.jpg",
+      "tags":[
+         "landing"
+      ]
+   },
+   {
+      "title":"National University of &#8216;Kyiv-Mohyla Academy&#8217;",
+      "slug":"acadamy",
+      "categories":[
+         6
+      ],
+      "meta":{
+         "year":"2012 - 2016"
+      },
+      "content":"<p>Faculty of Natural Science, department of Chemistry<\/p>\n"
+   },
+   {
+      "title":"GlobalLogic BaseCamp",
+      "slug":"courses",
+      "categories":[
+         6
+      ],
+      "meta":{
+         "year":"05.2018 \u2014 07.2018"
+      },
+      "content":"<p>JavaScript courses<\/p>\n"
+   },
+   {
+      "title":"PERSONAL INFORMATION",
+      "slug":"personal-information",
+      "categories":[
+         2
+      ],
+      "meta":{
+         "font_awesome":[
+            "icon-linkedin-squared, https:\/\/www.linkedin.com\/in\/olena-stotska-bb8072131\/",
+            "icon-facebook-squared, https:\/\/www.facebook.com\/olena.kuch",
+            "icon-github-squared, https:\/\/github.com\/Olena-Stotska"
+         ],
+         "phone":"+38 (\u043e95) 47 326 \u043e7",
+         "country":"Ukraine",
+         "city":"Kyiv, Lviv",
+         "email":"i.olena.stotska@gmail.com",
+         "skype":"olena992",
+         "phone_icon":"icon-mobile",
+         "adress_icon":"icon-direction"
+      }
+   },
+   {
+      "title":"Few words about me",
+      "slug":"few-words-about-me",
+      "categories":[
+         2
+      ],
+      "meta":[
+
+      ],
+      "media_url":"http:\/\/portfolio.freaksidea.com\/wp-content\/uploads\/2017\/03\/photo-1.jpeg",
+      "content":"<p><span style=\"font-weight: 400;\">I\u2019m a Front-end Developer with more two years of experience in WEB technologies. I have been learning and doing a different kind of tasks using JavaScript \/ HTML5 \/ CSS3 and have a big passion to grow and know even more. Recently I learned Vue.js\/MySQL and created a website for my portfolio based on WordPress CMS.<\/span><\/p>\n<p>My analytical skills help me to quickly learn and be up to date with the latest technologies and approaches. I want to become the best Front-end developer and got Team Lead role in 5 years.<\/p>\n"
+   }
+]
