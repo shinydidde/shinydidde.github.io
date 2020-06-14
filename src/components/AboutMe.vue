@@ -1,6 +1,6 @@
 <template>
   <section id="about" ref="about">
-    <Title :title="info.title" :description="info.subtitle" />
+    <Title :title="info.name" :description="info.subtitle" />
     <div class="section-content">
       <div class="container-fluid">
         <div class="row">

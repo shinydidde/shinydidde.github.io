@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>PERSONAL INFORMATION</h3>
-    <h3 class="personal-header">{{ userName }}</h3>
+    <!-- <h3 class="personal-header">{{ userName }}</h3> -->
     <div v-if="post.meta" class="info email"><strong>E-mail:</strong> {{ post.meta.email }}</div>
     <div v-if="post.meta" class="info"><strong>Skype:</strong> {{ post.meta.skype }}</div>
     <div v-if="post.meta" class="info"><strong>Phone Number:</strong> {{ post.meta.phone }}</div>
