@@ -1,0 +1,80 @@
+<template>
+  <section id="experience" class="my-cv position">
+    <Title :title="jobtitle" :description="jobdescription" />
+    <AnimateWhenVisible name="fadeUp" :duration="1.5" class="section-content">
+      <div class="container-fluid">
+        <div class="row">
+          <ExperienceGroup :posts="posts" class="col-12 col-md left" icon="icon-briefcase"
+          title="Jobs" animate="fadeLeft" :duration="2" :delay="0"/>
+          <ExperienceGroup :posts="education" class="col-12 col-md right" icon="icon-graduation-cap"
+           title="Education" animate="fadeRight" :duration="2" :delay="1"/>
+        </div>
+      </div>
+    </AnimateWhenVisible>
+  </section>
+</template>
+
+<script>
+import Title from './Title'
+import ExperienceGroup from './ExperienceGroup'
+import { db } from '../main';
+
+export default {
+  name: 'Experience',
+  props: ['icon', 'title', 'animate', 'duration', 'delay', 'description'],
+  components: {
+    Title,
+    ExperienceGroup,
+  },
+  data() {
+    return {
+      posts: [],
+      education: [],
+      jobtitle: '',
+      jobdescription: '',
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      db.collection('personal')
+        .doc('experience')
+        .get()
+        .then((snapshot) => {
+          if (!snapshot.exists) return;
+          const data = snapshot.data();
+          this.posts = data.timeline;
+          this.education = data.education;
+          this.jobtitle = data.title;
+          this.jobdescription = data.description;
+        });
+    },
+  },
+}
+</script>
+
+<style scoped lang="scss">
+  @import '@/styles/variables.scss';
+
+  $linear: map-get($colors, dark);
+
+  .row {
+    padding-top: 20px;
+    text-align: center;
+  }
+
+  @media(min-width: #{map-get($breakpoints, small)}) {
+
+    .left {
+      text-align: right;
+      border-right: 2px solid lighten($linear, 80%);
+    }
+
+    .right {
+      text-align: left;
+    }
+  }
+
+</style>

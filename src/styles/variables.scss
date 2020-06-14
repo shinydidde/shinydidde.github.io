@@ -1,0 +1,15 @@
+$colors: (
+  primary: gray,
+  secondary: darkgray,
+  light: #fff,
+  dark: #222,
+  error: #ff2818,
+);
+
+$breakpoints: (
+  small: 767px,
+  medium: 992px,
+  large: 1200px,
+);
+
+$text-color: map-get($colors, dark);
