@@ -9,11 +9,11 @@
           <AppMenu />
         </div>
       </header>
-      <AboutMe :category="categories['about-me']" :posts="posts['about-me']" :user="user"/>
-      <Experience :category="categories.experience" :posts="posts"/>
-      <Portfolio :category="categories.portfolio" :posts="posts.portfolio"/>
+      <AboutMe/>
+      <Experience/>
+      <Portfolio/>
       <!-- <Contacts :category="categories.contact" :posts="posts['about-me']"/> -->
-      <Footer :posts="posts['about-me']"/>
+      <Footer/>
     </div>
 
     <div class="loader wrapper" v-else key="loader">
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import { group } from './utils'
 import AppMenu from './components/AppMenu'
 import AboutMe from './components/AboutMe'
 import Experience from './components/Experience'
@@ -31,8 +30,6 @@ import Portfolio from './components/Portfolio'
 // import Contacts from './components/Contacts'
 import Footer from './components/Footer'
 
-const API_BASE_URL = 'http://portfolio.freaksidea.com/wp-json'
-const API_URL = `${API_BASE_URL}/wp/v2`
 
 export default {
   name: 'app',
@@ -46,56 +43,12 @@ export default {
   },
   data: () => ({
     isLoaded: false,
-    categories: {},
-    user: {},
-    posts: {},
-    info: {},
   }),
-  methods: {
-    getName() {
-      return fetch(API_BASE_URL)
-        .then(response => response.json())
-        .then(({ name, description }) => {
-          this.user = { name, description }
-        })
-    },
-    getCategories() {
-      return fetch(`${API_URL}/categories`)
-        .then(response => response.json())
-    },
-
-    getPosts() {
-      return fetch(`${API_URL}/posts?per_page=20`)
-        .then(response => response.json())
-    },
-
-    groupPosts(posts, categories) {
-      const categoriesById = group(categories, 'id')
-
-      return posts.reduce((acc, post) => {
-        post.categories.forEach((categoryId) => {
-          const key = categoriesById[categoryId].slug
-          acc[key] = acc[key] || []
-          acc[key].push(post)
-        })
-
-        return acc
-      }, {})
-    },
-  },
 
   created() {
     document.body.classList.add('loading')
-    Promise.all([
-      this.getCategories(),
-      this.getPosts(),
-      this.getName(),
-    ]).then(([categories, posts]) => {
-      this.categories = group(categories)
-      this.posts = this.groupPosts(posts, categories)
-      this.isLoaded = true
-      this.$nextTick(() => document.body.classList.remove('loading'))
-    })
+    this.isLoaded = true
+    this.$nextTick(() => document.body.classList.remove('loading'))
   },
 }
 </script>
