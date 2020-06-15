@@ -4,7 +4,7 @@
     <div class="section-content">
       <div class="container-fluid">
         <div class="row">
-          <AnimateWhenVisible name="fadeLeft" class="col-12 col-md">
+          <AnimateWhenVisible name="fadeLeft" class="col-12 col-md order-2 order-md-0">
             <Description :post="info.description"/>
           </AnimateWhenVisible>
           <Photo class="col-12 col-md text-center"/>

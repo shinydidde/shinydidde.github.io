@@ -9,6 +9,7 @@
        <li>
         <a href="https://github.com/shinydidde" target="_blank">
           <i class="icon-github-squared"></i>
+          <i class="fab fa-html5"></i>
         </a>
       </li>
     </ul>

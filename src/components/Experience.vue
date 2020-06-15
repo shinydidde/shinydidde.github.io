@@ -4,10 +4,10 @@
     <AnimateWhenVisible name="fadeUp" :duration="1.5" class="section-content">
       <div class="container-fluid">
         <div class="row">
-          <ExperienceGroup :posts="posts" class="col-12 col-md left" icon="icon-briefcase"
-          title="Jobs" animate="fadeLeft" :duration="2" :delay="0"/>
-          <ExperienceGroup :posts="education" class="col-12 col-md right" icon="icon-graduation-cap"
-           title="Education" animate="fadeRight" :duration="2" :delay="1"/>
+          <ExperienceGroup :posts="posts" class="col-12 col-md" icon="icon-briefcase"
+          title="Jobs" animate="fadeUp" :duration="1" :delay="0"/>
+          <!-- <ExperienceGroup :posts="education" class="col-12 col-md right" icon="icon-graduation-cap"
+           title="Education" animate="fadeRight" :duration="2" :delay="1"/> -->
         </div>
       </div>
     </AnimateWhenVisible>

@@ -1,12 +1,11 @@
 <template>
   <div>
-    <h3>{{ title }}</h3>
-    <div class="resume-icon"><i :class="icon"></i></div>
+    <!-- <h3>{{ title }}</h3>
+    <div class="resume-icon"><i :class="icon"></i></div> -->
       <AnimateWhenVisible :name="animate"  :duration="duration" :delay="delay">
         <div class="resume-item" v-for="post in posts" :key="post.title">
           <div class="year">{{ post.year }}</div>
-          <div class="resume-description">
-            <p class="group-name" v-html="post.title"></p>
+          <div class="resume-description" v-html="post.title">
           </div>
           <div v-html="post.content"></div>
         </div>
@@ -50,12 +49,14 @@ export default {
 
     .resume-description {
       font-size: 1.7rem;
-      h3{
+      margin-bottom: 20px;
+      > h3{
         color: black;
       }
     }
 
     .year {
+      text-align: right;
       font-weight: 600;
       margin-bottom: 5px;
     }

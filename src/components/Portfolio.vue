@@ -9,6 +9,7 @@
           <div class="portfolio-link">
             <a :href="post.url" class="popup_content" target="_blank">See</a>
           </div>
+          <p class="desc">{{post.desc}}</p>
         </div>
       </transition-group>
     </div>
@@ -96,9 +97,12 @@ export default {
     max-height: 250px;
     overflow: hidden;
     margin-bottom: 40px;
-
     img {
       height: 200px;
+    }
+    .desc{
+      text-align: center;
+      margin-top: 20px;
     }
   }
 
