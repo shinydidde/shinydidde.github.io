@@ -56,7 +56,6 @@ export default {
     .year {
       font-weight: 600;
       margin-bottom: 5px;
-      display: inline-block;
       float: right;
     }
   }
