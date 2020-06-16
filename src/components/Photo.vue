@@ -1,7 +1,6 @@
 <template>
   <div>
     <AnimateWhenVisible name="bounce">
-      <h3>Photo</h3>
       <div class="person">
         <a @click.prevent="isModalVisible = true" class="me-photo">
           <img v-bind:src="img" alt="Personal Photo"/>

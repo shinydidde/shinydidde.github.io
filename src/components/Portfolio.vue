@@ -4,7 +4,7 @@
 
     <div class="section-content">
       <transition-group name="filter" tag="div" class="row justify-content-center">
-        <div class="col-md-4 col-lg-auto portfolio-item" v-for="post in posts" :key="post.url">
+        <div class="col-md-3 portfolio-item" v-for="post in posts" :key="post.url">
           <img :src="post.img" alt="Alt"/>
           <div class="portfolio-link">
             <a :href="post.url" class="popup_content" target="_blank">See</a>
@@ -98,7 +98,7 @@ export default {
     overflow: hidden;
     margin-bottom: 40px;
     img {
-      height: 200px;
+      width: 100%;
     }
     .desc{
       text-align: center;
@@ -110,7 +110,7 @@ export default {
     position: absolute;
     top: 0;
     left: 15px;
-    width: 92.5%;
+    width: 90%;
     height: 100%;
     background-color: rgba(0,0,0,.8);
     text-align: center;
