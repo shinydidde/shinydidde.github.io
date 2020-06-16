@@ -7,10 +7,6 @@
           <ExperienceGroup :posts="posts" class="col-12 col-md" icon="icon-briefcase"
           title="Jobs" animate="fadeUp" :duration="1" :delay="0"/>
         </div>
-        <div class="row">
-          <ExperienceGroup :posts="education" class="col-12 col-md" icon="icon-graduation-cap"
-title="Education" animate="fadeUp" :duration="2" :delay="1"/>
-        </div>
       </div>
     </AnimateWhenVisible>
   </section>
@@ -31,7 +27,6 @@ export default {
   data() {
     return {
       posts: [],
-      education: [],
       jobtitle: '',
       jobdescription: '',
     };
@@ -48,7 +43,6 @@ export default {
           if (!snapshot.exists) return;
           const data = snapshot.data();
           this.posts = data.timeline;
-          this.education = data.education;
           this.jobtitle = data.title;
           this.jobdescription = data.description;
         });

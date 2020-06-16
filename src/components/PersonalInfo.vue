@@ -42,7 +42,8 @@ $btn: map-get($colors, secondary) !default;
       transition: all 0.5s sceal-out;
 
       &:hover {
-        color: lighten($btn, 10%);
+        color: white;
+        background-color: rgb(111, 111, 111);;
       }
     }
 

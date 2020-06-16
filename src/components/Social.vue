@@ -26,13 +26,23 @@ export default {
   @import '@/styles/variables.scss';
 
  .social-wrap {
+   ul{
+      margin-left: 0;
+    }
     li {
       display: inline-block;
       margin-right: 10px;
+      &:first-child{
+        :hover{
+          color: #006097;
+        }
+      }
     }
-
     i {
       font-size: 3rem;
+      &::before{
+        margin-left: 0;
+      }
     }
   }
 </style>

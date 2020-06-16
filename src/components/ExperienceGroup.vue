@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- <h3>{{ title }}</h3>
-    <div class="resume-icon"><i :class="icon"></i></div> -->
       <AnimateWhenVisible :name="animate"  :duration="duration" :delay="delay">
         <div class="resume-item" v-for="post in posts" :key="post.title">
           <div class="year">{{ post.year }}</div>

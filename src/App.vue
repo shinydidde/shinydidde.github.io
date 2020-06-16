@@ -3,16 +3,14 @@
     <div class="wrapper" v-if="isLoaded" key="app">
       <header class="header parallax position">
         <div class="container-page">
-          <!-- <div class="logo">
-            <img class="img-logo" src="./assets/img/logo.png">
-          </div> -->
           <AppMenu />
         </div>
       </header>
       <AboutMe/>
       <Experience/>
+      <Skills/>
       <Portfolio/>
-      <Contacts/>
+      <!-- <Education/> -->
       <Footer/>
     </div>
 
@@ -27,7 +25,8 @@ import AppMenu from './components/AppMenu'
 import AboutMe from './components/AboutMe'
 import Experience from './components/Experience'
 import Portfolio from './components/Portfolio'
-// import Contacts from './components/Contacts'
+import Skills from './components/Skills'
+// import Education from './components/Education'
 import Footer from './components/Footer'
 
 
@@ -38,7 +37,8 @@ export default {
     AboutMe,
     Experience,
     Portfolio,
-    // Contacts,
+    Skills,
+    // Education,
     Footer,
   },
   data: () => ({
