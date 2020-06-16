@@ -1,9 +1,9 @@
 <template>
   <section id="contact" class="position">
     <Title :title="sectitle" :description="secdescription"/>
-    <div class="section-content">
+    <div class="section-content container">
       <div class="row">
-          <div class="col-2 col-md-2 ver-ailgn" v-for="(skill, idx) in skills" :key="idx">
+          <div class="col-3 col-md-2 ver-ailgn" v-for="(skill, idx) in skills" :key="idx">
             <img :src="skill">
           </div>
         </div>

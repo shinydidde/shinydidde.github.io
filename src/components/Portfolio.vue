@@ -94,11 +94,11 @@ export default {
 
   .portfolio-item {
     width: auto;
-    max-height: 250px;
+    // max-height: 250px;
     overflow: hidden;
     margin-bottom: 40px;
     img {
-      width: 100%;
+      width: 105%;
     }
     .desc{
       text-align: center;
@@ -110,7 +110,7 @@ export default {
     position: absolute;
     top: 0;
     left: 15px;
-    width: 90%;
+    width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,.8);
     text-align: center;
