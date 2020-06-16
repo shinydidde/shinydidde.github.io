@@ -12,7 +12,7 @@
       <AboutMe/>
       <Experience/>
       <Portfolio/>
-      <!-- <Contacts :category="categories.contact" :posts="posts['about-me']"/> -->
+      <Contacts/>
       <Footer/>
     </div>
 

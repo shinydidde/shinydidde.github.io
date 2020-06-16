@@ -20,7 +20,7 @@ import { db } from '../main'
 
 export default {
   name: 'Contacts',
-  props: ['category', 'posts'],
+  props: ['posts'],
   components: {
     Title,
     PersonalInfo,
@@ -36,23 +36,8 @@ export default {
   }),
   firestore () {
     return {
-      locations: db.collection('locations')
+      locations: db.collection('skills/logos')
     }},
-  computed: {
-    groupedPosts() {
-      return group(this.posts)
-    },
-    personalInfo() {
-      return this.groupedPosts['personal-information']
-    },
-  },
-  methods: {
-    formSubmited() {
-      setTimeout(() => {
-        this.name = this.email = this.message = ''
-      }, 100)
-    },
-  },
 }
 </script>
 

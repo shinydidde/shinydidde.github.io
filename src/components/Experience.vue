@@ -6,8 +6,10 @@
         <div class="row">
           <ExperienceGroup :posts="posts" class="col-12 col-md" icon="icon-briefcase"
           title="Jobs" animate="fadeUp" :duration="1" :delay="0"/>
-          <!-- <ExperienceGroup :posts="education" class="col-12 col-md right" icon="icon-graduation-cap"
-           title="Education" animate="fadeRight" :duration="2" :delay="1"/> -->
+        </div>
+        <div class="row">
+          <ExperienceGroup :posts="education" class="col-12 col-md" icon="icon-graduation-cap"
+title="Education" animate="fadeUp" :duration="2" :delay="1"/>
         </div>
       </div>
     </AnimateWhenVisible>

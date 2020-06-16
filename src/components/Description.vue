@@ -14,10 +14,4 @@ export default {
 
 <style scoped lang="scss">
   @import '@/styles/variables.scss';
-
-  .first-paragraph {
-    /deep/ p:first-child {
-      color: map-get($colors, secondary);
-    }
-  }
 </style>

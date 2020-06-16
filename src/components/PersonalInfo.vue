@@ -8,7 +8,7 @@
     <div v-if="post.meta" class="info"><strong>City:</strong> {{ post.meta.city }}</div>
     <div class="info"><strong>Experience:</strong> {{experience}} years</div>
     <Social/>
-    <a target="_blank" href="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/June2020-Resume.pdf?alt=media&token=6b443ded-2c8e-4817-bf00-602915831fb2">Download Resume</a>
+    <a target="_blank" v-bind:href="resume">Download Resume</a>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ import Social from './Social';
 
 export default {
   name: 'PersonalInfo',
-  props: ['post', 'userName', 'experience'],
+  props: ['post', 'userName', 'experience', 'resume'],
   components: {
     Social,
   },

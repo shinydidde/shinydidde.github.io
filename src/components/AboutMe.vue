@@ -7,9 +7,10 @@
           <AnimateWhenVisible name="fadeLeft" class="col-12 col-md order-2 order-md-0">
             <Description :post="info.description"/>
           </AnimateWhenVisible>
-          <Photo class="col-12 col-md text-center"/>
+          <Photo :img="info.img" class="col-12 col-md text-center"/>
           <AnimateWhenVisible name="fadeRight" class="col-12 col-md">
-            <PersonalInfo :post="info" :userName="info.name" :experience="experience"/>
+            <PersonalInfo :post="info" :userName="info.name" :experience="experience"
+            :resume="info.resume"/>
           </AnimateWhenVisible>
         </div>
       </div>
@@ -53,6 +54,8 @@ export default {
             description: data.description,
             title: data.title,
             subtitle: data.subtitle,
+            img: data.img,
+            resume: data.resume,
             meta: {
               email: data.email,
               skype: data.skype,
