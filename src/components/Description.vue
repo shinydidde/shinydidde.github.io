@@ -14,7 +14,7 @@ export default {
 
 <style scoped lang="scss">
   @import '@/styles/variables.scss';
-  first-paragraph{
+  .first-paragraph{
     text-align: justify;
   }
 </style>
