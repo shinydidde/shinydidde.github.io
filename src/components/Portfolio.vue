@@ -4,7 +4,7 @@
 
     <div class="section-content">
       <transition-group name="filter" tag="div" class="row justify-content-center">
-        <div class="col-md-3 portfolio-item" v-for="post in posts" :key="post.url">
+        <div class="col-md-4 portfolio-item" v-for="post in posts" :key="post.url">
           <img :src="post.img" alt="Alt"/>
           <div class="portfolio-link">
             <a :href="post.url" class="popup_content" target="_blank">See</a>

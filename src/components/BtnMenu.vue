@@ -17,15 +17,15 @@ export default {
 
 <style scoped lang="scss">
 .btn-menu {
-  width: 55px;
-  height: 55px;
+  width: 50px;
+  height: 45px;
   right: 0;
   position: fixed;
   z-index: 100;
-  margin: 10px 30px;
+  margin: 10px 10px;
   border: none;
   border-style: none;
-  background: rgba(0, 0, 0, .6);
+  background: rgba(0, 0, 0, 0.5);
   -webkit-text-fill-color: transparent;
 
   &:active,

@@ -1,13 +1,11 @@
 <template>
   <div>
-      <AnimateWhenVisible :name="animate"  :duration="duration" :delay="delay">
         <div class="resume-item" v-for="post in posts" :key="post.title">
           <div class="year">{{ post.year }}</div>
           <div class="resume-description" v-html="post.title">
           </div>
           <div v-html="post.content"></div>
         </div>
-      </AnimateWhenVisible>
   </div>
 </template>
 

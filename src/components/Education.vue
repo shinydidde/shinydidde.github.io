@@ -2,12 +2,12 @@
   <section id="experience" class="my-cv position">
     <Title title="Education" description="" />
     <AnimateWhenVisible name="fadeUp" :duration="1.5" class="section-content">
-        <div class="row">
+        <div class="row container">
             <div class="col-md-4 resume-item" v-for="post in posts" :key="post.title">
                 <div class="year">{{ post.year }}</div>
                 <div class="resume-description" v-html="post.title"></div>
-                <div class="resume-description" v-html="post.desc"></div>
-                <div v-html="post.content"></div>
+                <div class="" v-html="post.content"></div>
+                <div class="" v-html="post.desc"></div>
             </div>
         </div>
     </AnimateWhenVisible>
@@ -52,24 +52,19 @@ export default {
     text-align: left;
     border: 1px solid whitesmoke;
     padding: 20px;
-    margin-bottom: 25px;
-
-    p {
-      font-size: 1.5rem;
-      margin-top: 0;
-    }
+    margin-bottom: 10px;
 
     .resume-description {
-      font-size: 1.7rem;
+      font-size: 1.4rem;
       margin-bottom: 20px;
-      > h3{
-        color: black;
-      }
+      font-weight: 600;
+      text-transform: capitalize;
     }
 
     .year {
       font-weight: 600;
       margin-bottom: 5px;
+      float: right;
     }
   }
 

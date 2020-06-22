@@ -1,7 +1,7 @@
 <template>
   <section id="experience" class="my-cv position">
     <Title :title="jobtitle" :description="jobdescription" />
-    <AnimateWhenVisible name="fadeUp" :duration="1.5" class="section-content">
+    <AnimateWhenVisible name="fadeUp" class="section-content">
       <div class="container-fluid">
         <div class="row">
           <ExperienceGroup :posts="posts" class="col-12 col-md" icon="icon-briefcase"

@@ -6,7 +6,7 @@
     <div v-if="post.meta" class="info"><strong>Skype:</strong> {{ post.meta.skype }}</div>
     <div v-if="post.meta" class="info"><strong>Phone Number:</strong> {{ post.meta.phone }}</div>
     <div v-if="post.meta" class="info"><strong>City:</strong> {{ post.meta.city }}</div>
-    <div class="info"><strong>Experience:</strong> {{experience}} years</div>
+    <div class="info"><strong>Experience:</strong> {{experience}}</div>
     <Social/>
     <a target="_blank" v-bind:href="resume">Download Resume</a>
   </div>

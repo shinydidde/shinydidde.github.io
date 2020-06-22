@@ -74,6 +74,7 @@ $text-nav-bar: map-get($colors, light) !default;
     margin-top: 120px;
     text-align: center;
     padding: 0;
+    list-style: none;
   }
 
   li {

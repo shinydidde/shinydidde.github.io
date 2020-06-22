@@ -10,7 +10,7 @@
       <Experience/>
       <Skills/>
       <Portfolio/>
-      <!-- <Education/> -->
+      <Education/>
       <Footer/>
     </div>
 
@@ -26,7 +26,7 @@ import AboutMe from './components/AboutMe'
 import Experience from './components/Experience'
 import Portfolio from './components/Portfolio'
 import Skills from './components/Skills'
-// import Education from './components/Education'
+import Education from './components/Education'
 import Footer from './components/Footer'
 
 
@@ -38,7 +38,7 @@ export default {
     Experience,
     Portfolio,
     Skills,
-    // Education,
+    Education,
     Footer,
   },
   data: () => ({
