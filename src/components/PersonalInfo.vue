@@ -8,7 +8,7 @@
     <div v-if="post.meta" class="info"><strong>City:</strong> {{ post.meta.city }}</div>
     <div class="info"><strong>Experience:</strong> {{experience}}</div>
     <Social/>
-    <a target="_blank" v-bind:href="resume">Download Resume</a>
+    <a class="download" target="_blank" v-bind:href="resume">Download Resume</a>
   </div>
 </template>
 
