@@ -3,8 +3,8 @@
     <Title :title="sectitle" :description="secdescription"/>
 
     <div class="section-content">
-      <transition-group name="filter" tag="div" class="row justify-content-center">
-        <div class="col-md-4 portfolio-item" v-for="post in posts" :key="post.url">
+      <transition-group name="filter" tag="div" class="portfolio row justify-content-center">
+        <div class="col-md-3 portfolio-item" v-for="post in posts" :key="post.url">
           <img :src="post.img" alt="Alt"/>
           <div class="portfolio-link">
             <a :href="post.url" class="popup_content" target="_blank">See</a>
@@ -134,6 +134,21 @@ export default {
 
       &:hover {
         color: lighten($btn, 30%);
+      }
+    }
+  }
+
+  .portfolio{
+    @media (max-width: 768px) {
+          padding: 0px 20px;
+          .portfolio-link {
+            left: 0;
+          }
+      .portfolio-item{
+        padding: 0;
+        img {
+          width: 100%;
+        }
       }
     }
   }

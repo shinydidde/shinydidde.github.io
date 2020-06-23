@@ -55,6 +55,9 @@ export default {
 img{
     margin-bottom: 40px;
     width: 65px;
+    @media (max-width: 768px) {
+      width: 70%;
+    }
 }
 .ver-ailgn{
   margin-top: auto;

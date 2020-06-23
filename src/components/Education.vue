@@ -2,7 +2,7 @@
   <section id="experience" class="my-cv position">
     <Title title="Education" description="" />
     <AnimateWhenVisible name="fadeUp" :duration="1.5" class="section-content">
-        <div class="row container">
+        <div class="row education">
             <div class="col-md-4 resume-item" v-for="post in posts" :key="post.title">
                 <div class="year">{{ post.year }}</div>
                 <div class="resume-description" v-html="post.title"></div>
@@ -48,6 +48,11 @@ export default {
 
 <style scoped lang="scss">
   @import '@/styles/variables.scss';
+  .education{
+    @media (max-width: 768px) {
+      padding: 0px 20px;
+    }
+  }
  .resume-item {
     text-align: left;
     border: 1px solid whitesmoke;
