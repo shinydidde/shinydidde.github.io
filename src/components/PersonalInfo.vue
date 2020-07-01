@@ -33,6 +33,9 @@ $btn: map-get($colors, secondary) !default;
 
 .info {
   margin-bottom: 10px;
+  span a{
+    color: black;
+  }
 }
 
  a {

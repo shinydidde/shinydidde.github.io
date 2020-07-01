@@ -40,7 +40,7 @@ ul {
 }
 
 a {
-  color: map-get($colors, secondary);
+  color: gray;
 
   &:hover {
     color: map-get($colors, dark);
