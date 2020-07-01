@@ -2,10 +2,13 @@
   <div>
     <h3>PERSONAL INFORMATION</h3>
     <!-- <h3 class="personal-header">{{ userName }}</h3> -->
-    <div v-if="post.meta" class="info email"><strong>E-mail:</strong> {{ post.meta.email }}</div>
-    <div v-if="post.meta" class="info"><strong>Skype:</strong> {{ post.meta.skype }}</div>
-    <div v-if="post.meta" class="info"><strong>Phone Number:</strong> {{ post.meta.phone }}</div>
-    <div v-if="post.meta" class="info"><strong>City:</strong> {{ post.meta.city }}</div>
+    <div v-if="post.meta" class="info email"><strong>E-mail : </strong>
+    <span v-html="post.meta.email"></span></div>
+    <div v-if="post.meta" class="info"><strong>Skype : </strong>
+    <span v-html="post.meta.skype"></span></div>
+    <div v-if="post.meta" class="info"><strong>Phone Number : </strong>
+    <span v-html="post.meta.phone"></span></div>
+    <div v-if="post.meta" class="info"><strong>City :</strong> {{ post.meta.city }}</div>
     <div class="info"><strong>Experience:</strong> {{experience}}</div>
     <Social/>
     <a class="download" target="_blank" v-bind:href="resume">Download Resume</a>
