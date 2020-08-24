@@ -4,10 +4,16 @@
     <transition name="fade">
       <nav class="nav-bar" v-if="isMenuVisible" @click="scrolling">
         <ul @click="isMenuVisible = !isMenuVisible">
-          <li><AnimateWhenVisible name="fadeUp"><a href="#about">About Me<span></span></a></AnimateWhenVisible></li>
-          <li><AnimateWhenVisible name="fadeUp" :duration="1.3"><a href="#experience">Experience<span></span></a></AnimateWhenVisible></li>
-          <li><AnimateWhenVisible name="fadeUp" :duration="1.6"><a href="#portfolio">Portfolio<span></span></a></AnimateWhenVisible></li>
-          <!-- <li><AnimateWhenVisible name="fadeUp" :duration="1.8"><a href="#contact">Contact<span></span></a></AnimateWhenVisible></li> -->
+          <li><AnimateWhenVisible name="fadeUp"><a href="#about">About Me<span>
+            </span></a></AnimateWhenVisible></li>
+          <li><AnimateWhenVisible name="fadeUp" :duration="1.3"><a href="#experience">Experience
+            <span></span></a></AnimateWhenVisible></li>
+          <li><AnimateWhenVisible name="fadeUp" :duration="1.6"><a href="#skills">Skills<span>
+            </span></a></AnimateWhenVisible></li>
+          <li><AnimateWhenVisible name="fadeUp" :duration="1.8"><a href="#portfolio">Portfolio<span>
+            </span></a></AnimateWhenVisible></li>
+          <li><AnimateWhenVisible name="fadeUp" :duration="2.0"><a href="#education">Education<span>
+            </span></a></AnimateWhenVisible></li>
         </ul>
       </nav>
     </transition>
@@ -34,7 +40,7 @@ export default {
       if (this.animation) {
         this.animation.cancel()
       }
-
+/* eslint-disable */
       const href = event.target.getAttribute('href')
       const scrollToEl = document.querySelector(href)
       const pageY = window.pageYOffset

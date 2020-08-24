@@ -1,5 +1,5 @@
 <template>
-  <section id="contact" class="position">
+  <section id="skills" class="position">
     <Title :title="sectitle" :description="secdescription"/>
     <div class="section-content container">
       <div class="row">

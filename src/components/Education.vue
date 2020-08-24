@@ -1,6 +1,6 @@
 <template>
-  <section id="experience" class="my-cv position">
-    <Title title="Education" description="" />
+  <section id="education" class="my-cv position">
+    <Title title="Education" description="Studied" />
     <AnimateWhenVisible name="fadeUp" :duration="1.5" class="section-content">
         <div class="row education">
             <div class="col-md-4 resume-item" v-for="post in posts" :key="post.title">
