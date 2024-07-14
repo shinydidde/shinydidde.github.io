@@ -13,7 +13,7 @@
 export default {
   name: 'ExperienceGroup',
   props: ['icon', 'posts', 'title', 'animate', 'duration', 'delay'],
-}
+};
 </script>
 
 <style scoped lang="scss">

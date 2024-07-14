@@ -1,31 +1,32 @@
 export function group(items, field = 'slug') {
   return items.reduce((acc, item) => {
-    acc[item[field]] = item
+    acc[item[field]] = item;
 
-    return acc
-  }, {})
+    return acc;
+  }, {});
 }
 
 window.requestAnimationFrame = window.requestAnimationFrame ||
   window.mozRequestAnimationFrame ||
   window.webkitRequestAnimationFrame ||
   window.msRequestAnimationFrame ||
-  (fn => setTimeout(fn, 16))
+  (fn => setTimeout(fn, 16));
 window.cancelAnimationFrame = window.cancelAnimationFrame ||
   window.mozCancelAnimationFrame ||
-  clearTimeout
+  clearTimeout;
 
 export function animate(options) {
-  const start = typeof performance === 'undefined' ? Date.now() : performance.now()
-  let animationId
-  const animation = { cancel: () => animationId && cancelAnimationFrame(animationId) }
+  const start = typeof performance === 'undefined' ? Date.now() : performance.now();
+  let animationId;
+  const animation = { cancel: () => animationId && cancelAnimationFrame(animationId) };
 
+  // eslint-disable-next-line no-shadow
   animationId = requestAnimationFrame(function animate(time) {
-    const currentTime = time || Date.now()
+    const currentTime = time || Date.now();
     let timeFraction = (currentTime - start) / options.duration;
 
     if (timeFraction > 1) {
-      timeFraction = 1
+      timeFraction = 1;
     }
 
     options.draw(options.easing(timeFraction));
@@ -33,9 +34,9 @@ export function animate(options) {
     if (timeFraction < 1) {
       animationId = requestAnimationFrame(animate);
     } else {
-      options.done()
+      options.done();
     }
   });
 
-  return animation
+  return animation;
 }

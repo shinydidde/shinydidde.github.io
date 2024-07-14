@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Title from './Title'
-import ExperienceGroup from './ExperienceGroup'
+import Title from './Title.vue';
+import ExperienceGroup from './ExperienceGroup.vue';
 import { db } from '../main';
 
 export default {
@@ -48,7 +48,7 @@ export default {
         });
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

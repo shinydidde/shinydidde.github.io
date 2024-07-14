@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import { group } from '../utils'
-import Social from './Social'
+import { group } from '../utils';
+import Social from './Social.vue';
 
 export default {
   name: 'Footer',
@@ -17,10 +17,10 @@ export default {
   },
   computed: {
     groupedPosts() {
-      return group(this.posts)
+      return group(this.posts);
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

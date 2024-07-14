@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import BtnMenu from './BtnMenu'
-import { animate } from '../utils'
+import BtnMenu from './BtnMenu.vue';
+import { animate } from '../utils';
 
 export default {
   name: 'AppMenu',
@@ -35,10 +35,10 @@ export default {
   }),
   methods: {
     scrolling(event) {
-      event.preventDefault()
+      event.preventDefault();
 
       if (this.animation) {
-        this.animation.cancel()
+        this.animation.cancel();
       }
 /* eslint-disable */
       const href = event.target.getAttribute('href')

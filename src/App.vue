@@ -21,13 +21,13 @@
 </template>
 
 <script>
-import AppMenu from './components/AppMenu'
-import AboutMe from './components/AboutMe'
-import Experience from './components/Experience'
-import Portfolio from './components/Portfolio'
-import Skills from './components/Skills'
-import Education from './components/Education'
-import Footer from './components/Footer'
+import AppMenu from './components/AppMenu.vue';
+import AboutMe from './components/AboutMe.vue';
+import Experience from './components/Experience.vue';
+import Portfolio from './components/Portfolio.vue';
+import Skills from './components/Skills.vue';
+import Education from './components/Education.vue';
+import Footer from './components/Footer.vue';
 
 
 export default {
@@ -46,11 +46,11 @@ export default {
   }),
 
   created() {
-    document.body.classList.add('loading')
-    this.isLoaded = true
-    this.$nextTick(() => document.body.classList.remove('loading'))
+    document.body.classList.add('loading');
+    this.isLoaded = true;
+    this.$nextTick(() => document.body.classList.remove('loading'));
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

@@ -12,9 +12,9 @@
 </template>
 
 <script>
-import Title from './Title'
-import PersonalInfo from './PersonalInfo'
-import { db } from '../main'
+import Title from './Title';
+import PersonalInfo from './PersonalInfo';
+import { db } from '../main';
 
 export default {
   name: 'Skills',
@@ -44,7 +44,7 @@ export default {
         });
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

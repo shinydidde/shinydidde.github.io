@@ -33,25 +33,25 @@ export default {
   }),
   methods: {
     inViewport() {
-      const rect = this.$el.getBoundingClientRect()
+      const rect = this.$el.getBoundingClientRect();
 
-      return rect.top <= (window.innerHeight - this.offsetTop) && rect.left <= window.innerWidth
+      return rect.top <= (window.innerHeight - this.offsetTop) && rect.left <= window.innerWidth;
     },
 
     detectVisibility() {
-      this.isVisible = this.inViewport()
+      this.isVisible = this.inViewport();
     },
   },
   mounted() {
-    this.$nextTick(this.detectVisibility)
-    window.addEventListener('scroll', this.detectVisibility, isPassiveSupported ? { passive: true } : false)
-    window.addEventListener('resize', this.detectVisibility, isPassiveSupported ? { passive: true } : false)
-    window.addEventListener('orientationchange', this.detectVisibility, isPassiveSupported ? { passive: true } : false)
+    this.$nextTick(this.detectVisibility);
+    window.addEventListener('scroll', this.detectVisibility, isPassiveSupported ? { passive: true } : false);
+    window.addEventListener('resize', this.detectVisibility, isPassiveSupported ? { passive: true } : false);
+    window.addEventListener('orientationchange', this.detectVisibility, isPassiveSupported ? { passive: true } : false);
   },
   destroyed() {
-    window.removeEventListener('scroll', this.detectVisibility)
-    window.removeEventListener('resize', this.detectVisibility)
-    window.removeEventListener('orientationchange', this.detectVisibility)
+    window.removeEventListener('scroll', this.detectVisibility);
+    window.removeEventListener('resize', this.detectVisibility);
+    window.removeEventListener('orientationchange', this.detectVisibility);
   },
-}
+};
 </script>

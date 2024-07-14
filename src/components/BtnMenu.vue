@@ -12,7 +12,7 @@
 export default {
   name: 'BtnMenu',
   props: ['active'],
-}
+};
 </script>
 
 <style scoped lang="scss">

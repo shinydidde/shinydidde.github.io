@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import Social from './Social';
+import Social from './Social.vue';
 
 export default {
   name: 'PersonalInfo',
@@ -24,7 +24,7 @@ export default {
   components: {
     Social,
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

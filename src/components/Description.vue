@@ -9,7 +9,7 @@
 export default {
   name: 'Description',
   props: ['post'],
-}
+};
 </script>
 
 <style scoped lang="scss">

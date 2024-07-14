@@ -16,7 +16,7 @@ export default {
     'title',
     'description',
   ],
-}
+};
 </script>
 
 <style scoped lang="scss">

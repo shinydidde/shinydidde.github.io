@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Title from './Title'
+import Title from './Title';
 import { db } from '../main';
 
 export default {
@@ -50,7 +50,7 @@ export default {
         });
     },
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import ModalView from './ModalView'
+import ModalView from './ModalView.vue';
 
 export default {
   name: 'Photo',
@@ -26,7 +26,7 @@ export default {
   data: () => ({
     isModalVisible: false,
   }),
-}
+};
 </script>
 
 <style scoped lang="scss">
