@@ -10,25 +10,54 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout code
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
+      # 1. Manually check out your repo (no actions/checkout)
+      - name: Checkout code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git init
+          git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git fetch --depth=1 origin master
+          git checkout -f FETCH_HEAD
 
-      - name: use Node.js v14
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14.17.3'   # ← your exact version
+      # 2. Install Node.js v14.17.3 via NodeSource (no setup-node action)
+      - name: Install Node.js v14.x
+        run: |
+          curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+          node --version
 
-      - name: install dependencies
-        run: npm ci
+      # 3. Install dependencies & build
+      - name: npm ci & build
+        run: |
+          npm ci
+          npm run build
 
-      - name: build
-        run: npm run build
+      # 4. Publish to gh-pages by git commands (no peaceiris/actions-gh-pages)
+      - name: Deploy to gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # configure git user
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
 
-      - name: deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
+          # add remote for pushing
+          git remote add deploy https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+
+          # fetch existing gh-pages branch (if any)
+          git fetch deploy gh-pages:gh-pages || echo "no existing gh-pages"
+
+          # prepare worktree
+          if [ -d out ]; then rm -rf out; fi
+          git worktree add out gh-pages
+
+          # copy built assets
+          rm -rf out/*
+          cp -r dist/* out/
+
+          # commit & push
+          cd out
+          git add --all
+          git diff-index --quiet HEAD || git commit -m "Deploy from ${{ github.sha }}"
+          git push deploy HEAD:gh-pages
