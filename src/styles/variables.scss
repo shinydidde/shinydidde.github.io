@@ -1,15 +1,71 @@
+// src/styles/variables.scss
+
+// Fonts
+$font-primary: 'Poppins', sans-serif;
+$font-secondary: 'Montserrat', sans-serif;
+
+// Colors
 $colors: (
-  primary: gray,
-  secondary: darkgray,
-  light: #fff,
-  dark: #222,
-  error: #ff2818,
+  primary: #6e45e2,
+  primary-dark: #4a2bb8,
+  primary-light: #8a6eff,
+  secondary: #ff7b25,
+  secondary-dark: #e05a00,
+  secondary-light: #ff9d5c,
+  accent: #00d4ff,
+  text-dark: #2d3436,
+  text-light: #f5f6fa,
+  background: #1e1e2e,
+  card-bg: rgba(255, 255, 255, 0.05)
 );
 
+// Direct color variables for easier access
+$text-color: map-get($colors, text-light);
+$text-color-dark: map-get($colors, text-dark);
+$primary-color: map-get($colors, primary);
+$secondary-color: map-get($colors, secondary);
+$accent-color: map-get($colors, accent);
+
+// Transitions
+$transitions: (
+  fast: 0.15s,
+  normal: 0.3s,
+  slow: 0.5s
+);
+
+// Breakpoints
 $breakpoints: (
-  small: 767px,
-  medium: 992px,
-  large: 1200px,
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
 );
 
-$text-color: map-get($colors, dark);
+// Spacing
+$spacing: (
+  xs: 0.5rem,
+  sm: 1rem,
+  md: 1.5rem,
+  lg: 2rem,
+  xl: 3rem,
+  xxl: 4rem
+);
+
+// Shadows
+$shadows: (
+  sm: 0 2px 4px rgba(0, 0, 0, 0.1),
+  md: 0 4px 8px rgba(0, 0, 0, 0.15),
+  lg: 0 8px 16px rgba(0, 0, 0, 0.2),
+  xl: 0 15px 30px rgba(0, 0, 0, 0.25)
+);
+
+// Border radius
+$radius: (
+  sm: 4px,
+  md: 8px,
+  lg: 12px,
+  pill: 50px,
+  circle: 50%
+);

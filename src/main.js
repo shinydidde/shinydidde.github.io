@@ -1,28 +1,21 @@
-import Vue from 'vue';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import { firestorePlugin } from 'vuefire';
-import VueMoment from 'vue-moment';
-import App from './App.vue';
-import AnimateWhenVisible from './components/AnimateWhenVisible.vue';
-import addPolyfills from './polyfills';
-import './directives/validity';
-import './styles/app.scss';
+// src/main.js
+import Vue from 'vue'
+import { firestorePlugin } from 'vuefire'
+import VueMoment from 'vue-moment'
+import App from './App.vue'
+import router from './router'
+import addPolyfills from './polyfills'
+import './directives/validity'
+import '@/styles/app.scss'
 
-Vue.use(firestorePlugin, VueMoment);
-firebase.initializeApp({
-  projectId: 'portfolio-4ad8b',
-  databaseURL: 'https://portfolio-4ad8b.firebaseio.com',
-});
-/* eslint-disable import/prefer-default-export */
-export const db = firebase.firestore();
-
-Vue.component('AnimateWhenVisible', AnimateWhenVisible);
-Vue.config.productionTip = false;
+Vue.use(firestorePlugin)
+Vue.use(VueMoment)
+Vue.config.productionTip = false
 
 addPolyfills().then(() => {
-  new Vue({ // eslint-disable-line no-new
+  new Vue({
     el: '#app',
+    router,
     render: h => h(App),
-  });
-});
+  })
+})

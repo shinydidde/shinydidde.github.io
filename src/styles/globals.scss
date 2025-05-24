@@ -1,54 +1,31 @@
-@import './variables';
+// src/styles/globals.scss
+@import 'variables';
 
-body,
-html {
-  height: 100%;
-  font-size: 10px;
-}
+// Font imports (add these to your index.html or use @import in CSS)
+// <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
 body {
-  font-family: 'Raleway', sans-serif;
-  font-size: 14px;
-  min-width: 320px;
-  position: relative;
-  line-height: 1.4;
-  font-weight: normal;
-  color: lighten($text-color, 30%);
-
-  &.loading {
-    overflow: scroll;
-  }
-}
-
-
-section {
-  padding: 50px 0;
-  overflow: hidden;
-
-  h3 {
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 30px;
-  }
-}
-
-ul {
   margin: 0;
   padding: 0;
-  // list-style-type: none;
-  margin-left: 20px;
+  font-family: $font-primary;
+  color: $text-color;
+  background-color: map-get($colors, background);
+  line-height: 1.6;
 }
 
 a {
-  color: gray;
+  color: $accent-color;
+  text-decoration: none;
+  transition: color map-get($transitions, normal) ease;
 
   &:hover {
-    color: map-get($colors, dark);
-    text-decoration: none;
+    color: lighten($accent-color, 10%);
   }
 }
 
-li {
-  margin-bottom: 10px;
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-primary;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 0;
 }
-

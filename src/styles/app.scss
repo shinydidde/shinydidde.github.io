@@ -1,7 +1,10 @@
-@import '~bootstrap/scss/bootstrap-grid';
-@import '~bootstrap/scss/bootstrap-reboot';
-@import './animation';
-@import './fontello';
-@import './globals';
-@import './fonts';
+// src/styles/app.scss
+@import 'variables';
+@import 'globals';
+@import 'transitions';
+@import 'animations';
 
+// Import component styles if you have them
+// @import '../components/HeaderBar/HeaderBar.scss';
+// @import '../components/AboutSection/AboutSection.scss';
+// etc...
