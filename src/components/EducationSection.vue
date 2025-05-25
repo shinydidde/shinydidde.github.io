@@ -4,7 +4,11 @@
       <p class="section-subtitle">{{ data.description }}</p>
 
       <div class="education-grid">
-        <div class="education-card" v-for="(item, index) in data.education" :key="index">
+        <div
+          class="education-card"
+          v-for="(item, index) in data.education"
+          :key="index"
+        >
           <div class="education-header">
             <h3 class="education-degree" v-html="item.title"></h3>
             <div class="education-year">{{ item.year }}</div>
@@ -21,9 +25,9 @@
     props: {
       data: {
         type: Object,
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   }
   </script>
 
@@ -32,13 +36,13 @@
     background: white;
     padding: 2.5rem;
     border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .education-section:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
   }
 
   .section-title {
@@ -69,8 +73,8 @@
 
   .education-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
     margin-top: 1.5rem;
   }
 
@@ -78,12 +82,12 @@
     background: #f9fafb;
     padding: 1.5rem;
     border-radius: 12px;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
   }
 
   .education-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     background: white;
   }
 
@@ -121,13 +125,34 @@
     font-size: 0.9rem;
   }
 
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .education-section {
+      padding: 2rem;
+    }
+    .section-title {
+      font-size: 1.6rem;
+    }
+    .education-degree {
+      font-size: 1.1rem;
+    }
+  }
+
   @media (max-width: 768px) {
     .education-section {
       padding: 1.5rem;
     }
-
     .education-grid {
       grid-template-columns: 1fr;
+    }
+    .section-title {
+      font-size: 1.4rem;
+    }
+    .section-subtitle {
+      font-size: 1rem;
+    }
+    .education-degree {
+      font-size: 1rem;
     }
   }
   </style>

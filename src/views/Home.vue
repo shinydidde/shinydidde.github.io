@@ -1,18 +1,19 @@
 <template>
-  <div class="resume-page">
-    <!-- Floating particles background -->
-    <div class="particles">
-      <div v-for="i in 30" :key="i" class="particle" :style="particleStyle(i)"></div>
+  <div class="portfolio-container">
+    <!-- Animated background elements -->
+    <div class="background-elements">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
     </div>
 
-    <!-- Colorful gradient circles -->
-    <div class="gradient-circle circle-1"></div>
-    <div class="gradient-circle circle-2"></div>
-    <div class="gradient-circle circle-3"></div>
+    <!-- Floating grid pattern -->
+    <div class="grid-pattern"></div>
 
+    <!-- Main content sections -->
     <HeaderBar :personalInfo="personalInfo" />
 
-    <main>
+    <main class="portfolio-content">
       <AboutSection :personalInfo="personalInfo" />
       <ExperienceSection :data="experienceData" />
       <SkillsSection :data="skillsData" />
@@ -54,8 +55,7 @@ export default {
       experienceData: {},
       skillsData: {},
       projectsData: {},
-      educationData: {},
-      particleCount: 30
+      educationData: {}
     }
   },
   async created() {
@@ -83,153 +83,103 @@ export default {
     } catch (e) {
       console.error('Data load failed:', e)
     }
-  },
-  methods: {
-    particleStyle(i) {
-      const size = Math.random() * 5 + 3
-      const duration = Math.random() * 20 + 10
-      const delay = Math.random() * 5
-      const x = Math.random() * 100
-      const y = Math.random() * 100
-      const opacity = Math.random() * 0.5 + 0.1
-      const color = `hsl(${Math.random() * 60 + 200}, 70%, 60%)`
-
-      return {
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${x}%`,
-        top: `${y}%`,
-        backgroundColor: color,
-        opacity: opacity,
-        animation: `float ${duration}s ease-in-out ${delay}s infinite`
-      }
-    }
   }
 }
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-:root {
-  --primary: #6366f1;
-  --primary-light: #8183f4;
-  --secondary: #10b981;
-  --secondary-light: #34d399;
-  --accent: #f59e0b;
-  --accent-light: #fbbf24;
-  --bg-blur: rgba(255,255,255,0.95);
-  --text-color: #2d3748;
-  --text-light: #6b7280;
-}
-
-.resume-page {
+.portfolio-container {
   position: relative;
-  font-family: 'Poppins', sans-serif;
-  color: var(--text-color);
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  overflow-x: hidden;
   min-height: 100vh;
+  background-color: #f9f9f9;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Particles background */
-.particles {
+.background-elements {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
 }
 
-.particle {
+.circle {
   position: absolute;
   border-radius: 50%;
-  z-index: -1;
-}
-
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(20px, 20px) rotate(45deg); }
-  50% { transform: translate(0, 40px) rotate(90deg); }
-  75% { transform: translate(-20px, 20px) rotate(135deg); }
-}
-
-/* Gradient circles */
-.gradient-circle {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.2;
-  z-index: -1;
-  animation: pulse 15s ease-in-out infinite alternate;
+  filter: blur(60px);
+  opacity: 0.15;
+  z-index: 0;
+  animation: float 15s ease-in-out infinite alternate;
 }
 
 .circle-1 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, var(--primary-light), transparent 70%);
-  top: -150px;
-  right: -150px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #6366f1, transparent 70%);
+  top: 20%;
+  right: 10%;
   animation-delay: 0s;
 }
 
 .circle-2 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, var(--secondary-light), transparent 70%);
-  bottom: -100px;
-  left: -100px;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #10b981, transparent 70%);
+  bottom: 15%;
+  left: 10%;
   animation-delay: 3s;
 }
 
 .circle-3 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, var(--accent-light), transparent 70%);
-  top: 40%;
-  left: -120px;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #f59e0b, transparent 70%);
+  top: 60%;
+  left: 30%;
   animation-delay: 6s;
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 0.2; }
-  50% { transform: scale(1.1); opacity: 0.3; }
+.grid-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background-image:
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px); */
+  background-size: 40px 40px;
+  z-index: 0;
+  pointer-events: none;
 }
 
-main > * {
-  margin: 4rem 0;
+.portfolio-content {
   position: relative;
   z-index: 1;
-  background: var(--bg-blur);
-  padding: 2.5rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  backdrop-filter: blur(10px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
 }
 
-main > *:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, 20px) scale(1.05); }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .resume-page {
+  .portfolio-content {
     padding: 1rem;
+    gap: 2rem;
   }
 
-  .gradient-circle {
+  .circle {
     display: none;
-  }
-
-  main > * {
-    margin: 2.5rem 0;
-    padding: 1.5rem;
   }
 }
 </style>
