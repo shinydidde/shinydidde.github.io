@@ -35,19 +35,28 @@ jobs:
           npm ci
           npm run build
 
-      - name: Deploy to gh-pages
+            - name: Deploy to gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # 1. Setup git user & remote
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git remote add deploy https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-          git fetch deploy gh-pages:gh-pages || echo "no existing gh-pages"
+
+          # 2. Fetch gh-pages into a new local branch "deploy"
+          git fetch deploy gh-pages:deploy
+
+          # 3. Create (or reset) the worktree for "deploy"
           rm -rf out || true
-          git worktree add out gh-pages
+          git worktree add out deploy
+
+          # 4. Copy your freshly built files
           rm -rf out/*
           cp -r dist/* out/
+
+          # 5. Commit & push from that worktree
           cd out
           git add -A
           git diff-index --quiet HEAD || git commit -m "Deploy from ${{ github.sha }}"
-          git push deploy HEAD:gh-pages
+          git push deploy deploy:gh-pages
