@@ -2,15 +2,13 @@ name: Build & Deploy to gh-pages
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code (no actions/checkout)
       - name: Checkout code
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,21 +18,20 @@ jobs:
           git fetch --depth=1 origin master
           git checkout -f FETCH_HEAD
 
-      # 2. Install Node.js v14.17.3 from official binary
-      - name: Install Node.js v14.17.3
+      - name: Install Node.js v14.17.3 locally
         run: |
           curl -fsSLO https://nodejs.org/dist/v14.17.3/node-v14.17.3-linux-x64.tar.xz
-          sudo tar -C /usr/local --strip-components 1 -xf node-v14.17.3-linux-x64.tar.xz
+          tar -xf node-v14.17.3-linux-x64.tar.xz
+          mv node-v14.17.3-linux-x64 node
+          echo "$PWD/node/bin" >> $GITHUB_PATH
           node --version
           npm --version
 
-      # 3. Install dependencies & build
       - name: npm ci & build
         run: |
           npm ci
           npm run build
 
-      # 4. Deploy to gh-pages via plain git
       - name: Deploy to gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
