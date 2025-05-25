@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Manually check out your repo (no actions/checkout)
+      # 1. Checkout code (no actions/checkout)
       - name: Checkout code
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -20,12 +20,13 @@ jobs:
           git fetch --depth=1 origin master
           git checkout -f FETCH_HEAD
 
-      # 2. Install Node.js v14.17.3 via NodeSource (no setup-node action)
-      - name: Install Node.js v14.x
+      # 2. Install Node.js v14.17.3 from official binary
+      - name: Install Node.js v14.17.3
         run: |
-          curl -fsSL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-          sudo apt-get install -y nodejs
+          curl -fsSLO https://nodejs.org/dist/v14.17.3/node-v14.17.3-linux-x64.tar.xz
+          sudo tar -C /usr/local --strip-components 1 -xf node-v14.17.3-linux-x64.tar.xz
           node --version
+          npm --version
 
       # 3. Install dependencies & build
       - name: npm ci & build
@@ -33,31 +34,20 @@ jobs:
           npm ci
           npm run build
 
-      # 4. Publish to gh-pages by git commands (no peaceiris/actions-gh-pages)
+      # 4. Deploy to gh-pages via plain git
       - name: Deploy to gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # configure git user
           git config user.name "${{ github.actor }}"
           git config user.email "${{ github.actor }}@users.noreply.github.com"
-
-          # add remote for pushing
           git remote add deploy https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-
-          # fetch existing gh-pages branch (if any)
           git fetch deploy gh-pages:gh-pages || echo "no existing gh-pages"
-
-          # prepare worktree
-          if [ -d out ]; then rm -rf out; fi
+          rm -rf out || true
           git worktree add out gh-pages
-
-          # copy built assets
           rm -rf out/*
           cp -r dist/* out/
-
-          # commit & push
           cd out
-          git add --all
+          git add -A
           git diff-index --quiet HEAD || git commit -m "Deploy from ${{ github.sha }}"
           git push deploy HEAD:gh-pages
