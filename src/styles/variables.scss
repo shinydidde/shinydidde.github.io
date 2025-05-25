@@ -13,6 +13,12 @@ $colors: (
   secondary-dark: #e05a00,
   secondary-light: #ff9d5c,
   accent: #00d4ff,
+  accent-dark: #00a5cc,
+  accent-light: #5fe2ff,
+  dark: #1e1e2e,
+  darker: #141420,
+  light: #f8fafc,
+  lighter: #ffffff,
   text-dark: #2d3436,
   text-light: #f5f6fa,
   background: #1e1e2e,
@@ -58,7 +64,8 @@ $shadows: (
   sm: 0 2px 4px rgba(0, 0, 0, 0.1),
   md: 0 4px 8px rgba(0, 0, 0, 0.15),
   lg: 0 8px 16px rgba(0, 0, 0, 0.2),
-  xl: 0 15px 30px rgba(0, 0, 0, 0.25)
+  xl: 0 15px 30px rgba(0, 0, 0, 0.25),
+  glow: 0 0 15px 0 rgba(110, 69, 226, 0.5)
 );
 
 // Border radius
@@ -66,6 +73,17 @@ $radius: (
   sm: 4px,
   md: 8px,
   lg: 12px,
+  xl: 16px,
   pill: 50px,
   circle: 50%
+);
+
+// Z-index
+$z-index: (
+  base: 1,
+  header: 10,
+  footer: 10,
+  modal: 100,
+  tooltip: 200,
+  overlay: 300
 );
