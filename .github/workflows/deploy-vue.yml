@@ -1,4 +1,4 @@
-name: Build & Deploy to gh-pages
+name: Build & Deploy to master
 
 on:
   push:
@@ -9,17 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout your source-code on main
+      # 1) Check out your source from main
       - name: Checkout source
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           rm -rf ./*
           git clone --depth=1 \
             --branch main \
-            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} ./
+            https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} ./
 
-      # 2️⃣ Install Node.js v14.17.3 locally
+      # 2) Install Node.js v14.17.3 locally
       - name: Install Node.js v14.17.3
         run: |
           curl -fsSLO https://nodejs.org/dist/v14.17.3/node-v14.17.3-linux-x64.tar.xz
@@ -27,34 +25,34 @@ jobs:
           mv node-v14.17.3-linux-x64 node
           echo "$PWD/node/bin" >> $GITHUB_PATH
 
-      # 3️⃣ Build your Vue app
+      # 3) Build your Vue app
       - name: npm ci & build
         run: |
           npm ci
           npm run build
 
-      # 4️⃣ Deploy the compiled `dist/` to gh-pages
-      - name: Deploy to gh-pages
+      # 4) Deploy the compiled dist/ to master
+      - name: Deploy to master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # ⏺️ Ensure git knows who we are for commits
+          # → ensure git can commit
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-          # clone (or init) the gh-pages branch into site/
+          # → clone master into `site/` (or init if it doesn’t exist)
           rm -rf site
           git clone --depth=1 \
-            --branch gh-pages \
+            --branch master \
             https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site || \
-          ( git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site && cd site && git checkout --orphan gh-pages )
+          ( git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site && cd site && git checkout --orphan master )
 
-          # overwrite existing content
+          # → replace everything with your fresh build
           rm -rf site/*
           cp -r dist/* site/
 
-          # commit & force-push back to gh-pages
+          # → commit & force-push back to master
           cd site
           git add --all
-          git commit -m "Deploy from ${{ github.sha }}" --allow-empty
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:gh-pages --force
+          git commit -m "Deploy from main @ ${{ github.sha }}" --allow-empty
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:master --force
