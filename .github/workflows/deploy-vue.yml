@@ -38,21 +38,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          # ⏺️ Ensure git knows who we are for commits
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-          # clone an empty gh-pages branch (or existing one)
+          # clone (or init) the gh-pages branch into site/
           rm -rf site
           git clone --depth=1 \
             --branch gh-pages \
             https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site || \
           ( git clone https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site && cd site && git checkout --orphan gh-pages )
 
-          # overwrite it with your dist/
+          # overwrite existing content
           rm -rf site/*
           cp -r dist/* site/
 
-          # commit & force-push
+          # commit & force-push back to gh-pages
           cd site
           git add --all
           git commit -m "Deploy from ${{ github.sha }}" --allow-empty
