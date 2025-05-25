@@ -10,12 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout code from gh-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           rm -rf ./*
-          git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git .
+          git clone --depth=1 \
+            --branch gh-pages \
+            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git .
           ls -lah
 
       - name: Install Node.js v14.17.3 locally
