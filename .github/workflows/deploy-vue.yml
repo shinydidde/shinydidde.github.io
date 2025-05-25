@@ -2,7 +2,8 @@ name: Build & Deploy to gh-pages
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build-and-deploy:
@@ -13,10 +14,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git init
-          git remote add origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-          git fetch --depth=1 origin master
-          git checkout -f FETCH_HEAD
+          rm -rf ./*
+          git clone --depth=1 https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git .
+          ls -lah
 
       - name: Install Node.js v14.17.3 locally
         run: |
