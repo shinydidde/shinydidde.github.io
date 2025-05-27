@@ -3,7 +3,7 @@
       <!-- logo -->
       <div class="footer-logo-wrapper">
         <img
-          src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/photo.png?alt=media&token=97d9bfc8-16ee-4c8e-b94a-bb3edb51a430"
+          src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logo.png?alt=media&token=30410bf1-5ad2-4e39-9aeb-646d914dfbaf"
           alt="Logo"
           class="footer-logo"
         />
