@@ -24,31 +24,28 @@ jobs:
       - name: Install dependencies & build
         run: |
           npm ci
-          npm run build    # build now also exports static into `out/`
+          npm run build    # your next.config.js -> output: export writes to `out/`
 
       - name: Deploy to master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config user.name "${{ github.actor }}"
-          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          # ensure git has your identity globally so commits inside 'site/' pick it up
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-          # Clone the master branch (your GitHub Pages site) into `site`
+          # prepare the gh-pages (master) branch checkout
           rm -rf site
           git clone --depth=1 \
             --branch master \
             https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site
 
-          # Wipe out old files
+          # replace its contents with your freshly exported static files
           rm -rf site/*
-
-          # Copy the freshly exported static files
           cp -r out/* site/
 
+          # commit & push
           cd site
           git add --all
-
-          # Only commit if there are changes
           git diff-index --quiet HEAD || git commit -m "Deploy from main @ ${{ github.sha }}"
-
           git push --force https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:master
