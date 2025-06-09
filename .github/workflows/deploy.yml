@@ -1,0 +1,55 @@
+# .github/workflows/build-and-deploy.yml
+name: Build & Deploy User Page
+
+on:
+  push:
+    branches:
+      - main   # your source branch
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js v18.18.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.18.0'
+
+      - name: Install dependencies & build
+        run: |
+          npm ci
+          npm run build
+          npm run export   # generates `out/`
+
+      - name: Deploy to master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          # Clone the master branch (your GitHub Pages site) into `site`
+          rm -rf site
+          git clone --depth=1 \
+            --branch master \
+            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site
+
+          # Wipe out old files
+          rm -rf site/*
+
+          # Copy the freshly exported static files
+          cp -r out/* site/
+
+          cd site
+          git add --all
+
+          # Only commit if there are changes
+          git diff-index --quiet HEAD || git commit -m "Deploy from main @ ${{ github.sha }}"
+
+          git push --force https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:master
