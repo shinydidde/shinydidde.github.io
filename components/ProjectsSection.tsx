@@ -3,6 +3,7 @@
 
 import { motion, Variants } from 'framer-motion'
 import React from 'react'
+import Image from 'next/image'
 
 interface Project {
   img: string
@@ -52,7 +53,10 @@ export default function ProjectsSection({ data }: ProjectsProps) {
         animate="visible"
         className="text-center mb-16"
       >
-        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-gray-900 mb-4">
+        <motion.h2
+          variants={itemVariants}
+          className="text-4xl font-bold text-gray-900 mb-4"
+        >
           {data.title}
         </motion.h2>
         <motion.div
@@ -86,11 +90,14 @@ export default function ProjectsSection({ data }: ProjectsProps) {
             className="block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
             whileHover={{ y: -5 }}
           >
-            <div className="relative h-48 overflow-hidden">
-              <img
+            <div className="relative h-48 w-full">
+              <Image
                 src={project.img}
                 alt={project.desc}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 hover:scale-110"
+                priority={idx < 3} // prerender first row for LCP
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
             </div>

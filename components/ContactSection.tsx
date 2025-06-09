@@ -3,6 +3,7 @@
 
 import { motion, Variants } from 'framer-motion'
 import React, { useState } from 'react'
+import Image from 'next/image'
 import { PersonalInfo } from '../lib/firestoreService'
 
 interface ContactProps {
@@ -10,12 +11,6 @@ interface ContactProps {
 }
 
 export default function ContactSection({ personalInfo }: ContactProps) {
-  // Helper to strip HTML tags from a string.
-  // e.g. stripTags('<a href="mailto:foo@bar.com">foo@bar.com</a>') === 'foo@bar.com'
-  const stripTags = (html: string): string => {
-    return html.replace(/<\/?[^>]+(>|$)/g, '')
-  }
-
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,9 +23,7 @@ export default function ContactSection({ personalInfo }: ContactProps) {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
+      transition: { staggerChildren: 0.1 }
     }
   }
 
@@ -43,9 +36,11 @@ export default function ContactSection({ personalInfo }: ContactProps) {
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -54,11 +49,10 @@ export default function ContactSection({ personalInfo }: ContactProps) {
     setSubmitStatus('idle')
 
     try {
-      // Simulate a network request to send form data
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      await new Promise(resolve => setTimeout(resolve, 1500))
       setSubmitStatus('success')
       setFormData({ name: '', email: '', message: '' })
-    } catch (error) {
+    } catch {
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -83,13 +77,8 @@ export default function ContactSection({ personalInfo }: ContactProps) {
       >
         <div className="grid md:grid-cols-2">
           {/* Contact Form */}
-          <motion.div
-            variants={itemVariants}
-            className="p-8 md:p-12"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              Get In Touch
-            </h2>
+          <motion.div variants={itemVariants} className="p-8 md:p-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Get In Touch</h2>
             <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mb-6 rounded-full" />
             <p className="text-gray-700 mb-8">
               Have a project in mind or want to discuss potential opportunities?
@@ -98,10 +87,7 @@ export default function ContactSection({ personalInfo }: ContactProps) {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                   Name
                 </label>
                 <input
@@ -116,10 +102,7 @@ export default function ContactSection({ personalInfo }: ContactProps) {
               </div>
 
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                   Email
                 </label>
                 <input
@@ -134,10 +117,7 @@ export default function ContactSection({ personalInfo }: ContactProps) {
               </div>
 
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                   Message
                 </label>
                 <textarea
@@ -185,21 +165,12 @@ export default function ContactSection({ personalInfo }: ContactProps) {
           </motion.div>
 
           {/* Contact Info */}
-          <motion.div
-            variants={itemVariants}
-            className="bg-gradient-to-br from-blue-500 to-purple-600 p-8 md:p-12 text-white"
-          >
+          <motion.div variants={itemVariants} className="bg-gradient-to-br from-blue-500 to-purple-600 p-8 md:p-12 text-white">
             <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
             <div className="space-y-6">
-              {/* EMAIL (only if provided) */}
               {personalInfo.email && (
                 <div className="flex items-start">
-                  <svg
-                    className="w-6 h-6 mr-4 mt-1 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-6 h-6 mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -209,23 +180,14 @@ export default function ContactSection({ personalInfo }: ContactProps) {
                   </svg>
                   <div>
                     <h4 className="font-medium mb-1">Email</h4>
-                    {/* Render the stored anchor HTML */}
-                    <div
-                      dangerouslySetInnerHTML={{ __html: personalInfo.email }}
-                    />
+                    <div dangerouslySetInnerHTML={{ __html: personalInfo.email }} />
                   </div>
                 </div>
               )}
 
-              {/* PHONE (only if provided) */}
               {personalInfo.phone && (
                 <div className="flex items-start">
-                  <svg
-                    className="w-6 h-6 mr-4 mt-1 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
+                  <svg className="w-6 h-6 mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -235,67 +197,29 @@ export default function ContactSection({ personalInfo }: ContactProps) {
                   </svg>
                   <div>
                     <h4 className="font-medium mb-1">Phone</h4>
-                    {/* Render the stored anchor HTML */}
-                    <div
-                      dangerouslySetInnerHTML={{ __html: personalInfo.phone }}
-                    />
+                    <div dangerouslySetInnerHTML={{ __html: personalInfo.phone }} />
                   </div>
                 </div>
               )}
 
-              {/* SKYPE (only if provided) */}
               {personalInfo.skype && (
                 <div className="flex items-start">
-                  <svg
-                    className="w-6 h-6 mr-4 mt-1 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M16 8a8 8 0 10-8 8 8 8 0 008-8z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8.517 13.654c.149 1.036.77 1.872 1.673 2.231a2.744 2.744 0 011.956 2.66l-.005.056a1 1 0 01-1.537.874C6.449 18.592 3.5 15.341 3.5 11.5c0-2.48 1.01-4.726 2.809-6.321 1.112-.927 2.565-.863 3.63.145a1 1 0 01-.107 1.607 2.681 2.681 0 00-1.092 2.153c.007.352.059.702.154 1.038z"
-                    />
+                  <svg className="w-6 h-6 mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8a8 8 0 10-8 8 8 8 0 008-8z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.517 13.654c.149 1.036.77 1.872 1.673 2.231a2.744 2.744 0 011.956 2.66l-.005.056a1 1 0 01-1.537.874C6.449 18.592 3.5 15.341 3.5 11.5c0-2.48 1.01-4.726 2.809-6.321 1.112-.927 2.565-.863 3.63.145a1 1 0 01-.107 1.607 2.681 2.681 0 00-1.092 2.153c.007.352.059.702.154 1.038z" />
                   </svg>
                   <div>
                     <h4 className="font-medium mb-1">Skype</h4>
-                    {/* Render the stored anchor HTML */}
-                    <div
-                      dangerouslySetInnerHTML={{ __html: personalInfo.skype }}
-                    />
+                    <div dangerouslySetInnerHTML={{ __html: personalInfo.skype }} />
                   </div>
                 </div>
               )}
 
-              {/* LOCATION (only if provided) */}
               {personalInfo.location && (
                 <div className="flex items-start">
-                  <svg
-                    className="w-6 h-6 mr-4 mt-1 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
+                  <svg className="w-6 h-6 mr-4 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                   <div>
                     <h4 className="font-medium mb-1">Location</h4>
@@ -305,8 +229,7 @@ export default function ContactSection({ personalInfo }: ContactProps) {
               )}
             </div>
 
-            {/* SOCIAL LINKS */}
-            {personalInfo.socialLinks && personalInfo.socialLinks.length > 0 && (
+            {personalInfo.socialLinks?.length && (
               <div className="mt-12">
                 <h4 className="font-medium mb-4">Connect with me</h4>
                 <div className="flex space-x-4">
@@ -320,11 +243,7 @@ export default function ContactSection({ personalInfo }: ContactProps) {
                       whileHover={{ y: -3 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <img
-                        src={link.icon}
-                        alt={link.name}
-                        className="w-5 h-5"
-                      />
+                      <Image src={link.icon} alt={link.name} width={20} height={20} />
                     </motion.a>
                   ))}
                 </div>

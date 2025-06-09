@@ -21,7 +21,7 @@ export interface PersonalInfo {
   location?: string
   resume?: string
   logoUrl?: string
-  socialLinks?: SocialLink[]
+  socialLinks: SocialLink[]
 }
 
 export interface TimelineItem {
@@ -39,19 +39,19 @@ export interface EducationItem {
 
 export interface ExperienceData {
   title: string
-  description?: string
+  description: string
   timeline: TimelineItem[]
 }
 
 export interface EducationData {
   title: string
-  description?: string
+  description: string
   education: EducationItem[]
 }
 
 export interface SkillsData {
   title: string
-  description?: string
+  description: string
   logos: string[]
 }
 
@@ -63,35 +63,99 @@ export interface Project {
 
 export interface ProjectsData {
   title: string
-  description?: string
+  description: string
   projects: Project[]
+}
+
+// Helper to safely extract a string field
+function getString(field: unknown): string {
+  return typeof field === 'string' ? field : ''
+}
+
+// Helper to safely extract an array of strings
+function getStringArray(field: unknown): string[] {
+  return Array.isArray(field) ? field.filter(item => typeof item === 'string') : []
+}
+
+// Helper to safely extract a TimelineItem[] from raw DocumentData
+function parseTimeline(raw: unknown): TimelineItem[] {
+  if (!Array.isArray(raw)) return []
+  return raw.map(item => {
+    const o = item as Record<string, unknown>
+    return {
+      year: getString(o.year),
+      title: getString(o.title),
+      content: getString(o.content),
+    }
+  })
+}
+
+// Helper to safely extract EducationItem[]
+function parseEducation(raw: unknown): EducationItem[] {
+  if (!Array.isArray(raw)) return []
+  return raw.map(item => {
+    const o = item as Record<string, unknown>
+    return {
+      year: getString(o.year),
+      title: getString(o.title),
+      content: getString(o.content),
+      desc: getString(o.desc),
+    }
+  })
 }
 
 // Fetch personal info
 export async function fetchPersonalInfo(): Promise<PersonalInfo> {
   const snap = await getDoc(doc(db, 'personal', 'info'))
-  if (!snap.exists()) {
-    return {
-      name: '',
-      position: '',
-      img: '',
-      socialLinks: []
-    }
+  const defaultInfo: PersonalInfo = {
+    name: '',
+    position: '',
+    img: '',
+    socialLinks: []
   }
-  return snap.data() as PersonalInfo
+  if (!snap.exists()) return defaultInfo
+
+  const data = snap.data()
+  const social =
+    Array.isArray(data.socialLinks)
+      ? data.socialLinks.filter(link => typeof link === 'object').map(link => {
+          const o = link as Record<string, unknown>
+          return {
+            name: getString(o.name),
+            url: getString(o.url),
+            icon: getString(o.icon),
+          }
+        })
+      : []
+
+  return {
+    name:    getString(data.name),
+    position:getString(data.position),
+    title:   getString(data.title),
+    subtitle:getString(data.subtitle),
+    description: getString(data.description),
+    img:     getString(data.img),
+    email:   getString(data.email),
+    phone:   getString(data.phone),
+    skype:   getString(data.skype),
+    location:getString(data.location),
+    resume:  getString(data.resume),
+    logoUrl: getString(data.logoUrl),
+    socialLinks: social,
+  }
 }
 
 // Fetch experience timeline
 export async function fetchExperience(): Promise<ExperienceData> {
   const snap = await getDoc(doc(db, 'personal', 'experience'))
   if (!snap.exists()) {
-    return { title: 'Experience', timeline: [] }
+    return { title: 'Experience', description: '', timeline: [] }
   }
-  const raw = snap.data() as any
+  const data = snap.data()
   return {
-    title: raw.title || 'Experience',
-    description: raw.description || '',
-    timeline: raw.timeline || []
+    title:       getString(data.title) || 'Experience',
+    description: getString(data.description),
+    timeline:    parseTimeline(data.timeline),
   }
 }
 
@@ -99,14 +163,14 @@ export async function fetchExperience(): Promise<ExperienceData> {
 export async function fetchEducation(): Promise<EducationData> {
   const snap = await getDoc(doc(db, 'personal', 'experience'))
   if (!snap.exists()) {
-    return { title: 'Education', education: [] }
+    return { title: 'Education', description: '', education: [] }
   }
-  const raw = snap.data() as any
+  const data = snap.data()
+  const title = getString(data.title)
   return {
-    // If Firestore uses the same doc, flip title to “Education” if necessary
-    title: raw.title === 'EXPERIENCE' ? 'Education' : raw.title || 'Education',
-    description: raw.description || '',
-    education: raw.education || []
+    title:       title === 'EXPERIENCE' ? 'Education' : title || 'Education',
+    description: getString(data.description),
+    education:   parseEducation(data.education),
   }
 }
 
@@ -116,11 +180,11 @@ export async function fetchSkills(): Promise<SkillsData> {
   if (!snap.exists()) {
     return { title: 'Skills', description: '', logos: [] }
   }
-  const raw = snap.data() as any
+  const data = snap.data()
   return {
-    title: raw.title || 'Skills',
-    description: raw.description || '',
-    logos: raw.logos || []
+    title:       getString(data.title) || 'Skills',
+    description: getString(data.description),
+    logos:       getStringArray(data.logos),
   }
 }
 
@@ -128,12 +192,21 @@ export async function fetchSkills(): Promise<SkillsData> {
 export async function fetchProjects(): Promise<ProjectsData> {
   const snap = await getDoc(doc(db, 'personal', 'portfolio'))
   if (!snap.exists()) {
-    return { title: 'Portfolio', projects: [] }
+    return { title: 'Portfolio', description: '', projects: [] }
   }
-  const raw = snap.data() as any
+  const data = snap.data()
+  const rawProjects = Array.isArray(data.projects) ? data.projects : []
+  const projects: Project[] = rawProjects.map(item => {
+    const o = item as Record<string, unknown>
+    return {
+      img:  getString(o.img),
+      desc: getString(o.desc),
+      url:  getString(o.url),
+    }
+  })
   return {
-    title: raw.title || 'Portfolio',
-    description: raw.description || '',
-    projects: raw.projects || []
+    title:       getString(data.title) || 'Portfolio',
+    description: getString(data.description),
+    projects,
   }
 }

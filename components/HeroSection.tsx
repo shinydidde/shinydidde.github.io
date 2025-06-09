@@ -3,6 +3,7 @@
 
 import { motion, Variants } from 'framer-motion'
 import React from 'react'
+import Image from 'next/image'
 import { SocialLink } from '../lib/firestoreService'
 
 interface HeroProps {
@@ -63,16 +64,18 @@ export default function HeroSection({ personalInfo }: HeroProps) {
           animate="visible"
           className="flex flex-col items-center"
         >
+          {/* Avatar */}
           <motion.div variants={itemVariants} className="mb-8">
-            <motion.img
-              src={personalInfo.img}
-              alt="avatar"
-              className="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-white shadow-2xl"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.5, type: 'spring', stiffness: 120 }}
-              whileHover={{ scale: 1.05 }}
-            />
+            <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-2xl">
+              <Image
+                src={personalInfo.img}
+                alt="avatar"
+                fill
+                sizes="192px"
+                className="object-cover"
+                priority
+              />
+            </div>
           </motion.div>
 
           <motion.h1
@@ -89,18 +92,25 @@ export default function HeroSection({ personalInfo }: HeroProps) {
             {personalInfo.position}
           </motion.p>
 
+          {/* Social Links */}
           <motion.div variants={itemVariants} className="flex space-x-4 mb-8">
-            {personalInfo.socialLinks?.map((link, index) => (
+            {personalInfo.socialLinks?.map((link, idx) => (
               <motion.a
-                key={index}
+                key={idx}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow hover:shadow-lg transition-shadow"
+                className="relative w-10 h-10 rounded-full bg-white flex items-center justify-center shadow hover:shadow-lg transition-shadow"
                 whileHover={{ y: -3 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <img src={link.icon} alt={link.name} className="w-5 h-5" />
+                <Image
+                  src={link.icon}
+                  alt={link.name}
+                  fill
+                  sizes="40px"
+                  className="p-2"
+                />
               </motion.a>
             ))}
           </motion.div>
@@ -127,8 +137,18 @@ export default function HeroSection({ personalInfo }: HeroProps) {
       >
         <div className="animate-bounce flex flex-col items-center">
           <span className="text-sm text-gray-600 mb-2">Scroll down</span>
-          <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          <svg
+            className="w-6 h-6 text-gray-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
+            />
           </svg>
         </div>
       </motion.div>

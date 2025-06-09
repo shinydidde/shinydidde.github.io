@@ -3,6 +3,7 @@
 
 import { motion, Variants } from 'framer-motion'
 import React from 'react'
+import Image from 'next/image'
 
 interface SkillsProps {
   data: {
@@ -46,7 +47,10 @@ export default function SkillsSection({ data }: SkillsProps) {
         animate="visible"
         className="text-center mb-16"
       >
-        <motion.h2 variants={itemVariants} className="text-4xl font-bold text-gray-900 mb-4">
+        <motion.h2
+          variants={itemVariants}
+          className="text-4xl font-bold text-gray-900 mb-4"
+        >
           {data.title}
         </motion.h2>
         <motion.div
@@ -77,7 +81,16 @@ export default function SkillsSection({ data }: SkillsProps) {
             className="flex items-center justify-center bg-white rounded-xl shadow-md p-4 hover:shadow-xl transition-shadow"
             whileHover={{ y: -5 }}
           >
-            <img src={logoUrl} alt={`Skill ${idx + 1}`} className="max-h-12 max-w-full" />
+            <div className="relative w-12 h-12">
+              <Image
+                src={logoUrl}
+                alt={`Skill ${idx + 1}`}
+                fill
+                sizes="48px"
+                className="object-contain"
+                priority={idx < 7} // prioritize first row
+              />
+            </div>
           </motion.div>
         ))}
       </motion.div>
