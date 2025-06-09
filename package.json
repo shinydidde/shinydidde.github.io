@@ -1,47 +1,30 @@
 {
-  "name": "portfolio",
+  "name": "shinydidde.github.io",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://shinydidde.github.io/",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next export"
   },
   "dependencies": {
-    "bootstrap": "^4.1.1",
-    "core-js": "^3.0.0",
-    "firebase": "^7.15.0",
-    "gsap": "^3.13.0",
-    "moment": "^2.27.0",
-    "particles.js": "^2.0.0",
-    "vue": "^2.5.16",
-    "vue-moment": "^4.1.0",
-    "vue-router": "^3.6.5",
-    "vue2-animate": "^2.0.0",
-    "vuefire": "^2.2.0-alpha.0",
-    "whatwg-fetch": "^2.0.4"
+    "firebase": "^11.8.1",
+    "framer-motion": "^12.15.0",
+    "next": "15.3.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.7",
-    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
-    "@vue/cli-service": "^3.0.0-beta.15",
-    "@vue/eslint-config-airbnb": "^3.0.0-beta.16",
-    "eslint": "^7.32.0",
-    "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^7.2.1",
-    "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-vue": "^7.20.0",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.16"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3",
+    "tailwindcss": "^4.1.8",
+    "typescript": "^5"
+  }
 }
