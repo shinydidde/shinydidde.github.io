@@ -1,3 +1,4 @@
+# .github/workflows/build-and-deploy.yml
 name: Build & Deploy User Page
 
 on:
@@ -23,7 +24,7 @@ jobs:
       - name: Install & build (static export)
         run: |
           npm ci
-          npm run build    # next.config.js: { output: 'export' } → emits out/
+          npm run build    # next.config.js → output: 'export', writes to out/
 
       - name: List exported output
         run: ls -R out
@@ -32,21 +33,25 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          # make git happy about author
           git config --global user.name  "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-          # pull down the live-pages branch
+          # clone your Pages branch
           rm -rf site
           git clone --depth=1 \
             --branch master \
             "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" site
 
-          # replace its contents
+          # disable Jekyll so _next/… gets published
+          touch site/.nojekyll
+
+          # copy in the fresh export
           rm -rf site/*
           cp -r out/* site/
 
           cd site
           git add --all
-          git diff-index --quiet HEAD || \
-            git commit -m "Deploy from main @ ${{ github.sha }}"
+          git diff-index --quiet HEAD \
+            || git commit -m "Deploy from main @ ${{ github.sha }}"
           git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" HEAD:master
