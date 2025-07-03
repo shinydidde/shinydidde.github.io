@@ -1,51 +1,52 @@
-# .github/workflows/build-and-deploy.yml
 name: Build & Deploy User Page
 
 on:
   push:
     branches:
-      - main   # your source branch
+      - main
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+      - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js v18.18.0
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18.18.0'
 
-      - name: Install dependencies & build
+      - name: Install & build (static export)
         run: |
           npm ci
-          npm run build    # your next.config.js -> output: export writes to `out/`
+          npm run build    # next.config.js: { output: 'export' } → emits out/
+
+      - name: List exported output
+        run: ls -R out
 
       - name: Deploy to master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # ensure git has your identity globally so commits inside 'site/' pick it up
-          git config --global user.name "${{ github.actor }}"
+          git config --global user.name  "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-          # prepare the gh-pages (master) branch checkout
+          # pull down the live-pages branch
           rm -rf site
           git clone --depth=1 \
             --branch master \
-            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} site
+            "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" site
 
-          # replace its contents with your freshly exported static files
+          # replace its contents
           rm -rf site/*
           cp -r out/* site/
 
-          # commit & push
           cd site
           git add --all
-          git diff-index --quiet HEAD || git commit -m "Deploy from main @ ${{ github.sha }}"
-          git push --force https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:master
+          git diff-index --quiet HEAD || \
+            git commit -m "Deploy from main @ ${{ github.sha }}"
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" HEAD:master
