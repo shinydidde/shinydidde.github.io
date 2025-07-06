@@ -1,112 +1,108 @@
 // app/components/ProjectsSection.tsx
-'use client'
+'use client';
 
-import { motion, Variants } from 'framer-motion'
-import React from 'react'
-import Image from 'next/image'
+import { motion, Variants } from 'framer-motion';
+import Image from 'next/image';
+import DoodleSection from './DoodleSection';
+import type { ProjectsListData } from '../lib/firestoreService';
 
-interface Project {
-  img: string
-  desc: string
-  url: string
+interface ProjectsSectionProps {
+  data: ProjectsListData;
 }
 
-interface ProjectsProps {
-  data: {
-    title: string
-    projects: Project[]
-    description?: string
-  }
-}
-
-export default function ProjectsSection({ data }: ProjectsProps) {
-  const containerVariants: Variants = {
+export default function ProjectsSection({ data }: ProjectsSectionProps) {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  }
+      transition: { staggerChildren: 0.1 },
+    },
+  };
 
-  const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
+  const item: Variants = {
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  }
+      transition: { type: 'spring', stiffness: 120 },
+    },
+  };
 
   return (
-    <motion.section
-      id="projects"
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6 }}
-      className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
-    >
-      {/* Section Header */}
+    <DoodleSection bgImage="/images/projects-bg.avif">
+      {/* Header */}
       <motion.div
-        variants={containerVariants}
+        id="projects"
         initial="hidden"
-        animate="visible"
-        className="text-center mb-16"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        variants={container}
+        className="text-center max-w-4xl mx-auto mb-16 px-4"
       >
-        <motion.h2
-          variants={itemVariants}
-          className="text-4xl font-bold text-gray-900 mb-4"
-        >
+        <motion.h2 variants={item} className="text-4xl font-sketch text-teal mb-2">
           {data.title}
         </motion.h2>
         <motion.div
-          variants={itemVariants}
-          className="w-16 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto mb-6 rounded-full"
+          variants={item}
+          className="mx-auto mb-4 h-1 w-16 rounded-full bg-gradient-to-r from-magenta to-lime"
         />
-        {data.description && (
-          <motion.p
-            variants={itemVariants}
-            className="text-xl text-gray-600 max-w-3xl mx-auto"
-          >
-            {data.description}
-          </motion.p>
-        )}
       </motion.div>
 
-      {/* Projects Grid */}
+      {/* Cards Grid */}
       <motion.div
-        variants={containerVariants}
+        variants={container}
         initial="hidden"
-        animate="visible"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-100px' }}
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto px-4"
       >
-        {data.projects.map((project, idx) => (
+        {data.items.map((proj, idx) => (
           <motion.a
-            key={`proj-${idx}`}
-            href={project.url}
+            key={proj.title}
+            href={proj.link}
             target="_blank"
             rel="noopener noreferrer"
-            variants={itemVariants}
-            className="block rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-            whileHover={{ y: -5 }}
+            variants={item}
+            whileHover={{
+              scale: 1.03,
+              rotate: [0, 15, -15, 0]
+            }}
+            transition={{
+              type: 'tween',
+              duration: 0.5,
+              ease: 'easeInOut'
+            }}
+            className="
+              relative flex flex-col rounded-2xl overflow-hidden
+              border-2 border-dashed border-magenta/60
+              bg-paper/60 backdrop-blur-xs
+              transition-transform duration-300
+            "
           >
+            {/* image */}
             <div className="relative h-48 w-full">
               <Image
-                src={project.img}
-                alt={project.desc}
+                src={proj.image}
+                alt={proj.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 hover:scale-110"
-                priority={idx < 3} // prerender first row for LCP
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                priority={idx < 3}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             </div>
-            <div className="bg-white p-6">
-              <p className="text-gray-700 text-base">{project.desc}</p>
+
+            {/* text */}
+            <div className="p-6 flex-1 flex flex-col justify-between">
+              <h3 className="text-xl font-semibold text-teal mb-2">{proj.title}</h3>
+              <p className="text-gray-700 flex-grow">{proj.description}</p>
+              <span className="mt-4 inline-block text-sm font-sketch text-magenta">
+                View Live →
+              </span>
             </div>
           </motion.a>
         ))}
       </motion.div>
-    </motion.section>
-  )
+    </DoodleSection>
+  );
 }

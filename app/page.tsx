@@ -1,73 +1,53 @@
 // app/page.tsx
-import Header from '../components/Header'
-import HeroSection from '../components/HeroSection'
-import ContactSection from '../components/ContactSection'
-import AboutSection from '../components/AboutSection'
-import ExperienceSection from '../components/ExperienceSection'
-import SkillsSection from '../components/SkillsSection'
-import ProjectsSection from '../components/ProjectsSection'
-import EducationSection from '../components/EducationSection'
-import FooterSection from '../components/FooterSection'
+import React from 'react'
+
+import Header            from '@/components/Header'
+import HeroSection       from '@/components/HeroSection'
+import AboutSection      from '@/components/AboutSection'
+import SkillsSection     from '@/components/SkillsSection'
+import ExperienceSection from '@/components/ExperienceSection'
+import ProjectsSection   from '@/components/ProjectsSection'
+import EducationSection from '@/components/EducationSection'
+// import ContactSection    from '@/components/ContactSection'
+import FooterSection     from '@/components/FooterSection'
 
 import {
-  fetchPersonalInfo,
-  fetchExperience,
-  fetchSkills,
-  fetchProjects,
-  fetchEducation,
-  PersonalInfo
-} from '../lib/firestoreService'
+  fetchHero,
+  fetchAbout,
+  fetchSkillsList,
+  fetchExperienceList,
+  fetchProjectsList,
+  fetchContactInfo,
+  fetchEducationList
+} from '@/lib/firestoreService'
 
 export default async function Home() {
-  // Fetch all data from Firestore
-  const personalInfo: PersonalInfo = await fetchPersonalInfo()
-  const experienceData = await fetchExperience()
-  const skillsData = await fetchSkills()
-  const projectsData = await fetchProjects()
-  const educationData = await fetchEducation()
+  // fetch all new-structure docs
+  const heroData       = await fetchHero()
+  const aboutData      = await fetchAbout()
+  const skillsData     = await fetchSkillsList()
+  const experienceData = await fetchExperienceList()
+  const projectsData   = await fetchProjectsList()
+  const contactData    = await fetchContactInfo()
+  const educationData  = await fetchEducationList();
 
   return (
-    <>
-      <Header personalInfo={personalInfo} />
+    <div className="min-h-screen">
+      {/* only pass hero to Header */}
+      <Header hero={heroData} />
 
-      <main className="space-y-32 py-4 lg:py-8">
-        <HeroSection
-          personalInfo={{
-            name: personalInfo.name,
-            position: personalInfo.position,
-            img: personalInfo.img,
-            socialLinks: personalInfo.socialLinks || []
-          }}
-        />
-
-        <AboutSection
-          personalInfo={{
-            title: personalInfo.title || '',
-            subtitle: personalInfo.subtitle || '',
-            description: personalInfo.description || ''
-          }}
-        />
-
+      <main className="space-y-32">
+        <HeroSection       data={heroData} />
+        <AboutSection      data={aboutData} />
+        <SkillsSection     data={skillsData} />
         <ExperienceSection data={experienceData} />
-
-        <SkillsSection data={skillsData} />
-
-        <ProjectsSection data={projectsData} />
-
+        <ProjectsSection   data={projectsData} />
         <EducationSection data={educationData} />
-        <ContactSection personalInfo={personalInfo} />
-
+        {/* <ContactSection    data={contactData} /> */}
       </main>
 
-      <FooterSection
-        personalInfo={{
-          name: personalInfo.name,
-          email: personalInfo.email,
-          socialLinks: personalInfo.socialLinks || [],
-          resume: personalInfo.resume,
-          logoUrl: personalInfo.logoUrl || ''
-        }}
-      />
-    </>
+      {/* only pass contact to Footer */}
+      <FooterSection contact={contactData} />
+    </div>
   )
 }

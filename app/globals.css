@@ -1,12 +1,18 @@
-/* app/globals.css */
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-html {
-  scroll-behavior: smooth;
+/* your paper‐grain, etc. */
+body {
+  background-image: url("/images/paper-grain.png");
+  background-size: 200px;
+  background-repeat: repeat;
 }
 
-/* Any extra custom utility classes you need (same as your other project) */
-.perspective-1000 { perspective: 1000px; }
-.transform-style-preserve-3d { transform-style: preserve-3d; }
-.backface-hidden { backface-visibility: hidden; }
-.rotate-y-180 { transform: rotateY(180deg); }
+@keyframes draw {
+  from { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+  to   { stroke-dasharray: 1000; stroke-dashoffset: 0; }
+}
+.animate-draw {
+  animation: draw 2s ease-out forwards;
+}

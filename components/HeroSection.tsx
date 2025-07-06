@@ -1,157 +1,102 @@
-// app/components/HeroSection.tsx
+// components/HeroSection.tsx
 'use client'
 
-import { motion, Variants } from 'framer-motion'
-import React from 'react'
 import Image from 'next/image'
-import { SocialLink } from '../lib/firestoreService'
+import { motion } from 'framer-motion'
+import DoodleSection from './DoodleSection'
+import type { HeroData } from '@/lib/firestoreService'
 
-interface HeroProps {
-  personalInfo: {
-    name: string
-    position: string
-    img: string
-    socialLinks?: SocialLink[]
-  }
+interface HeroSectionProps {
+  data: HeroData
 }
 
-export default function HeroSection({ personalInfo }: HeroProps) {
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3
-      }
-    }
-  }
-
-  const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
-    }
-  }
+export default function HeroSection({ data }: HeroSectionProps) {
+  const { name, role, avatarUrl, backgrounds, catchPhrase, scrollPrompt } = data
+  const bgImage = backgrounds[0] ?? '/images/hero-bg.avif'
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center justify-center pt-16 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden"
+    <DoodleSection
+      bgImage={bgImage}
+      divider={false}
+      className="relative w-full h-screen overflow-hidden flex items-center justify-center pt-20 pb-0"
     >
-      {/* Background Blobs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-400 opacity-10 blur-3xl"
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.1 }}
-          transition={{ duration: 1.5, delay: 0.5 }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-purple-400 opacity-10 blur-3xl"
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.1 }}
-          transition={{ duration: 1.5, delay: 0.8 }}
-        />
-      </div>
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col items-center"
-        >
-          {/* Avatar */}
-          <motion.div variants={itemVariants} className="mb-8">
-            <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-white shadow-2xl">
-              <Image
-                src={personalInfo.img}
-                alt="avatar"
-                fill
-                sizes="192px"
-                className="object-cover"
-                priority
-              />
-            </div>
-          </motion.div>
-
-          <motion.h1
-            variants={itemVariants}
-            className="text-4xl md:text-6xl font-bold text-gray-900 mb-4"
-          >
-            {personalInfo.name}
-          </motion.h1>
-
-          <motion.p
-            variants={itemVariants}
-            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto"
-          >
-            {personalInfo.position}
-          </motion.p>
-
-          {/* Social Links */}
-          <motion.div variants={itemVariants} className="flex space-x-4 mb-8">
-            {personalInfo.socialLinks?.map((link, idx) => (
-              <motion.a
-                key={idx}
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative w-10 h-10 rounded-full bg-white flex items-center justify-center shadow hover:shadow-lg transition-shadow"
-                whileHover={{ y: -3 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Image
-                  src={link.icon}
-                  alt={link.name}
-                  fill
-                  sizes="40px"
-                  className="p-2"
-                />
-              </motion.a>
-            ))}
-          </motion.div>
-
-          <motion.div variants={itemVariants}>
-            <motion.a
-              href="#about"
-              className="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium rounded-full shadow-lg hover:shadow-xl transition-all"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Explore My Work
-            </motion.a>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* Scroll indicator */}
+      {/* Centered Panel */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5 }}
+        className="
+          relative z-10 mx-auto flex flex-col items-center text-center
+          bg-paper/10 backdrop-blur-sm p-8 rounded-2xl
+          border-2 border-dashed border-teal/80
+          max-w-md
+        "
+        initial={{ scale: 0.8, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 20 }}
       >
-        <div className="animate-bounce flex flex-col items-center">
-          <span className="text-sm text-gray-600 mb-2">Scroll down</span>
-          <svg
-            className="w-6 h-6 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 14l-7 7m0 0l-7-7m7 7V3"
-            />
-          </svg>
-        </div>
+        {/* Avatar */}
+        <motion.div
+          initial={{ rotate: -10, opacity: 0 }}
+          animate={{ rotate: 0, opacity: 1 }}
+          transition={{ type: 'spring', stiffness: 150 }}
+          className="
+            relative mb-6 w-36 h-36 rounded-full overflow-hidden
+            border-4 border-dashed border-magenta
+          "
+        >
+          <Image src={avatarUrl} alt={`${name} avatar`} fill className="object-cover" />
+        </motion.div>
+
+        {/* Name & Role */}
+        <motion.h1
+          className="text-5xl font-sketch text-teal mb-2"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.3, type: 'spring', stiffness: 120 }}
+        >
+          {name}
+        </motion.h1>
+        <motion.p
+          className="text-2xl text-magenta mb-4"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          {role}
+        </motion.p>
+
+        {/* Catchphrase */}
+        <motion.p
+          className="italic text-lg mb-6 text-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          {catchPhrase}
+        </motion.p>
+
+        {/* CTA */}
+        <motion.a
+          href="#about"
+          className="px-8 py-3 bg-gradient-to-r from-lime to-magenta rounded-full text-white font-sketch shadow-lg hover:shadow-2xl"
+          whileHover={{
+            scale: 1.05,
+            rotate: [0, 4]           // spring only supports 2 keyframes
+          }}
+          transition={{ type: 'spring', stiffness: 200, repeat: Infinity, repeatType: 'mirror' }}
+        >
+          Let’s Go!
+        </motion.a>
+
+        {/* Scroll prompt */}
+        <motion.div
+          className="mt-8 text-sm text-gray-700"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 1 }}
+        >
+          {scrollPrompt}
+        </motion.div>
       </motion.div>
-    </section>
+    </DoodleSection>
   )
 }
