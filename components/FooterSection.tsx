@@ -80,29 +80,6 @@ export default function FooterSection({ contact }: FooterSectionProps) {
         <motion.p variants={itemVariants} className="text-center italic mb-6 text-gray-700">
           {contact.footerText}
         </motion.p>
-
-        {/* Back to Top */}
-        <motion.div variants={itemVariants} className="text-center">
-          <a
-            href="#home"
-            className="inline-flex items-center space-x-2 font-sketch text-teal hover:text-magenta transition"
-          >
-            <span>Back to top</span>
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 10l7-7 7 7m-7-7v18"
-              />
-            </svg>
-          </a>
-        </motion.div>
       </motion.footer>
       {/* Floating “Back to Top” */}
       <motion.button
