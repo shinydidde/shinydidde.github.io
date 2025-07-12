@@ -23,16 +23,26 @@ interface SkillsSectionProps {
 export default function SkillsSection({ data }: SkillsSectionProps) {
   const [activeTab, setActiveTab] = useState(0)
 
+  // parent container for staggering
   const container: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   }
+
+  // variants for each skill card: entry + hover
   const item: Variants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 20, opacity: 0, rotate: 0, scale: 1 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: 'spring', stiffness: 100 }
+      rotate: 0,
+      scale: 1,
+      transition: { type: 'spring', stiffness: 100 },
+    },
+    hover: {
+      rotate: [0, 15, -15, 0],
+      scale: 1.03,
+      transition: { type: 'tween', duration: 0.6, ease: 'easeInOut' },
     },
   }
 
@@ -52,7 +62,7 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
 
   return (
     <DoodleSection bgImage="/images/skills-bg.avif">
-      {/* header */}
+      {/* Header */}
       <motion.div
         id="skills"
         variants={container}
@@ -70,7 +80,7 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
         />
       </motion.div>
 
-      {/* tabs */}
+      {/* Tabs */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -83,10 +93,11 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
             key={tab}
             variants={item}
             onClick={() => setActiveTab(i)}
-            className={`px-6 py-2 font-sketch text-lg rounded-full transition ${activeTab === i
-              ? 'bg-magenta text-white shadow-lg'
-              : 'bg-paper/60 text-teal hover:bg-paper/80'
-              }`}
+            className={`px-6 py-2 font-sketch text-lg rounded-full transition-colors ${
+              activeTab === i
+                ? 'bg-magenta text-white shadow-lg'
+                : 'bg-paper/60 text-teal hover:bg-paper/80'
+            }`}
             whileHover={{ scale: 1.05 }}
           >
             {tab}
@@ -94,7 +105,7 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
         ))}
       </motion.div>
 
-      {/* icons grid */}
+      {/* Icons Grid */}
       <motion.div
         variants={container}
         initial="hidden"
@@ -107,17 +118,12 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
             <motion.div
               key={skill.name}
               variants={item}
-              whileHover={{ scale: 1.03, rotate: [0, 15, -15, 0] }}
-              transition={{
-                type: 'tween',
-                duration: 0.6,
-                ease: 'easeInOut'
-              }}
+              whileHover="hover"
               className="
-        flex flex-col items-center p-4
-        rounded-2xl border-2 border-dashed border-magenta/60
-        bg-paper/60 backdrop-blur-xs
-        "
+                flex flex-col items-center p-4
+                rounded-2xl border-2 border-dashed border-magenta/60
+                bg-paper/60 backdrop-blur-xs
+              "
             >
               {Icon
                 ? <Icon size={48} className="mb-2 text-magenta" />
@@ -130,6 +136,6 @@ export default function SkillsSection({ data }: SkillsSectionProps) {
           )
         })}
       </motion.div>
-    </DoodleSection >
+    </DoodleSection>
   )
 }

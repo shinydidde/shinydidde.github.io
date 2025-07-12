@@ -11,6 +11,7 @@ interface ProjectsSectionProps {
 }
 
 export default function ProjectsSection({ data }: ProjectsSectionProps) {
+  // parent container staggering
   const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
@@ -19,11 +20,13 @@ export default function ProjectsSection({ data }: ProjectsSectionProps) {
     },
   };
 
+  // each card starts and ends at rotate: 0
   const item: Variants = {
-    hidden: { y: 30, opacity: 0 },
+    hidden: { y: 30, opacity: 0, rotate: 0 },
     visible: {
       y: 0,
       opacity: 1,
+      rotate: 0,
       transition: { type: 'spring', stiffness: 120 },
     },
   };
@@ -65,18 +68,17 @@ export default function ProjectsSection({ data }: ProjectsSectionProps) {
             variants={item}
             whileHover={{
               scale: 1.03,
-              rotate: [0, 15, -15, 0]
+              rotate: [0, 15, -15, 0],
             }}
             transition={{
               type: 'tween',
               duration: 0.5,
-              ease: 'easeInOut'
+              ease: 'easeInOut',
             }}
             className="
               relative flex flex-col rounded-2xl overflow-hidden
               border-2 border-dashed border-magenta/60
               bg-paper/60 backdrop-blur-xs
-              transition-transform duration-300
             "
           >
             {/* image */}
@@ -86,7 +88,7 @@ export default function ProjectsSection({ data }: ProjectsSectionProps) {
                 alt={proj.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                className="object-cover transition-transform duration-500"
                 priority={idx < 3}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />

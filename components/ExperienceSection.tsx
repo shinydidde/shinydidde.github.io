@@ -10,14 +10,26 @@ interface ExperienceSectionProps {
 }
 
 export default function ExperienceSection({ data }: ExperienceSectionProps) {
+  // parent container staggering
   const container: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
   };
 
+  // each entry fades/flies in
   const item: Variants = {
     hidden: { y: 30, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { type: 'spring', stiffness: 120 } },
+  };
+
+  // card resting vs hover states
+  const cardVariants: Variants = {
+    rest: { rotate: 0, scale: 1 },
+    hover: {
+      rotate: [0, 15, -15, 0],
+      scale: 1.02,
+      transition: { type: 'tween', duration: 0.6, ease: 'easeInOut' },
+    },
   };
 
   return (
@@ -38,7 +50,6 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
 
         {/* Timeline */}
         <div className="relative">
-          {/* center line */}
           <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-magenta to-lime transform -translate-x-1/2" />
 
           {data.entries.map((entry, idx) => {
@@ -47,12 +58,14 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
               <motion.div
                 key={idx}
                 variants={item}
-                className={`mb-12 flex flex-col md:flex-row ${onLeft ? 'md:flex-row-reverse' : ''}`}
+                className={`mb-12 flex flex-col md:flex-row ${
+                  onLeft ? 'md:flex-row-reverse' : ''
+                }`}
               >
                 {/* dot */}
                 <div className="hidden md:flex absolute left-1/2 top-8 w-4 h-4 bg-gradient-to-r from-magenta to-lime rounded-full transform -translate-x-1/2 z-10" />
 
-                {/* year */}
+                {/* year bubble */}
                 <div
                   className={`md:w-1/2 p-4 ${
                     onLeft ? 'text-right md:pr-8' : 'text-left md:pl-8'
@@ -70,12 +83,10 @@ export default function ExperienceSection({ data }: ExperienceSectionProps) {
                 {/* content card */}
                 <div className="md:w-1/2 p-4 flex">
                   <motion.div
-                    whileHover={{ scale: 1.02, rotate: [0, 15, -15, 0] }}
-                    transition={{
-                      type: 'tween',
-                      duration: 0.6,
-                      ease: 'easeInOut'
-                    }}
+                    variants={cardVariants}
+                    initial="rest"
+                    animate="rest"
+                    whileHover="hover"
                     className="
                       flex-1 rounded-2xl border-2 border-dashed border-magenta/60
                       bg-paper/60 backdrop-blur-xs p-6

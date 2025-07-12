@@ -48,7 +48,7 @@ export default function Header({ hero }: HeaderProps) {
           >
             <Link href="#" className="flex items-center space-x-2">
               <Image
-                src={hero.avatarUrl}
+                src={hero.logo}
                 alt={`${hero.name} Avatar`}
                 width={40}
                 height={40}

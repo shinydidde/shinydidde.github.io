@@ -21,6 +21,7 @@ export interface HeroData {
   name:        string
   role:        string
   avatarUrl:   string
+  logo:        string
   backgrounds: string[]
   catchPhrase: string
   scrollPrompt:string
@@ -28,13 +29,14 @@ export interface HeroData {
 export async function fetchHero(): Promise<HeroData> {
   const snap = await getDoc(doc(db, 'hero', 'info'))
   if (!snap.exists()) {
-    return { name:'',role:'',avatarUrl:'',backgrounds:[],catchPhrase:'',scrollPrompt:'' }
+    return { name:'',role:'',avatarUrl:'',logo: '',backgrounds:[],catchPhrase:'',scrollPrompt:'' }
   }
   const d = snap.data()!
   return {
     name:        getString(d.name),
     role:        getString(d.role),
     avatarUrl:   getString(d.avatarUrl),
+    logo:        getString(d.logo),
     backgrounds: getStringArray(d.backgrounds),
     catchPhrase: getString(d.catchPhrase),
     scrollPrompt:getString(d.scrollPrompt),
