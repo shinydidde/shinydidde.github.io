@@ -44,34 +44,82 @@ export async function fetchHero(): Promise<HeroData> {
 }
 
 /** 2) ABOUT **/
-export interface AboutData {
-  illustration: string
-  title:        string
-  subtitle:     string
-  bio:          string      // rich HTML
+export interface AboutFact {
+  text: string;
+  icon: string; // e.g. "lightbulb", "code", "fire"...
 }
+export interface AboutData {
+  title: string;
+  subtitle: string;
+  bio: string;            // HTML string
+  illustration: string;
+  memeTitle?: string;
+  memeSubtitle?: string;
+  normalFacts?: AboutFact[];
+  memeFacts?: AboutFact[];
+  buttonText?: {
+    normal: string;
+    meme: string;
+  };
+}
+
 export async function fetchAbout(): Promise<AboutData> {
-  const snap = await getDoc(doc(db, 'about', 'info'))
+  const snap = await getDoc(doc(db, 'about', 'info'));
   if (!snap.exists()) {
-    return { illustration:'', title:'', subtitle:'', bio:'' }
+    return { illustration: '', title: '', subtitle: '', bio: '' };
   }
-  const d = snap.data()!
+
+  // Narrow away Firestore's DocumentData (which is [k: string]: any)
+  const d = snap.data() as Record<string, unknown>;
+
+  const normalFacts = getObjectArray<AboutFact>(d.normalFacts, (o) => ({
+    text: getString(o.text),
+    icon: getString(o.icon),
+  }));
+
+  const memeFacts = getObjectArray<AboutFact>(d.memeFacts, (o) => ({
+    text: getString(o.text),
+    icon: getString(o.icon),
+  }));
+
+  // buttonText is optional and nested — guard and map safely
+  const rawBtn: unknown = d['buttonText'];
+  let buttonText: AboutData['buttonText'] | undefined;
+  if (rawBtn && typeof rawBtn === 'object' && !Array.isArray(rawBtn)) {
+    const btn = rawBtn as Record<string, unknown>;
+    buttonText = {
+      normal: getString(btn.normal),
+      meme:   getString(btn.meme),
+    };
+  }
+
   return {
     illustration: getString(d.illustration),
     title:        getString(d.title),
     subtitle:     getString(d.subtitle),
     bio:          getString(d.bio),
-  }
+
+    memeTitle:    getString(d.memeTitle),
+    memeSubtitle: getString(d.memeSubtitle),
+    normalFacts,
+    memeFacts,
+    buttonText,
+  };
 }
 
 /** 3) SKILLS **/
 export interface SkillCategory {
   type:  string
-  items: { name:string, icon:string }[]
+  items: SkillItem[]
 }
 export interface SkillsListData {
   title:      string
   categories: SkillCategory[]
+}
+
+export interface SkillItem {
+  name: string
+  icon: string
 }
 export async function fetchSkillsList(): Promise<SkillsListData> {
   const snap = await getDoc(doc(db, 'skills', 'list'))

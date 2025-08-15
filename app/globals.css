@@ -4,9 +4,16 @@
 
 /* your paper‐grain, etc. */
 body {
-  background-image: url("/images/paper-grain.png");
-  background-size: 200px;
-  background-repeat: repeat;
+  background-image:
+      url('/images/doodle-wallpaper.svg'),
+      linear-gradient(
+        135deg,
+        #fef9f3 0%,
+        #f0e4d1 50%,
+        #e8f9fa 100%
+      );
+    background-repeat: repeat;
+    background-size: 150px 150px, cover;
 }
 
 @keyframes draw {
@@ -15,4 +22,71 @@ body {
 }
 .animate-draw {
   animation: draw 2s ease-out forwards;
+}
+
+/* globals.css */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(5deg); }
+  50% { transform: rotate(0eg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.shake {
+  animation: shake 0.5s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f9f2e7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e24084;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2ba99a;
+}
+
+/* Custom selection colors */
+::selection {
+  background: #e24084;
+  color: white;
+}
+
+.clip-corner {
+  clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+}
+
+.meme-mode {
+  --color-primary: #ff00ff;
+  --color-secondary: #00ffff;
+  --font-sans: "Comic Sans MS", cursive;
+}
+
+.meme-mode .professional-text {
+  font-family: "Impact", sans-serif;
+  color: white;
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000;
+}
+
+.meme-mode img:hover {
+  filter: hue-rotate(90deg) saturate(200%);
+  transform: rotate(5deg) scale(1.1);
 }

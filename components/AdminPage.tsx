@@ -22,7 +22,7 @@ export default function AdminPage() {
   const [collections, setCollections] = useState<CollectionsState>({})
 
   useEffect(() => {
-    const names = ['personal', 'experience', 'skills', 'projects', 'education']
+    const names = ['hero', 'about', 'skills', 'experience', 'projects', 'education']
 
     async function fetchAll() {
       const result: CollectionsState = {}

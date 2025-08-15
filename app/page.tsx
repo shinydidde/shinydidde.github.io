@@ -36,7 +36,7 @@ export default async function Home() {
       {/* only pass hero to Header */}
       <Header hero={heroData} />
 
-      <main className="space-y-32">
+      <main>
         <HeroSection       data={heroData} />
         <AboutSection      data={aboutData} />
         <SkillsSection     data={skillsData} />
