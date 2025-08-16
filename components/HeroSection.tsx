@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { FloatingIcons } from './ui/FloatingIcons';
 import { Sticker } from './ui/Sticker';
 import { useMemeMode } from '@/contexts/MemeContext';
+import Modal from '@/components/ui/Modal';
 import {
   FaLaughSquint,
   FaBug,
@@ -33,27 +34,12 @@ interface HeroData {
   memeTitle?: string;
   memeButtonText?: string;
   normalButtonText?: string;
-  sticker1?: {
-    emoji: string;
-    text: string;
-  };
-  sticker2?: {
-    emoji: string;
-    text: string;
-  };
+  sticker1?: { emoji: string; text: string };
+  sticker2?: { emoji: string; text: string };
 }
 
-const DEFAULT_NORMAL_ROLES = [
-  "Web Developer",
-  "Tech Lead",
-  "Nature Lover"
-];
-
-const DEFAULT_MEME_ROLES = [
-  "Bug Creator",
-  "Stack Overflow Expert",
-  "Console.log() Master"
-];
+const DEFAULT_NORMAL_ROLES = ["Web Developer", "Tech Lead", "Nature Lover"];
+const DEFAULT_MEME_ROLES = ["Bug Creator", "Stack Overflow Expert", "Console.log() Master"];
 
 const ICON_MAP = {
   code: <FaCode className="inline mr-2" />,
@@ -78,56 +64,64 @@ export default function HeroSection({ data }: { data: HeroData }) {
   const scale = useTransform(x, [-100, 100], [0.9, 1.1]);
   const { isMemeMode } = useMemeMode();
 
-  // Safely get roles with fallbacks
+  // Modal state for "random fact"
+  const [factOpen, setFactOpen] = useState(false);
+  const [factText, setFactText] = useState<string>('');
+
   const normalRoles = data.normalRoles || DEFAULT_NORMAL_ROLES;
   const memeRoles = data.memeRoles || DEFAULT_MEME_ROLES;
 
   const roles = isMemeMode
     ? memeRoles.map(role => ({
         text: role,
-        icon: ICON_MAP[
-          role.toLowerCase().includes('bug') ? 'bug' :
-          role.toLowerCase().includes('elephant') ? 'elephant' :
-          role.toLowerCase().includes('nature') ? 'leaf' :
-          role.toLowerCase().includes('stack') ? 'stack' :
-          role.toLowerCase().includes('console') ? 'terminal' :
-          'laugh'
-        ] || ICON_MAP.laugh
+        icon:
+          ICON_MAP[
+            role.toLowerCase().includes('bug') ? 'bug' :
+            role.toLowerCase().includes('elephant') ? 'elephant' :
+            role.toLowerCase().includes('nature') ? 'leaf' :
+            role.toLowerCase().includes('stack') ? 'stack' :
+            role.toLowerCase().includes('console') ? 'terminal' :
+            'laugh'
+          ] || ICON_MAP.laugh
       }))
     : normalRoles.map(role => ({
         text: role,
-        icon: ICON_MAP[
-          role.toLowerCase().includes('nature') ? 'leaf' :
-          role.toLowerCase().includes('animal') ? 'paw' :
-          role.toLowerCase().includes('travel') ? 'globe' :
-          role.toLowerCase().includes('tech') ? 'brain' :
-          role.toLowerCase().includes('magic') ? 'magic' :
-          'code'
-        ] || ICON_MAP.code
+        icon:
+          ICON_MAP[
+            role.toLowerCase().includes('nature') ? 'leaf' :
+            role.toLowerCase().includes('animal') ? 'paw' :
+            role.toLowerCase().includes('travel') ? 'globe' :
+            role.toLowerCase().includes('tech') ? 'brain' :
+            role.toLowerCase().includes('magic') ? 'magic' :
+            'code'
+          ] || ICON_MAP.code
       }));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+      setCurrentRoleIndex(prev => (prev + 1) % roles.length);
     }, 3000);
     return () => clearInterval(interval);
   }, [isMemeMode, roles.length]);
 
+  // Open modal instead of alert()
   const showRandomFact = () => {
     const facts = isMemeMode
       ? data.memeFacts || ["Check out my memes!"]
       : data.normalFacts || ["Interesting fact about me"];
     const randomFact = facts[Math.floor(Math.random() * facts.length)];
-    alert(randomFact);
+    setFactText(randomFact);
+    setFactOpen(true);
   };
 
   return (
-    <section className={`relative w-full min-h-screen flex items-center justify-center pt-20 pb-20 overflow-hidden ${
-      isMemeMode
-        ? 'bg-gradient-to-br from-green-100 to-blue-100'
-        : 'bg-gradient-to-br from-purple-50 to-pink-50'
-    }`}>
-      {/* Background elements */}
+    <section
+      className={`relative w-full min-h-screen flex items-center justify-center pt-20 pb-20 overflow-hidden ${
+        isMemeMode ? 'bg-gradient-to-br from-green-100 to-blue-100'
+                   : 'bg-gradient-to-br from-purple-50 to-pink-50'
+      }`}
+    >
+      {/* Background blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {isMemeMode ? (
           <>
@@ -214,9 +208,8 @@ export default function HeroSection({ data }: { data: HeroData }) {
             exit={{ y: -20, opacity: 0 }}
             transition={{ duration: 0.5 }}
             className={`inline-block bg-clip-text text-transparent ${
-              isMemeMode
-                ? 'bg-gradient-to-r from-green-500 to-blue-500'
-                : 'bg-gradient-to-r from-purple-500 to-pink-500'
+              isMemeMode ? 'bg-gradient-to-r from-green-500 to-blue-500'
+                         : 'bg-gradient-to-r from-purple-500 to-pink-500'
             }`}
           >
             {roles[currentRoleIndex].icon}
@@ -232,11 +225,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
           transition={{ delay: 0.6 }}
         >
           {data.catchPhrase}
-          <svg
-            className="absolute -bottom-2 left-0 w-full h-2"
-            viewBox="0 0 200 10"
-            preserveAspectRatio="none"
-          >
+          <svg className="absolute -bottom-2 left-0 w-full h-2" viewBox="0 0 200 10" preserveAspectRatio="none">
             <path
               d="M0,5 C50,0 50,10 100,5 C150,0 150,10 200,5"
               fill="none"
@@ -266,19 +255,20 @@ export default function HeroSection({ data }: { data: HeroData }) {
           >
             {isMemeMode ? data.memeButtonText || 'Explore My Work' : data.normalButtonText || 'View My Work'}
           </motion.a>
+
           <motion.button
             onClick={showRandomFact}
             className={`px-6 py-3 rounded-full font-bold border-2 ${
-              isMemeMode
-                ? 'bg-white text-black border-blue-500'
-                : 'bg-white text-black border-pink-500'
+              isMemeMode ? 'bg-white text-black border-blue-500'
+                         : 'bg-white text-black border-pink-500'
             } transition-all`}
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.95 }}
           >
             {isMemeMode ? (
               <>
-                <FaPaw className="inline mr-2" />
+                {/* keep icon visual parity with meme mode */}
+                <FaLaughSquint className="inline mr-2" />
                 {data.memeButtonText || 'Random Fact'}
               </>
             ) : (
@@ -297,9 +287,7 @@ export default function HeroSection({ data }: { data: HeroData }) {
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <span className="text-sm mb-2">
-            {data.scrollPrompt}
-          </span>
+          <span className="text-sm mb-2">{data.scrollPrompt}</span>
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 1.5 }}
@@ -313,24 +301,23 @@ export default function HeroSection({ data }: { data: HeroData }) {
 
         {/* Stickers */}
         {data.sticker1 && (
-          <Sticker
-            emoji={data.sticker1.emoji}
-            text={data.sticker1.text}
-            position="top-right"
-            rotate={15}
-            memeMode={isMemeMode}
-          />
+          <Sticker emoji={data.sticker1.emoji} text={data.sticker1.text} position="top-right" rotate={15} memeMode={isMemeMode} />
         )}
         {data.sticker2 && (
-          <Sticker
-            emoji={data.sticker2.emoji}
-            text={data.sticker2.text}
-            position="bottom-left"
-            rotate={-10}
-            memeMode={isMemeMode}
-          />
+          <Sticker emoji={data.sticker2.emoji} text={data.sticker2.text} position="bottom-left" rotate={-10} memeMode={isMemeMode} />
         )}
       </motion.div>
+
+      {/* Random Fact Modal */}
+      <Modal
+        isOpen={factOpen}
+        onClose={() => setFactOpen(false)}
+        title={isMemeMode ? 'RANDOM CHAOS FACT' : 'Random Fun Fact'}
+        icon={isMemeMode ? FaLaughSquint : FaLeaf}
+        size="sm"
+      >
+        <p className="text-lg">{factText}</p>
+      </Modal>
     </section>
   );
 }

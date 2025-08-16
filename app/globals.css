@@ -90,3 +90,20 @@ body {
   filter: hue-rotate(90deg) saturate(200%);
   transform: rotate(5deg) scale(1.1);
 }
+
+
+@keyframes tailWag {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(15deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes petBounce {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+.pet-playing {
+  animation: petBounce 0.5s infinite;
+}

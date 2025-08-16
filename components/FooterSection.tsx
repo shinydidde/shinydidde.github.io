@@ -3,60 +3,92 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { SocialIcon } from './ui/SocialIcon';
-import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaHeart, FaCoffee, FaLaughSquint, FaSkype } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+  FaHeart,
+  FaLaughSquint,
+  FaSkype,
+  FaCode
+} from 'react-icons/fa';
 import { SiReact } from 'react-icons/si';
 import { useMemeMode } from '@/contexts/MemeContext';
 
-interface ContactInfo {
+export type FooterData = Readonly<{
   name?: string;
   avatar?: string;
-  email?: string;
-  phone?: string;
-  location?: string;
-  github?: string;
-  linkedin?: string;
-  twitter?: string;
-  instagram?: string;
-  skype?: string;
-  heading?: string;
-  footerText?: string;
+  contact?: {
+    email?: string;
+    phone?: string;
+    location?: string;
+    skype?: string;
+  };
+  social?: {
+    github?: string;
+    linkedin?: string;
+    twitter?: string;
+    instagram?: string;
+  };
+  copy?: {
+    headingNormal?: string;
+    headingMeme?: string;
+    bioNormal?: string;
+    bioMeme?: string;
+    footerTextNormal?: string;
+    footerTextMeme?: string;
+    copyrightNormal?: string; // supports {year}
+    copyrightMeme?: string;   // supports {year}
+    nameSuffixMeme?: string;
+    dmTitleNormal?: string;
+    dmTitleMeme?: string;
+    dmListNormal?: string[];
+    dmListMeme?: string[];
+  };
+}>;
+
+function withYear(s?: string, year?: number) {
+  return (s ?? '').replace(/\{year\}/g, String(year ?? ''));
 }
 
-export default function FooterSection({ contact = {} }: { contact?: Partial<ContactInfo> }) {
+export default function FooterSection({ contact }: { contact: FooterData }) {
   const { isMemeMode } = useMemeMode();
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
-  // Provide default values
-  const safeContact = {
-    name: 'Your Name',
-    avatar: 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/me.png?alt=media&token=0ff61f87-58db-408c-8496-589ce987f5ea',
-    email: 'example@example.com',
-    phone: '+0000000000',
-    location: 'Earth',
-    github: '#',
-    linkedin: '#',
-    twitter: '#',
-    instagram: '#',
-    skype: 'your-skype',
-    heading: "Let's Connect!",
-    footerText: "This website consumes cookies. Not the edible kind, sadly.",
-    ...contact
-  };
+  const name = contact?.name ?? '';
+  const avatar = contact?.avatar ?? '';
+  const c = contact?.contact ?? {};
+  const social = contact?.social ?? {};
+  const copy = contact?.copy ?? {};
+
+  const heading = isMemeMode ? (copy.headingMeme ?? '') : (copy.headingNormal ?? '');
+  const bio = isMemeMode ? (copy.bioMeme ?? '') : (copy.bioNormal ?? '');
+  const footerText = isMemeMode ? (copy.footerTextMeme ?? '') : (copy.footerTextNormal ?? '');
+  const copyright = isMemeMode
+    ? withYear(copy.copyrightMeme, year)
+    : withYear(copy.copyrightNormal, year);
+
+  const dmTitle = isMemeMode ? (copy.dmTitleMeme ?? '') : (copy.dmTitleNormal ?? '');
+  const dmList = isMemeMode ? (copy.dmListMeme ?? []) : (copy.dmListNormal ?? []);
+
+  const displayName = isMemeMode
+    ? `${(name || 'YOU').toUpperCase()}${copy.nameSuffixMeme ?? ''}`
+    : name;
 
   const socialLinks = [
-    { name: 'GitHub', url: safeContact.github, icon: 'github' as const },
-    { name: 'LinkedIn', url: safeContact.linkedin, icon: 'linkedin' as const },
-    { name: 'Twitter', url: safeContact.twitter, icon: 'twitter' as const },
-    { name: 'Instagram', url: safeContact.instagram, icon: 'instagram' as const },
-  ];
+    { name: 'GitHub', url: social.github, icon: 'github' as const },
+    { name: 'LinkedIn', url: social.linkedin, icon: 'linkedin' as const },
+    { name: 'Twitter', url: social.twitter, icon: 'twitter' as const },
+    { name: 'Instagram', url: social.instagram, icon: 'instagram' as const }
+  ].filter((s) => !!s.url);
 
   return (
-    <footer className={`py-16 relative overflow-hidden ${
-      isMemeMode
-        ? 'bg-gradient-to-br from-green-900 to-blue-900'
-        : 'bg-black text-white'
-    }`}>
-      {/* Background elements */}
+    <footer
+      className={`py-16 relative overflow-hidden ${
+        isMemeMode ? 'bg-gradient-to-br from-green-900 to-blue-900' : 'bg-black text-white'
+      }`}
+    >
+      {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {isMemeMode ? (
           <>
@@ -73,7 +105,7 @@ export default function FooterSection({ contact = {} }: { contact?: Partial<Cont
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between gap-12">
-          {/* Left column */}
+          {/* Left: avatar/name/bio */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -82,37 +114,39 @@ export default function FooterSection({ contact = {} }: { contact?: Partial<Cont
             className="flex-1"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="relative w-12 h-12">
-                <Image
-                  src={safeContact.avatar}
-                  alt={`${safeContact.name} avatar`}
-                  fill
-                  className={`rounded-full border-2 object-cover ${
-                    isMemeMode ? 'border-yellow-400' : 'border-pink-500'
-                  }`}
-                />
-              </div>
-              <h2 className={`text-2xl font-bold ${
-                isMemeMode ? 'text-yellow-300' : ''
-              }`}>
-                {isMemeMode ? `${safeContact.name?.toUpperCase() || 'YOU'} (MEME LORD)` : safeContact.name}
-              </h2>
+              {avatar && (
+                <div className="relative w-12 h-12">
+                  <Image
+                    src={avatar}
+                    alt={`${name || 'Portfolio'} avatar`}
+                    fill
+                    className={`rounded-full border-2 object-cover ${
+                      isMemeMode ? 'border-yellow-400' : 'border-pink-500'
+                    }`}
+                  />
+                </div>
+              )}
+              {displayName && (
+                <h2 className={`text-2xl font-bold ${isMemeMode ? 'text-yellow-300' : ''}`}>
+                  {displayName}
+                </h2>
+              )}
             </div>
-            <p className={`mb-6 max-w-md ${
-              isMemeMode ? 'text-blue-200' : 'text-gray-300'
-            }`}>
-              {isMemeMode
-                ? "BUILDING BUGGY EXPERIENCES WITH A SIDE OF CHAOS AND TOO MUCH COFFEE."
-                : "Building digital experiences with a side of memes and too much coffee."}
-            </p>
-            <p className={isMemeMode ? 'text-blue-200' : 'text-gray-300'}>
-              {isMemeMode
-                ? `© ${currentYear} ALL RIGHTS RESERVED (UNLESS YOU'RE A RECRUITER WITH PIZZA).`
-                : `© ${currentYear} All rights reserved. Unless you're a recruiter with an awesome opportunity, then some rights may be waived.`}
-            </p>
+
+            {bio && (
+              <p className={`mb-6 max-w-md ${isMemeMode ? 'text-blue-200' : 'text-gray-300'}`}>
+                {bio}
+              </p>
+            )}
+
+            {copyright && (
+              <p className={isMemeMode ? 'text-blue-200' : 'text-gray-300'}>
+                {copyright}
+              </p>
+            )}
           </motion.div>
 
-          {/* Middle column - Contact */}
+          {/* Middle: contact */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -120,49 +154,49 @@ export default function FooterSection({ contact = {} }: { contact?: Partial<Cont
             viewport={{ once: true }}
             className="flex-1"
           >
-            <h3 className={`text-xl font-bold mb-6 ${
-              isMemeMode ? 'text-yellow-300' : ''
-            }`}>
-              {isMemeMode ? "LET'S CHAOS!" : safeContact.heading}
-            </h3>
+            {heading && (
+              <h3 className={`text-xl font-bold mb-6 ${isMemeMode ? 'text-yellow-300' : ''}`}>
+                {heading}
+              </h3>
+            )}
+
             <ul className="space-y-4">
-              <li className="flex items-center gap-3">
-                <FaEnvelope className={`text-2xl ${
-                  isMemeMode ? 'text-yellow-400' : 'text-pink-400'
-                }`} />
-                <a
-                  href={`mailto:${safeContact.email}`}
-                  className={`hover:${
-                    isMemeMode ? 'text-yellow-400' : 'text-pink-400'
-                  } transition-colors`}
-                >
-                  {isMemeMode ? safeContact.email?.toUpperCase() : safeContact.email}
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <FaPhone className={`text-2xl ${
-                  isMemeMode ? 'text-yellow-400' : 'text-pink-400'
-                }`} />
-                <span>{safeContact.phone}</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <FaSkype className={`text-2xl ${
-                  isMemeMode ? 'text-yellow-400' : 'text-pink-400'
-                }`} />
-                <span>{isMemeMode ? safeContact.skype?.toUpperCase() : safeContact.skype}</span>
-              </li>
-              {safeContact.location && (
+              {c.email && (
                 <li className="flex items-center gap-3">
-                  <FaMapMarkerAlt className={`text-2xl ${
-                    isMemeMode ? 'text-yellow-400' : 'text-pink-400'
-                  }`} />
-                  <span>{isMemeMode ? safeContact.location.toUpperCase() : safeContact.location}</span>
+                  <FaEnvelope className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <a
+                    href={`mailto:${c.email}`}
+                    className={`transition-colors hover:${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`}
+                  >
+                    {isMemeMode ? c.email.toUpperCase() : c.email}
+                  </a>
+                </li>
+              )}
+
+              {c.phone && (
+                <li className="flex items-center gap-3">
+                  <FaPhone className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <span>{c.phone}</span>
+                </li>
+              )}
+
+              {c.skype && (
+                <li className="flex items-center gap-3">
+                  <FaSkype className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <span>{isMemeMode ? c.skype.toUpperCase() : c.skype}</span>
+                </li>
+              )}
+
+              {c.location && (
+                <li className="flex items-center gap-3">
+                  <FaMapMarkerAlt className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <span>{isMemeMode ? c.location.toUpperCase() : c.location}</span>
                 </li>
               )}
             </ul>
           </motion.div>
 
-          {/* Right column - Social */}
+          {/* Right: social & DM list */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -170,58 +204,40 @@ export default function FooterSection({ contact = {} }: { contact?: Partial<Cont
             viewport={{ once: true }}
             className="flex-1"
           >
-            <h3 className={`text-xl font-bold mb-6 ${
-              isMemeMode ? 'text-yellow-300' : ''
-            }`}>
-              {isMemeMode ? "STALK MY CHAOS" : "Follow My Shenanigans"}
-            </h3>
-            <div className="flex gap-4 mb-8">
-              {socialLinks.map((social) => (
-                <SocialIcon
-                  key={social.name}
-                  platform={social.icon}
-                  url={social.url || '#'}
-                  memeMode={isMemeMode}
-                />
-              ))}
-            </div>
-            <p className={`mb-4 ${
-              isMemeMode ? 'text-blue-200' : 'text-gray-300'
-            }`}>
-              {isMemeMode ? "P.S. MY DMS ARE OPEN FOR:" : "P.S. My DMs are open for:"}
-            </p>
-            <ul className={`space-y-2 ${
-              isMemeMode ? 'text-blue-200' : 'text-gray-300'
-            }`}>
-              <li className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${
-                  isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'
-                }`} />
-                {isMemeMode ? "JOB OFFERS (PIZZA INCLUDED)" : "Job opportunities"}
-              </li>
-              <li className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${
-                  isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'
-                }`} />
-                {isMemeMode ? "MEME COLLABORATIONS" : "Collaboration ideas"}
-              </li>
-              <li className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${
-                  isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'
-                }`} />
-                {isMemeMode ? "BUG HUNTING PARTNERS" : "Meme exchanges"}
-              </li>
-              <li className="flex items-center gap-2">
-                <span className={`w-2 h-2 rounded-full ${
-                  isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'
-                }`} />
-                {isMemeMode ? "COFFEE DONATIONS" : "Coffee recommendations"}
-              </li>
-            </ul>
+            {(socialLinks.length > 0 || dmTitle) && (
+              <h3 className={`text-xl font-bold mb-6 ${isMemeMode ? 'text-yellow-300' : ''}`}>
+                {isMemeMode ? 'STALK MY CHAOS' : 'Follow My Shenanigans'}
+              </h3>
+            )}
+
+            {socialLinks.length > 0 && (
+              <div className="flex gap-4 mb-8">
+                {socialLinks.map((s) => (
+                  <SocialIcon key={s.name} platform={s.icon} url={s.url!} memeMode={isMemeMode} />
+                ))}
+              </div>
+            )}
+
+            {dmTitle && (
+              <p className={`${isMemeMode ? 'text-blue-200' : 'text-gray-300'} mb-4`}>
+                {dmTitle}
+              </p>
+            )}
+
+            {dmList.length > 0 && (
+              <ul className={`${isMemeMode ? 'text-blue-200' : 'text-gray-300'} space-y-2`}>
+                {dmList.map((line, i) => (
+                  <li key={`${line}-${i}`} className="flex items-center gap-2">
+                    <span className={`w-2 h-2 rounded-full ${isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'}`} />
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            )}
           </motion.div>
         </div>
 
-        {/* Footer bottom */}
+        {/* Bottom strip */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -234,23 +250,20 @@ export default function FooterSection({ contact = {} }: { contact?: Partial<Cont
           <p>
             {isMemeMode ? (
               <>
-                MADE WITH <FaLaughSquint className="inline text-yellow-400" />,
-                <SiReact className="inline mx-1 text-blue-400" />,
-                AND <FaCoffee className="inline mx-1 text-green-400" />
+                MADE WITH <FaLaughSquint className="inline text-yellow-400" />,{' '}
+                <SiReact className="inline mx-1 text-blue-400" /> AND{' '}
+                <FaCode className="inline mx-1 text-green-400" />
               </>
             ) : (
               <>
-                Made with <FaHeart className="inline text-pink-500" />,
-                <SiReact className="inline mx-1 text-purple-500" />,
-                and <FaCoffee className="inline mx-1 text-yellow-500" />
+                Made with <FaHeart className="inline text-pink-500" />,{' '}
+                <SiReact className="inline mx-1 text-purple-500" /> and{' '}
+                <FaCode className="inline mx-1 text-yellow-500" />
               </>
             )}
           </p>
-          <p className="mt-2">
-            {isMemeMode
-              ? safeContact.footerText?.toUpperCase() || "THIS WEBSITE CONSUMES COOKIES. STILL NOT THE EDIBLE KIND, SADLY."
-              : safeContact.footerText || "This website consumes cookies. Not the edible kind, sadly."}
-          </p>
+
+          {footerText && <p className="mt-2">{isMemeMode ? footerText.toUpperCase() : footerText}</p>}
         </motion.div>
       </div>
     </footer>

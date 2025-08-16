@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { Patrick_Hand, Permanent_Marker } from "next/font/google";
 import MemePopup from "@/components/MemePopup";
 import { MemeProvider } from '@/contexts/MemeContext';
+import DesktopBlackCatWrapper from '@/components/DesktopBlackCatWrapper';
 
 // load fonts
 const sketch = Patrick_Hand({ subsets: ["latin"], weight: "400" });
@@ -38,8 +39,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {children}
         </MemeProvider>
 
-        {/* Global meme popup container - now a client component */}
+        {/* Global components */}
         <MemePopup />
+        <DesktopBlackCatWrapper />
       </body>
     </html>
   );

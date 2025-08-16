@@ -7,8 +7,7 @@ import AboutSection      from '@/components/AboutSection'
 import SkillsSection     from '@/components/SkillsSection'
 import ExperienceSection from '@/components/ExperienceSection'
 import ProjectsSection   from '@/components/ProjectsSection'
-import EducationSection from '@/components/EducationSection'
-// import ContactSection    from '@/components/ContactSection'
+import EducationSection  from '@/components/EducationSection'
 import FooterSection     from '@/components/FooterSection'
 
 import {
@@ -17,23 +16,21 @@ import {
   fetchSkillsList,
   fetchExperienceList,
   fetchProjectsList,
-  fetchContactInfo,
-  fetchEducationList
+  fetchEducationList,
+  fetchFooterInfo
 } from '@/lib/firestoreService'
 
 export default async function Home() {
-  // fetch all new-structure docs
   const heroData       = await fetchHero()
   const aboutData      = await fetchAbout()
   const skillsData     = await fetchSkillsList()
   const experienceData = await fetchExperienceList()
   const projectsData   = await fetchProjectsList()
-  const contactData    = await fetchContactInfo()
-  const educationData  = await fetchEducationList();
+  const educationData  = await fetchEducationList()
+  const footerData     = await fetchFooterInfo()
 
   return (
     <div className="min-h-screen">
-      {/* only pass hero to Header */}
       <Header hero={heroData} />
 
       <main>
@@ -42,12 +39,10 @@ export default async function Home() {
         <SkillsSection     data={skillsData} />
         <ExperienceSection data={experienceData} />
         <ProjectsSection   data={projectsData} />
-        <EducationSection data={educationData} />
-        {/* <ContactSection    data={contactData} /> */}
+        <EducationSection  data={educationData} />
       </main>
 
-      {/* only pass contact to Footer */}
-      <FooterSection contact={contactData} />
+      <FooterSection contact={footerData} />
     </div>
   )
 }

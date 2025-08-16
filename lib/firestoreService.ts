@@ -16,30 +16,68 @@ function getObjectArray<T>(raw: unknown, mapFn: (o: Record<string,unknown>) => T
     .map(i => mapFn(i as Record<string,unknown>))
 }
 
-/** 1) HERO **/
 export interface HeroData {
-  name:        string
-  role:        string
-  avatarUrl:   string
-  logo:        string
-  backgrounds: string[]
-  catchPhrase: string
-  scrollPrompt:string
+  name:         string
+  role:         string
+  avatarUrl:    string
+  logo:         string
+  backgrounds:  string[]
+  catchPhrase:  string
+  scrollPrompt: string
+
+  // new (all optional in Firestore)
+  normalRoles?:   string[]
+  memeRoles?:     string[]
+  normalFacts?:   string[]
+  memeFacts?:     string[]
+  memeTitle?:     string
+  normalButtonText?: string
+  memeButtonText?:   string
+  sticker1?: { emoji: string; text: string }
+  sticker2?: { emoji: string; text: string }
 }
+
+function getSticker(x: unknown): { emoji: string; text: string } | undefined {
+  if (!x || typeof x !== 'object') return undefined
+  const o = x as Record<string, unknown>
+  const emoji = getString(o.emoji)
+  const text  = getString(o.text)
+  return emoji || text ? { emoji, text } : undefined
+}
+
 export async function fetchHero(): Promise<HeroData> {
   const snap = await getDoc(doc(db, 'hero', 'info'))
   if (!snap.exists()) {
-    return { name:'',role:'',avatarUrl:'',logo: '',backgrounds:[],catchPhrase:'',scrollPrompt:'' }
+    return {
+      name:'', role:'', avatarUrl:'', logo:'',
+      backgrounds:[], catchPhrase:'', scrollPrompt:'',
+      normalRoles:[], memeRoles:[], normalFacts:[], memeFacts:[]
+    }
   }
-  const d = snap.data()!
+
+  const d = snap.data() as Record<string, unknown>
+
   return {
-    name:        getString(d.name),
-    role:        getString(d.role),
-    avatarUrl:   getString(d.avatarUrl),
-    logo:        getString(d.logo),
-    backgrounds: getStringArray(d.backgrounds),
-    catchPhrase: getString(d.catchPhrase),
-    scrollPrompt:getString(d.scrollPrompt),
+    name:         getString(d.name),
+    role:         getString(d.role),
+    avatarUrl:    getString(d.avatarUrl),
+    logo:         getString(d.logo),
+    backgrounds:  getStringArray(d.backgrounds),
+    catchPhrase:  getString(d.catchPhrase),
+    scrollPrompt: getString(d.scrollPrompt),
+
+    // 🔹 pull roles & facts directly from Firestore
+    normalRoles:  getStringArray(d.normalRoles),
+    memeRoles:    getStringArray(d.memeRoles),
+    normalFacts:  getStringArray(d.normalFacts),
+    memeFacts:    getStringArray(d.memeFacts),
+
+    // optional extras (safe if missing)
+    memeTitle:        getString(d.memeTitle),
+    normalButtonText: getString(d.normalButtonText),
+    memeButtonText:   getString(d.memeButtonText),
+    sticker1: getSticker(d.sticker1),
+    sticker2: getSticker(d.sticker2),
   }
 }
 
@@ -292,4 +330,95 @@ export async function fetchThemeSettings(): Promise<ThemeSettings> {
       easing:   getString(d.animation?.easing),
     }
   }
+}
+
+
+export type FooterData = Readonly<{
+  name: string;
+  avatar: string;
+  contact: {
+    email: string;
+    phone: string;
+    location: string;
+    skype: string;
+  };
+  social: {
+    github: string;
+    linkedin: string;
+    twitter: string;
+    instagram: string;
+  };
+  copy: {
+    headingNormal: string;
+    headingMeme: string;
+    bioNormal: string;
+    bioMeme: string;
+    footerTextNormal: string;
+    footerTextMeme: string;
+    copyrightNormal: string; // supports {year}
+    copyrightMeme: string;   // supports {year}
+    nameSuffixMeme: string;
+    dmTitleNormal: string;
+    dmTitleMeme: string;
+    dmListNormal: string[];
+    dmListMeme: string[];
+  };
+}>;
+
+export async function fetchFooterInfo(): Promise<FooterData> {
+  const snap = await getDoc(doc(db, 'footer', 'info'));
+  if (!snap.exists()) {
+    return {
+      name: '',
+      avatar: '',
+      contact: { email: '', phone: '', location: '', skype: '' },
+      social:  { github: '', linkedin: '', twitter: '', instagram: '' },
+      copy: {
+        headingNormal: '', headingMeme: '',
+        bioNormal: '', bioMeme: '',
+        footerTextNormal: '', footerTextMeme: '',
+        copyrightNormal: '', copyrightMeme: '',
+        nameSuffixMeme: '',
+        dmTitleNormal: '', dmTitleMeme: '',
+        dmListNormal: [], dmListMeme: []
+      }
+    };
+  }
+
+  const d = snap.data() as Record<string, unknown>;
+  const c  = (d.contact && typeof d.contact === 'object') ? d.contact as Record<string,unknown> : {};
+  const s  = (d.social  && typeof d.social  === 'object') ? d.social  as Record<string,unknown> : {};
+  const cp = (d.copy    && typeof d.copy    === 'object') ? d.copy    as Record<string,unknown> : {};
+
+  return {
+    name:   getString(d.name),
+    avatar: getString(d.avatar),
+    contact: {
+      email:    getString(c.email),
+      phone:    getString(c.phone),
+      location: getString(c.location),
+      skype:    getString(c.skype),
+    },
+    social: {
+      github:    getString(s.github),
+      linkedin:  getString(s.linkedin),
+      twitter:   getString(s.twitter),
+      instagram: getString(s.instagram),
+    },
+    copy: {
+      headingNormal:    getString(cp.headingNormal),
+      headingMeme:      getString(cp.headingMeme),
+      bioNormal:        getString(cp.bioNormal),
+      bioMeme:          getString(cp.bioMeme),
+      footerTextNormal: getString(cp.footerTextNormal),
+      footerTextMeme:   getString(cp.footerTextMeme),
+      copyrightNormal:  getString(cp.copyrightNormal),
+      copyrightMeme:    getString(cp.copyrightMeme),
+      nameSuffixMeme:   getString(cp.nameSuffixMeme),
+      dmTitleNormal:    getString(cp.dmTitleNormal),
+      dmTitleMeme:      getString(cp.dmTitleMeme),
+      dmListNormal:     getStringArray(cp.dmListNormal),
+      dmListMeme:       getStringArray(cp.dmListMeme),
+    }
+  };
 }
