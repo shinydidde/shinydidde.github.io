@@ -5,6 +5,8 @@ import { Patrick_Hand, Permanent_Marker } from "next/font/google";
 import MemePopup from "@/components/MemePopup";
 import { MemeProvider } from '@/contexts/MemeContext';
 import DesktopBlackCatWrapper from '@/components/DesktopBlackCatWrapper';
+import FloatingCharacter from '@/components/FloatingCharacter';
+import BlinkingFaces from '@/components/BlinkingFaces';
 
 // load fonts
 const sketch = Patrick_Hand({ subsets: ["latin"], weight: "400" });
@@ -36,12 +38,50 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </div>
 
         <MemeProvider>
-          {children}
-        </MemeProvider>
+          <div className="fixed inset-0 pointer-events-none z-20">
+            <FloatingCharacter
+              src="/characters/coder-on-lift.png"
+              alt="Developer on lift"
+              initialY={-130}
+              mobileInitialY={-12}
+              scrollRange={[0, 0.8]}
+              motionRange={[200, -100]}
+              mobileMotionRange={[0, 0]}
+              side="left"
+              size={320}
+              mobileSize={72}
+              idleBob={false}
+            />
 
-        {/* Global components */}
-        <MemePopup />
-        <DesktopBlackCatWrapper />
+            <FloatingCharacter
+              src="/characters/bug-hunter.png"
+              alt="Bug hunter"
+              initialY={300}
+              scrollRange={[0.1, 0.7]}
+              motionRange={[300, -100]}
+              side="right"
+              size={260}
+              hideOnMobile
+              memeOnly={true}
+              idleBob={false}
+            />
+          </div>
+
+          {/* Blinking Faces */}
+          <div className="fixed inset-0 pointer-events-none z-20">
+            <BlinkingFaces
+              src="/faces/meme-cat.png"
+              alt="Meme cat"
+              position={{ top: "30%", left: "15%" }}
+              blinkInterval={5000}
+              size={70}
+              memeOnly={true}
+            />
+          </div>
+          {children}
+          <MemePopup />
+          <DesktopBlackCatWrapper />
+        </MemeProvider>
       </body>
     </html>
   );

@@ -107,3 +107,84 @@ body {
 .pet-playing {
   animation: petBounce 0.5s infinite;
 }
+
+
+/* globals.css */
+@keyframes rainbow {
+  0% { color: #ff0000; }
+  14% { color: #ff7f00; }
+  28% { color: #ffff00; }
+  42% { color: #00ff00; }
+  57% { color: #0000ff; }
+  71% { color: #4b0082; }
+  85% { color: #9400d3; }
+  100% { color: #ff0000; }
+}
+
+.meme-text {
+  animation: rainbow 3s linear infinite;
+  text-shadow: 2px 2px 0 #000;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.floating {
+  animation: float 3s ease-in-out infinite;
+}
+
+
+/* Add to globals.css */
+.meme-mode .floating {
+  animation: float 2s ease-in-out infinite, rainbow-border 4s linear infinite;
+}
+
+@keyframes rainbow-border {
+  0% { border-color: #ff0000; }
+  100% { border-color: #9400d3; }
+}
+
+/* globals.css */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.meme-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.hover-grow {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.hover-grow:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+}
+
+
+/* Add to globals.css */
+.floating-element {
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  transition: all 0.3s ease;
+}
+
+.floating-element:hover {
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+  transform: scale(1.1);
+}
+
+.meme-element {
+  z-index: 30;
+}
+
+@media (max-width: 768px) {
+  .floating-element {
+    width: 80px !important;
+    height: 80px !important;
+  }
+}
