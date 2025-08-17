@@ -67,8 +67,23 @@ export default function AboutSection({
   const { isMemeMode } = useMemeMode();
 
   const hoverAnim: Variants = {
-    rest: { y: 0, scale: 1 },
-    hover: { y: -4, scale: 1.02, transition: { type: 'spring', stiffness: 180, damping: 12 } },
+    rest: { 
+      y: 0, 
+      scale: 1, 
+      rotateX: 0,
+      transition: { type: 'spring', stiffness: 300, damping: 30 }
+    },
+    hover: { 
+      y: -8, 
+      scale: 1.01, 
+      rotateX: 2,
+      transition: { 
+        type: 'spring', 
+        stiffness: 400, 
+        damping: 25,
+        mass: 0.8
+      } 
+    },
   };
 
   const currentTitle = isMemeMode ? data.memeTitle : data.title;
@@ -131,7 +146,7 @@ export default function AboutSection({
       bgPosition="top center"
     >
       {/* Wrapper so we can position doodles around the card, not inside it */}
-      <div className="relative max-w-4xl mx-auto px-8">
+      <div className="relative max-w-4xl mx-auto px-8 pt-12 pr-12">
         {/* Visible doodles placed AROUND the card (no clipping) */}
         <div className="pointer-events-none absolute inset-0 -z-0">
           {isMemeMode ? (

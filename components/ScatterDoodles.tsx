@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 
 const doodleFiles = [
   '/doodles/leaf.svg',
-  '/doodles/me.svg',
+  '/doodles/me.png',
   '/doodles/paw.svg',
   '/doodles/code-brackets.svg',
   '/doodles/bird.svg',
-  '/doodles/me1.svg',
+  '/doodles/me1.png',
 ];
 
 type DoodleSpec = { src: string; top: string; left: string; width: number; duration: number };

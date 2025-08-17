@@ -27,10 +27,16 @@ interface FloatingCharacterProps {
   size?: number;
 
   // Mobile behavior
-  hideOnMobile?: boolean;                 // hide entirely on mobile
-  mobileSize?: number;                    // override size on mobile
-  mobileInitialY?: number;                // override Y on mobile
-  mobileMotionRange?: [number, number];   // override parallax on mobile
+  hideOnMobile?: boolean;
+  mobileSize?: number;
+  mobileInitialY?: number;
+  mobileMotionRange?: [number, number];
+
+  // Meme-mode overrides
+  memeSrc?: string;
+  memeSize?: number;
+  memeInitialY?: number;
+  memeMotionRange?: [number, number];
 }
 
 export default function FloatingCharacter({
@@ -49,8 +55,14 @@ export default function FloatingCharacter({
   mobileSize,
   mobileInitialY,
   mobileMotionRange = [0, 0],
+
+  // meme overrides
+  memeSrc,
+  memeSize,
+  memeInitialY,
+  memeMotionRange,
 }: FloatingCharacterProps) {
-  // 1) Hooks FIRST (unconditional)
+  // --- Hooks must be unconditional
   const { isMemeMode } = useMemeMode();
   const { scrollYProgress } = useScroll();
 
@@ -65,12 +77,18 @@ export default function FloatingCharacter({
     return () => mq.removeEventListener('change', update);
   }, []);
 
-  // 2) Compute effective (can depend on state)
-  const effSize = isMobile ? (mobileSize ?? size) : size;
-  const effInitialY = isMobile ? (mobileInitialY ?? initialY) : initialY;
-  const effMotionRange = isMobile ? mobileMotionRange : motionRange;
+  // Resolve meme-mode base props
+  const baseSrc = isMemeMode && memeSrc ? memeSrc : src;
+  const baseSize = isMemeMode && memeSize !== undefined ? memeSize : size;
+  const baseInitialY = isMemeMode && memeInitialY !== undefined ? memeInitialY : initialY;
+  const baseMotionRange = isMemeMode && memeMotionRange ? memeMotionRange : motionRange;
 
-  // 3) All motion values/hooks still run every render
+  // Then apply mobile overrides
+  const effSize = isMobile ? (mobileSize ?? baseSize) : baseSize;
+  const effInitialY = isMobile ? (mobileInitialY ?? baseInitialY) : baseInitialY;
+  const effMotionRange = isMobile ? mobileMotionRange : baseMotionRange;
+
+  // Motion values (unconditional)
   const rawY = useTransform(scrollYProgress, scrollRange, effMotionRange);
   const rawX = useTransform(
     scrollYProgress,
@@ -98,7 +116,7 @@ export default function FloatingCharacter({
     [side]
   );
 
-  // 4) Only now decide to render or not (after all hooks)
+  // Render gate AFTER hooks
   if (!mounted || (memeOnly && !isMemeMode) || (hideOnMobile && isMobile)) return null;
 
   return (
@@ -113,7 +131,7 @@ export default function FloatingCharacter({
     >
       <motion.div style={{ y, x, rotate, willChange: 'transform' }} whileHover={{ scale: 1.08 }}>
         <Image
-          src={src}
+          src={baseSrc}
           alt={alt}
           width={effSize}
           height={effSize}

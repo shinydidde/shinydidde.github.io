@@ -2,35 +2,27 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { JSX, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import {
-  FaReact,
-  FaCode,
-  FaRocket,
-  FaPalette,
-  FaBolt,
-  FaTools,
-  FaBrain,
-  FaGamepad,
-  FaMobile,
-  FaDesktop,
-  FaLaughSquint,
-  FaBug,
-  FaStackOverflow,
-  FaTerminal,
-  FaCoffee
+  FaReact, FaCode, FaRocket, FaPalette, FaBolt, FaTools, FaBrain,
+  FaGamepad, FaMobile, FaDesktop, FaLaughSquint, FaBug,
+  FaStackOverflow, FaTerminal, FaCoffee
 } from 'react-icons/fa';
 
-interface FloatingIcon {
+type FloatingIcon = {
   id: number;
-  icon: JSX.Element;
+  icon: ReactElement;
   style: {
     top: string;
     left: string;
     fontSize: string;
     rotate: number;
   };
-}
+  // per-icon animation params (avoid recomputing on every render)
+  duration: number;
+  amplitude: number;
+  delay: number;
+};
 
 interface FloatingIconsProps {
   count?: number;
@@ -39,28 +31,28 @@ interface FloatingIconsProps {
 
 // Normal mode icons
 const NORMAL_ICONS = [
-  { icon: <FaReact key="react" className="text-blue-500" />, name: "react" },
-  { icon: <FaCode key="code" className="text-gray-700" />, name: "code" },
-  { icon: <FaRocket key="rocket" className="text-purple-500" />, name: "rocket" },
-  { icon: <FaPalette key="palette" className="text-pink-500" />, name: "palette" },
-  { icon: <FaBolt key="bolt" className="text-yellow-500" />, name: "bolt" },
-  { icon: <FaTools key="tools" className="text-gray-600" />, name: "tools" },
-  { icon: <FaBrain key="brain" className="text-indigo-500" />, name: "brain" },
-  { icon: <FaGamepad key="gamepad" className="text-green-500" />, name: "gamepad" },
-  { icon: <FaMobile key="mobile" className="text-blue-400" />, name: "mobile" },
-  { icon: <FaDesktop key="desktop" className="text-gray-800" />, name: "desktop" }
+  { icon: <FaReact key="react" className="text-blue-500" /> },
+  { icon: <FaCode key="code" className="text-gray-700" /> },
+  { icon: <FaRocket key="rocket" className="text-purple-500" /> },
+  { icon: <FaPalette key="palette" className="text-pink-500" /> },
+  { icon: <FaBolt key="bolt" className="text-yellow-500" /> },
+  { icon: <FaTools key="tools" className="text-gray-600" /> },
+  { icon: <FaBrain key="brain" className="text-indigo-500" /> },
+  { icon: <FaGamepad key="gamepad" className="text-green-500" /> },
+  { icon: <FaMobile key="mobile" className="text-blue-400" /> },
+  { icon: <FaDesktop key="desktop" className="text-gray-800" /> }
 ];
 
 // Meme mode icons
 const MEME_ICONS = [
-  { icon: <FaLaughSquint key="laugh" className="text-red-500" />, name: "laugh" },
-  { icon: <FaBug key="bug" className="text-green-600" />, name: "bug" },
-  { icon: <FaStackOverflow key="stack" className="text-orange-500" />, name: "stack" },
-  { icon: <FaTerminal key="terminal" className="text-blue-600" />, name: "terminal" },
-  { icon: <FaCoffee key="coffee" className="text-brown-500" />, name: "coffee" },
-  { icon: <FaCode key="code" className="text-purple-600" />, name: "code" },
-  { icon: <FaBolt key="bolt" className="text-yellow-400" />, name: "bolt" },
-  { icon: <FaGamepad key="gamepad" className="text-pink-500" />, name: "gamepad" }
+  { icon: <FaLaughSquint key="laugh" className="text-red-500" /> },
+  { icon: <FaBug key="bug" className="text-green-600" /> },
+  { icon: <FaStackOverflow key="stack" className="text-orange-500" /> },
+  { icon: <FaTerminal key="terminal" className="text-blue-600" /> },
+  { icon: <FaCoffee key="coffee" className="text-amber-800" /> }, // brown isn't a Tailwind default
+  { icon: <FaCode key="code" className="text-purple-600" /> },
+  { icon: <FaBolt key="bolt" className="text-yellow-400" /> },
+  { icon: <FaGamepad key="gamepad" className="text-pink-500" /> }
 ];
 
 export function FloatingIcons({ count = 10, memeMode = false }: FloatingIconsProps) {
@@ -68,17 +60,21 @@ export function FloatingIcons({ count = 10, memeMode = false }: FloatingIconsPro
 
   useEffect(() => {
     const iconSet = memeMode ? MEME_ICONS : NORMAL_ICONS;
-    const newIcons = Array.from({ length: count }, (_, i) => {
-      const randomIcon = iconSet[Math.floor(Math.random() * iconSet.length)];
+    const newIcons: FloatingIcon[] = Array.from({ length: count }, (_, i) => {
+      const { icon } = iconSet[Math.floor(Math.random() * iconSet.length)];
+      const rotateStart = Math.random() * 360;
       return {
         id: i,
-        icon: randomIcon.icon,
+        icon,
         style: {
           top: `${Math.random() * 100}%`,
           left: `${Math.random() * 100}%`,
           fontSize: `${Math.random() * 20 + 10}px`,
-          rotate: Math.random() * 360,
+          rotate: rotateStart
         },
+        duration: Math.random() * 8 + 6, // 6–14s
+        amplitude: Math.random() * 40 + 20, // 20–60px
+        delay: Math.random() * 2 // 0–2s
       };
     });
     setIcons(newIcons);
@@ -86,21 +82,22 @@ export function FloatingIcons({ count = 10, memeMode = false }: FloatingIconsPro
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {icons.map(({ id, icon, style }) => (
+      {icons.map(({ id, icon, style, duration, amplitude, delay }) => (
         <motion.div
           key={`floating-icon-${id}`}
           className="absolute"
           style={style}
           animate={{
-            y: [0, -50, 0],
-            opacity: [0.8, 1, 0.8],
-            rotate: [style.rotate, style.rotate + 20],
+            y: [0, -amplitude, 0],
+            opacity: [0.7, 1, 0.7],
+            rotate: [style.rotate, style.rotate + 20, style.rotate]
           }}
           transition={{
-            duration: Math.random() * 10 + 5,
+            type: 'tween',         // <-- force tween so 3+ keyframes work
+            duration,
             repeat: Infinity,
-            repeatType: 'reverse',
             ease: 'easeInOut',
+            delay
           }}
         >
           {icon}

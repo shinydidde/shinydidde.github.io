@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body
         className={`${sketch.className}
-                    bg-paper
+                    // bg-paper
                     text-gray-900
                     antialiased
                     min-h-screen
@@ -41,26 +41,29 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <div className="fixed inset-0 pointer-events-none z-20">
             <FloatingCharacter
               src="/characters/coder-on-lift.png"
-              alt="Developer on lift"
+              memeSrc="/characters/party.png"
+              alt="Floating friend"
               initialY={-130}
-              mobileInitialY={-12}
+              memeInitialY={-110}
               scrollRange={[0, 0.8]}
               motionRange={[200, -100]}
-              mobileMotionRange={[0, 0]}
+              memeMotionRange={[140, -60]}
               side="left"
               size={320}
+              memeSize={320}
               mobileSize={72}
-              idleBob={false}
+              mobileInitialY={-12}
+              mobileMotionRange={[0, 0]}
             />
 
             <FloatingCharacter
-              src="/characters/bug-hunter.png"
+              src="/faces/c.gif"
               alt="Bug hunter"
               initialY={300}
               scrollRange={[0.1, 0.7]}
               motionRange={[300, -100]}
               side="right"
-              size={260}
+              size={200}
               hideOnMobile
               memeOnly={true}
               idleBob={false}
@@ -70,9 +73,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {/* Blinking Faces */}
           <div className="fixed inset-0 pointer-events-none z-20">
             <BlinkingFaces
-              src="/faces/meme-cat.png"
+              src="/faces/m1.png"
               alt="Meme cat"
-              position={{ top: "30%", left: "15%" }}
+              position={{ top: "1%", right: "0" }}
+              blinkInterval={5000}
+              size={70}
+              memeOnly={true}
+            />
+            <BlinkingFaces
+              src="/faces/m2.png"
+              alt="Meme cat"
+              position={{ bottom: "0", left: "0" }}
               blinkInterval={5000}
               size={70}
               memeOnly={true}
