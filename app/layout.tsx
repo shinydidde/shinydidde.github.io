@@ -51,9 +51,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               side="left"
               size={320}
               memeSize={320}
-              mobileSize={72}
-              mobileInitialY={-12}
-              mobileMotionRange={[0, 0]}
+              mobileSize={140}
+              mobileInitialY={-24}
+              mobileMotionRange={[20, -20]}
             />
 
             <FloatingCharacter
@@ -64,7 +64,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               motionRange={[300, -100]}
               side="right"
               size={200}
-              hideOnMobile
+              mobileSize={80}
+              mobileInitialY={500}
+              mobileMotionRange={[500, 200]}
+              className="md:right-4 right-8"
               memeOnly={true}
               idleBob={false}
             />

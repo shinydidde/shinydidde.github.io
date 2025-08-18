@@ -12,5 +12,9 @@ const DesktopBlackCat = dynamic(
 );
 
 export default function DesktopBlackCatWrapper() {
-  return <DesktopBlackCat />;
+  return (
+    <div className="hidden md:block">
+      <DesktopBlackCat />
+    </div>
+  );
 }
