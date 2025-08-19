@@ -59,6 +59,7 @@ const ICON_MAP = {
 
 export default function HeroSection({ data }: { data: HeroData }) {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
+  const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-100, 100], [-15, 15]);
   const scale = useTransform(x, [-100, 100], [0.9, 1.1]);
@@ -67,6 +68,16 @@ export default function HeroSection({ data }: { data: HeroData }) {
   // Modal state for "random fact"
   const [factOpen, setFactOpen] = useState(false);
   const [factText, setFactText] = useState<string>('');
+
+  // All company logos for meme mode cycling
+  const companyLogos = [
+    '/logos/finnovation.png',
+    '/logos/localstack.png',
+    '/logos/questdot.png',
+    '/logos/ux.png',
+    '/logos/wandertrails.png',
+    '/logos/witlab.png'
+  ];
 
   const normalRoles = data.normalRoles || DEFAULT_NORMAL_ROLES;
   const memeRoles = data.memeRoles || DEFAULT_MEME_ROLES;
@@ -103,6 +114,17 @@ export default function HeroSection({ data }: { data: HeroData }) {
     }, 3000);
     return () => clearInterval(interval);
   }, [isMemeMode, roles.length]);
+
+  // Logo cycling effect for meme mode
+  useEffect(() => {
+    if (!isMemeMode) return;
+
+    const logoInterval = setInterval(() => {
+      setCurrentLogoIndex(prev => (prev + 1) % companyLogos.length);
+    }, 5000);
+
+    return () => clearInterval(logoInterval);
+  }, [isMemeMode, companyLogos.length]);
 
   // Open modal instead of alert()
   const showRandomFact = () => {
@@ -161,10 +183,10 @@ export default function HeroSection({ data }: { data: HeroData }) {
           onDragEnd={() => animate(x, 0, { type: 'spring', stiffness: 300 })}
         >
           <Image
-            src={data.avatarUrl}
-            alt={`${data.name} avatar`}
+            src={isMemeMode ? companyLogos[currentLogoIndex] : data.avatarUrl}
+            alt={isMemeMode ? `Company logo ${currentLogoIndex + 1}` : `${data.name} avatar`}
             fill
-            className="object-cover rounded-full"
+            className="object-contain rounded-full"
             priority
           />
           <motion.div

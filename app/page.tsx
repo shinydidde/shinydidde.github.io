@@ -21,13 +21,24 @@ import {
 } from '@/lib/firestoreService'
 
 export default async function Home() {
-  const heroData       = await fetchHero()
-  const aboutData      = await fetchAbout()
-  const skillsData     = await fetchSkillsList()
-  const experienceData = await fetchExperienceList()
-  const projectsData   = await fetchProjectsList()
-  const educationData  = await fetchEducationList()
-  const footerData     = await fetchFooterInfo()
+  // Run all Firestore calls in parallel for faster loading
+  const [
+    heroData,
+    aboutData,
+    skillsData,
+    experienceData,
+    projectsData,
+    educationData,
+    footerData
+  ] = await Promise.all([
+    fetchHero(),
+    fetchAbout(),
+    fetchSkillsList(),
+    fetchExperienceList(),
+    fetchProjectsList(),
+    fetchEducationList(),
+    fetchFooterInfo()
+  ])
 
   return (
     <div className="min-h-screen">

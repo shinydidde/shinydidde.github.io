@@ -11,8 +11,8 @@ export type ExperienceData = Readonly<{
   illustration?: string;
   title?: string;
   entries: ReadonlyArray<{
-    year: string;            // e.g., "Oct '24 – Present"
-    role: string;            // e.g., "Senior Lead @ QuestDot"
+    year: string;
+    role: string;
     details: ReadonlyArray<string>;
   }>;
 }>;
@@ -24,10 +24,12 @@ function extractCompany(role: string): string {
 }
 
 /** Best-effort slug → logo path following your /logos/*.png convention */
-function logoFromCompany(company: string): string {
+function logoFromCompany(company: string, fullRole: string): string {
   const c = company.toLowerCase();
+  const r = fullRole.toLowerCase();
   if (c.includes('questdot')) return '/logos/questdot.png';
   if (c.includes('localstack')) return '/logos/localstack.png';
+  if (c.includes('finnovation') && r.includes('ux')) return '/logos/ux.png';
   if (c.includes('finnovation')) return '/logos/finnovation.png';
   if (c.includes('wandertrails')) return '/logos/wandertrails.png';
   if (c.includes('witlab')) return '/logos/witlab.png';
@@ -47,7 +49,7 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
       role: e.role,
       period: e.year,
       company,
-      logo: logoFromCompany(company),
+      logo: logoFromCompany(company, e.role),
       highlights: [...e.details],
       tags: [] as string[],
     };
@@ -120,7 +122,6 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
           />
 
           {/* Timeline items */}
-          {/* Timeline items */}
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.id}
@@ -128,7 +129,7 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true, margin: "-100px" }}
-              className={`relative mb-16 ${index % 2 === 0 ? 'pr-8 md:pr-0 md:pl-8' : 'pl-8 md:pl-0 md:pr-8'}`}
+              className={`relative mb-20 md:mb-16 md:px-0 ${index % 2 === 0 ? 'pr-8 md:pr-0 md:pl-8' : 'pl-8 md:pl-0 md:pr-8'}`}
             >
               <TimelineItem
                 experience={exp}
