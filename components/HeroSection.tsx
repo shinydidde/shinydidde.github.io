@@ -76,7 +76,8 @@ export default function HeroSection({ data }: { data: HeroData }) {
     '/logos/questdot.png',
     '/logos/ux.png',
     '/logos/wandertrails.png',
-    '/logos/witlab.png'
+    '/logos/witlab.png',
+    '/logos/me.png'
   ];
 
   const normalRoles = data.normalRoles || DEFAULT_NORMAL_ROLES;
