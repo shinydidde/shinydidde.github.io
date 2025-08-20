@@ -23,9 +23,9 @@ export default function ClientAnimations() {
           side="left"
           size={320}
           memeSize={320}
-          mobileSize={140}
-          mobileInitialY={-24}
-          mobileMotionRange={[20, -20]}
+          mobileSize={60}
+          mobileInitialY={30}
+          mobileMotionRange={[15, -15]}
         />
 
         <FloatingCharacter
@@ -64,7 +64,7 @@ export default function ClientAnimations() {
           memeOnly={true}
         />
       </div>
-      
+
       <DesktopBlackCatWrapper />
     </>
   );
