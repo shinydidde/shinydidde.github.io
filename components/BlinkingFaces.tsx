@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 interface BlinkingFaceProps {
   src: string;
@@ -12,7 +12,7 @@ interface BlinkingFaceProps {
   position: { top?: string; bottom?: string; left?: string; right?: string };
   blinkInterval?: number;
   size?: number;
-  memeOnly?: boolean;
+  playfulOnly?: boolean;
   hoverEffect?: boolean;
   floatEffect?: boolean;
 }
@@ -23,12 +23,12 @@ export default function BlinkingFaces({
   position,
   blinkInterval = 3000,
   size = 80,
-  memeOnly = false,
+  playfulOnly = false,
   hoverEffect = true,
   floatEffect = true,
 }: BlinkingFaceProps) {
   const [isBlinking, setIsBlinking] = useState(false);
-  const { isMemeMode } = useMemeMode();
+  const { isPlayfulMode } = usePlayfulMode();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -39,7 +39,7 @@ export default function BlinkingFaces({
     return () => clearInterval(interval);
   }, [blinkInterval]);
 
-  if (memeOnly && !isMemeMode) return null;
+  if (playfulOnly && !isPlayfulMode) return null;
 
   return (
     <motion.div

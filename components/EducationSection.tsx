@@ -9,7 +9,7 @@ import {
   FaPencilAlt,
   FaUniversity,
 } from 'react-icons/fa';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 import type { JSX } from 'react';
 
 /** Firestore payload */
@@ -42,7 +42,7 @@ function iconAndColorFor(title: string): { icon: JSX.Element; color: string } {
 }
 
 export default function EducationSection({ data }: { data: EducationData }) {
-  const { isMemeMode } = useMemeMode();
+  const { isPlayfulMode } = usePlayfulMode();
 
   // Transform Firestore -> UI expected by <EducationCard />
   const items = (data.entries ?? []).map((e, i) => {
@@ -62,14 +62,14 @@ export default function EducationSection({ data }: { data: EducationData }) {
     <section
       id="education"
       className={`py-20 relative overflow-hidden ${
-        isMemeMode
+        isPlayfulMode
           ? 'bg-gradient-to-br from-green-100 to-blue-100'
           : 'bg-gradient-to-br from-pink-50 to-purple-50'
       }`}
     >
       {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isMemeMode ? (
+        {isPlayfulMode ? (
           <>
             <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
             <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
@@ -93,19 +93,19 @@ export default function EducationSection({ data }: { data: EducationData }) {
         >
           <h2
             className={`text-4xl sm:text-5xl font-bold mb-4 ${
-              isMemeMode
+              isPlayfulMode
                 ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500'
                 : ''
             }`}
           >
-            {data.title ?? (isMemeMode ? 'EDU-MEME-CATION' : 'Education')}
+            {data.title ?? (isPlayfulMode ? 'EDU-PLAYFUL-CATION' : 'Education')}
           </h2>
           <p
             className={`text-lg ${
-              isMemeMode ? 'text-blue-600' : 'text-gray-600'
+              isPlayfulMode ? 'text-blue-600' : 'text-gray-600'
             } max-w-2xl mx-auto`}
           >
-            {isMemeMode
+            {isPlayfulMode
               ? 'Where I officially learned to Google error messages'
               : 'A snapshot of my academic journey'}
           </p>
@@ -121,7 +121,7 @@ export default function EducationSection({ data }: { data: EducationData }) {
               transition={{ delay: index * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <EducationCard item={item} index={index} memeMode={isMemeMode} />
+              <EducationCard item={item} index={index} playfulMode={isPlayfulMode} />
             </motion.div>
           ))}
         </div>
@@ -133,24 +133,24 @@ export default function EducationSection({ data }: { data: EducationData }) {
           transition={{ delay: 0.4 }}
           viewport={{ once: true }}
           className={`mt-20 text-center p-6 rounded-xl border-2 ${
-            isMemeMode
+            isPlayfulMode
               ? 'bg-white border-green-500 shadow-[6px_6px_0_0_rgba(59,130,246,0.5)]'
               : 'bg-white border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]'
           } max-w-2xl mx-auto`}
         >
-          <h3 className={`text-xl font-bold mb-2 ${isMemeMode ? 'text-blue-600' : ''}`}>
-            {isMemeMode ? 'REAL TALK (KINDA):' : 'Real Talk:'}
+          <h3 className={`text-xl font-bold mb-2 ${isPlayfulMode ? 'text-blue-600' : ''}`}>
+            {isPlayfulMode ? 'REAL TALK (KINDA):' : 'Real Talk:'}
           </h3>
-          <p className={isMemeMode ? 'text-gray-800' : 'text-gray-700'}>
-            {isMemeMode
-              ? '99% OF MY SKILLS CAME FROM STACK OVERFLOW AND RANDOM BLOG POSTS. THE DEGREE JUST MADE MY LINKEDIN LOOK FANCY 💼'
+          <p className={isPlayfulMode ? 'text-gray-800' : 'text-gray-700'}>
+            {isPlayfulMode
+              ? '99% OF MY SKILLS CAME FROM STACK OVERFLOW AND RANDOM BLOG POSTS. THE DEGREE JUST MADE MY LINKEDIN LOOK FANCY'
               : 'A lot of the practical skills came from projects, tinkering, and '}
-            {!isMemeMode && (
+            {!isPlayfulMode && (
               <span className="text-pink-500 font-bold">
                 countless hours of trial and error
               </span>
             )}
-            {!isMemeMode && '.'}
+            {!isPlayfulMode && '.'}
           </p>
         </motion.div>
       </div>

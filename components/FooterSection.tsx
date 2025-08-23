@@ -13,7 +13,7 @@ import {
   FaCode
 } from 'react-icons/fa';
 import { SiReact } from 'react-icons/si';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 export type FooterData = Readonly<{
   name?: string;
@@ -32,18 +32,18 @@ export type FooterData = Readonly<{
   };
   copy?: {
     headingNormal?: string;
-    headingMeme?: string;
+    headingPlayful?: string;
     bioNormal?: string;
-    bioMeme?: string;
+    bioPlayful?: string;
     footerTextNormal?: string;
-    footerTextMeme?: string;
+    footerTextPlayful?: string;
     copyrightNormal?: string; // supports {year}
-    copyrightMeme?: string;   // supports {year}
-    nameSuffixMeme?: string;
+    copyrightPlayful?: string;   // supports {year}
+    nameSuffixPlayful?: string;
     dmTitleNormal?: string;
-    dmTitleMeme?: string;
+    dmTitlePlayful?: string;
     dmListNormal?: string[];
-    dmListMeme?: string[];
+    dmListPlayful?: string[];
   };
 }>;
 
@@ -52,7 +52,7 @@ function withYear(s?: string, year?: number) {
 }
 
 export default function FooterSection({ contact }: { contact: FooterData }) {
-  const { isMemeMode } = useMemeMode();
+  const { isPlayfulMode } = usePlayfulMode();
   const year = new Date().getFullYear();
 
   const name = contact?.name ?? '';
@@ -61,18 +61,18 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
   const social = contact?.social ?? {};
   const copy = contact?.copy ?? {};
 
-  const heading = isMemeMode ? (copy.headingMeme ?? '') : (copy.headingNormal ?? '');
-  const bio = isMemeMode ? (copy.bioMeme ?? '') : (copy.bioNormal ?? '');
-  const footerText = isMemeMode ? (copy.footerTextMeme ?? '') : (copy.footerTextNormal ?? '');
-  const copyright = isMemeMode
-    ? withYear(copy.copyrightMeme, year)
+  const heading = isPlayfulMode ? (copy.headingPlayful ?? '') : (copy.headingNormal ?? '');
+  const bio = isPlayfulMode ? (copy.bioPlayful ?? '') : (copy.bioNormal ?? '');
+  const footerText = isPlayfulMode ? (copy.footerTextPlayful ?? '') : (copy.footerTextNormal ?? '');
+  const copyright = isPlayfulMode
+    ? withYear(copy.copyrightPlayful, year)
     : withYear(copy.copyrightNormal, year);
 
-  const dmTitle = isMemeMode ? (copy.dmTitleMeme ?? '') : (copy.dmTitleNormal ?? '');
-  const dmList = isMemeMode ? (copy.dmListMeme ?? []) : (copy.dmListNormal ?? []);
+  const dmTitle = isPlayfulMode ? (copy.dmTitlePlayful ?? '') : (copy.dmTitleNormal ?? '');
+  const dmList = isPlayfulMode ? (copy.dmListPlayful ?? []) : (copy.dmListNormal ?? []);
 
-  const displayName = isMemeMode
-    ? `${(name || 'YOU').toUpperCase()}${copy.nameSuffixMeme ?? ''}`
+  const displayName = isPlayfulMode
+    ? `${(name || 'YOU').toUpperCase()}${copy.nameSuffixPlayful ?? ''}`
     : name;
 
   const socialLinks = [
@@ -85,12 +85,12 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
   return (
     <footer
       className={`py-16 relative overflow-hidden ${
-        isMemeMode ? 'bg-gradient-to-br from-green-900 to-blue-900' : 'bg-black text-white'
+        isPlayfulMode ? 'bg-gradient-to-br from-green-900 to-blue-900' : 'bg-black text-white'
       }`}
     >
       {/* Background blobs */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isMemeMode ? (
+        {isPlayfulMode ? (
           <>
             <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-700/20 blur-3xl" />
             <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-700/20 blur-3xl" />
@@ -121,26 +121,26 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
                     alt={`${name || 'Portfolio'} avatar`}
                     fill
                     className={`rounded-full border-2 object-cover ${
-                      isMemeMode ? 'border-yellow-400' : 'border-pink-500'
+                      isPlayfulMode ? 'border-yellow-400' : 'border-pink-500'
                     }`}
                   />
                 </div>
               )}
               {displayName && (
-                <h2 className={`text-2xl font-bold ${isMemeMode ? 'text-yellow-300' : ''}`}>
+                <h2 className={`text-2xl font-bold ${isPlayfulMode ? 'text-yellow-300' : ''}`}>
                   {displayName}
                 </h2>
               )}
             </div>
 
             {bio && (
-              <p className={`mb-6 max-w-md ${isMemeMode ? 'text-blue-200' : 'text-gray-300'}`}>
+              <p className={`mb-6 max-w-md ${isPlayfulMode ? 'text-blue-200' : 'text-gray-300'}`}>
                 {bio}
               </p>
             )}
 
             {copyright && (
-              <p className={isMemeMode ? 'text-blue-200' : 'text-gray-300'}>
+              <p className={isPlayfulMode ? 'text-blue-200' : 'text-gray-300'}>
                 {copyright}
               </p>
             )}
@@ -155,7 +155,7 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
             className="flex-1"
           >
             {heading && (
-              <h3 className={`text-xl font-bold mb-6 ${isMemeMode ? 'text-yellow-300' : ''}`}>
+              <h3 className={`text-xl font-bold mb-6 ${isPlayfulMode ? 'text-yellow-300' : ''}`}>
                 {heading}
               </h3>
             )}
@@ -163,34 +163,34 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
             <ul className="space-y-4">
               {c.email && (
                 <li className="flex items-center gap-3">
-                  <FaEnvelope className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <FaEnvelope className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
                   <a
                     href={`mailto:${c.email}`}
-                    className={`transition-colors hover:${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`}
+                    className={`transition-colors hover:${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`}
                   >
-                    {isMemeMode ? c.email.toUpperCase() : c.email}
+                    {isPlayfulMode ? c.email.toUpperCase() : c.email}
                   </a>
                 </li>
               )}
 
               {c.phone && (
                 <li className="flex items-center gap-3">
-                  <FaPhone className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <FaPhone className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
                   <span>{c.phone}</span>
                 </li>
               )}
 
               {c.skype && (
                 <li className="flex items-center gap-3">
-                  <FaSkype className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
-                  <span>{isMemeMode ? c.skype.toUpperCase() : c.skype}</span>
+                  <FaSkype className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <span>{isPlayfulMode ? c.skype.toUpperCase() : c.skype}</span>
                 </li>
               )}
 
               {c.location && (
                 <li className="flex items-center gap-3">
-                  <FaMapMarkerAlt className={`text-2xl ${isMemeMode ? 'text-yellow-400' : 'text-pink-400'}`} />
-                  <span>{isMemeMode ? c.location.toUpperCase() : c.location}</span>
+                  <FaMapMarkerAlt className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
+                  <span>{isPlayfulMode ? c.location.toUpperCase() : c.location}</span>
                 </li>
               )}
             </ul>
@@ -205,30 +205,30 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
             className="flex-1"
           >
             {(socialLinks.length > 0 || dmTitle) && (
-              <h3 className={`text-xl font-bold mb-6 ${isMemeMode ? 'text-yellow-300' : ''}`}>
-                {isMemeMode ? 'STALK MY CHAOS' : 'Follow My Shenanigans'}
+              <h3 className={`text-xl font-bold mb-6 ${isPlayfulMode ? 'text-yellow-300' : ''}`}>
+                {isPlayfulMode ? 'STALK MY CHAOS' : 'Connect With Me'}
               </h3>
             )}
 
             {socialLinks.length > 0 && (
               <div className="flex gap-4 mb-8">
                 {socialLinks.map((s) => (
-                  <SocialIcon key={s.name} platform={s.icon} url={s.url!} memeMode={isMemeMode} />
+                  <SocialIcon key={s.name} platform={s.icon} url={s.url!} playfulMode={isPlayfulMode} />
                 ))}
               </div>
             )}
 
             {dmTitle && (
-              <p className={`${isMemeMode ? 'text-blue-200' : 'text-gray-300'} mb-4`}>
+              <p className={`${isPlayfulMode ? 'text-blue-200' : 'text-gray-300'} mb-4`}>
                 {dmTitle}
               </p>
             )}
 
             {dmList.length > 0 && (
-              <ul className={`${isMemeMode ? 'text-blue-200' : 'text-gray-300'} space-y-2`}>
+              <ul className={`${isPlayfulMode ? 'text-blue-200' : 'text-gray-300'} space-y-2`}>
                 {dmList.map((line, i) => (
                   <li key={`${line}-${i}`} className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'}`} />
+                    <span className={`w-2 h-2 rounded-full ${isPlayfulMode ? 'bg-yellow-400' : 'bg-pink-500'}`} />
                     {line}
                   </li>
                 ))}
@@ -244,11 +244,11 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
           transition={{ delay: 0.6 }}
           viewport={{ once: true }}
           className={`mt-16 pt-8 border-t ${
-            isMemeMode ? 'border-blue-700 text-blue-200' : 'border-gray-800 text-gray-400'
+            isPlayfulMode ? 'border-blue-700 text-blue-200' : 'border-gray-800 text-gray-400'
           } text-center text-sm`}
         >
           <p>
-            {isMemeMode ? (
+            {isPlayfulMode ? (
               <>
                 MADE WITH <FaLaughSquint className="inline text-yellow-400" />,{' '}
                 <SiReact className="inline mx-1 text-blue-400" /> AND{' '}
@@ -263,7 +263,7 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
             )}
           </p>
 
-          {footerText && <p className="mt-2">{isMemeMode ? footerText.toUpperCase() : footerText}</p>}
+          {footerText && <p className="mt-2">{isPlayfulMode ? footerText.toUpperCase() : footerText}</p>}
         </motion.div>
       </div>
     </footer>

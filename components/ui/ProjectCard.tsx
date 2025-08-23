@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 interface ProjectCardProps {
   project: {
@@ -16,12 +16,12 @@ interface ProjectCardProps {
     featured?: boolean;
   };
   isHovered?: boolean;
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
-export function ProjectCard({ project, isHovered, memeMode = false }: ProjectCardProps) {
-  const { isMemeMode } = useMemeMode();
-  const activeMemeMode = memeMode || isMemeMode;
+export function ProjectCard({ project, isHovered, playfulMode = false }: ProjectCardProps) {
+  const { isPlayfulMode } = usePlayfulMode();
+  const activeMemeMode = playfulMode || isPlayfulMode;
 
   return (
     <motion.div

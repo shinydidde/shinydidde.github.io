@@ -7,8 +7,8 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { SquigglyUnderline } from './ui/SquigglyUnderline';
-import { useMemeMode } from '@/contexts/MemeContext';
-import { FaLaughSquint, FaGraduationCap } from 'react-icons/fa';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
+import { FaLaughSquint, FaGraduationCap, FaBriefcase, FaPalette } from 'react-icons/fa';
 
 interface HeaderProps {
   hero: {
@@ -45,10 +45,10 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const { isMemeMode, toggleMemeMode } = useMemeMode();
+  const { isPlayfulMode, togglePlayfulMode } = usePlayfulMode();
 
   // Use provided nav items or fallback to defaults
-  const currentNavItems = isMemeMode
+  const currentNavItems = isPlayfulMode
     ? memeNavItems || DEFAULT_MEME_NAV_ITEMS
     : navItems || DEFAULT_NAV_ITEMS;
 
@@ -59,19 +59,19 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
   }, []);
 
   const handleMemeModeToggle = () => {
-    toggleMemeMode();
+    togglePlayfulMode();
     setMobileMenuOpen(false);
   };
 
   const getNavItemDisplay = (name: string) => {
-    if (isMemeMode && name === 'Education') {
+    if (isPlayfulMode && name === 'Education') {
       return (
         <span className="flex items-center">
           Edu-meme-cation <FaGraduationCap className="ml-2" />
         </span>
       );
     }
-    if (isMemeMode && name === 'Skills') {
+    if (isPlayfulMode && name === 'Skills') {
       return (
         <span className="flex items-center">
           Skillz <FaLaughSquint className="ml-2" />
@@ -90,7 +90,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
         isScrolled
           ? 'bg-white/90 shadow-lg py-2 border-b-2 border-black'
           : 'bg-transparent py-4'
-      } ${isMemeMode ? 'meme-mode-header' : ''}`}
+      } ${isPlayfulMode ? 'meme-mode-header' : ''}`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center">
@@ -98,7 +98,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
           <motion.div
             whileHover={{
               scale: 1.05,
-              rotate: isMemeMode ? [0, -10, 10, -10, 0] : [0, -5, 5, -5, 0],
+              rotate: isPlayfulMode ? [0, -10, 10, -10, 0] : [0, -5, 5, -5, 0],
               transition: { duration: 0.5 }
             }}
           >
@@ -109,7 +109,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                   alt={`${hero.name} Logo`}
                   fill
                   className={`rounded-full border-2 ${
-                    isMemeMode
+                    isPlayfulMode
                       ? 'border-yellow-400 group-hover:border-red-500'
                       : 'border-purple-500 group-hover:border-pink-500'
                   } transition-colors`}
@@ -119,7 +119,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                   className="absolute -right-1 -bottom-1 w-4 h-4 rounded-full border-2 border-white"
                   animate={{
                     scale: [1, 1.2, 1],
-                    backgroundColor: isMemeMode
+                    backgroundColor: isPlayfulMode
                       ? ['#ff0000', '#00ff00', '#0000ff']
                       : ['#4ade80', '#22d3ee', '#4ade80']
                   }}
@@ -127,7 +127,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                 />
               </div>
               <span className={`text-xl font-bold bg-clip-text ${
-                isMemeMode
+                isPlayfulMode
                   ? 'text-transparent bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
                   : 'text-transparent bg-gradient-to-r from-purple-500 to-pink-500'
               }`}>
@@ -144,15 +144,15 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                 href={item.href}
                 className="relative px-2 py-1 font-medium group"
               >
-                <span className={`relative z-10 ${isMemeMode ? 'font-meme' : ''}`}>
+                <span className={`relative z-10 ${isPlayfulMode ? 'font-meme' : ''}`}>
                   {getNavItemDisplay(item.name)}
                 </span>
-                <SquigglyUnderline color={isMemeMode ? '#FFD700' : '#EC4899'} />
+                <SquigglyUnderline color={isPlayfulMode ? '#FFD700' : '#EC4899'} />
                 {pathname === item.href && (
                   <motion.span
                     layoutId="activeNavItem"
                     className={`absolute left-0 top-full w-full h-0.5 ${
-                      isMemeMode ? 'bg-yellow-400' : 'bg-pink-500'
+                      isPlayfulMode ? 'bg-yellow-400' : 'bg-pink-500'
                     }`}
                     transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
                   />
@@ -164,13 +164,25 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
-                isMemeMode
+                isPlayfulMode
                   ? 'bg-yellow-400 text-black shadow-[4px_4px_0_0_rgba(255,0,0,1)] hover:shadow-[6px_6px_0_0_rgba(0,255,0,1)]'
                   : 'bg-black text-white shadow-[4px_4px_0_0_rgba(236,72,153,1)] hover:shadow-[6px_6px_0_0_rgba(236,72,153,1)]'
               }`}
-              aria-label={isMemeMode ? 'Disable meme mode' : 'Enable meme mode'}
+              aria-label={isPlayfulMode ? 'Switch to professional mode' : 'Switch to playful mode'}
             >
-              {isMemeMode ? 'Normal Mode 🏁' : 'Meme Mode 🚀'}
+              <span className="flex items-center gap-2">
+                {isPlayfulMode ? (
+                  <>
+                    <FaBriefcase className="w-4 h-4" />
+                    Professional
+                  </>
+                ) : (
+                  <>
+                    <FaPalette className="w-4 h-4" />
+                    Playful
+                  </>
+                )}
+              </span>
             </motion.button>
           </nav>
 
@@ -195,9 +207,9 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                 animate={{ rotate: 0 }}
                 className="flex flex-col gap-1"
               >
-                <motion.span className={`w-6 h-0.5 rounded-full ${isMemeMode ? 'bg-yellow-500' : 'bg-black'}`} />
-                <motion.span className={`w-6 h-0.5 rounded-full ${isMemeMode ? 'bg-yellow-500' : 'bg-black'}`} />
-                <motion.span className={`w-6 h-0.5 rounded-full ${isMemeMode ? 'bg-yellow-500' : 'bg-black'}`} />
+                <motion.span className={`w-6 h-0.5 rounded-full ${isPlayfulMode ? 'bg-yellow-500' : 'bg-black'}`} />
+                <motion.span className={`w-6 h-0.5 rounded-full ${isPlayfulMode ? 'bg-yellow-500' : 'bg-black'}`} />
+                <motion.span className={`w-6 h-0.5 rounded-full ${isPlayfulMode ? 'bg-yellow-500' : 'bg-black'}`} />
               </motion.div>
             )}
           </motion.button>
@@ -212,7 +224,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
               className={`md:hidden fixed inset-0 z-40 pt-24 px-6 flex flex-col gap-6 ${
-                isMemeMode ? 'bg-yellow-50' : 'bg-white'
+                isPlayfulMode ? 'bg-yellow-50' : 'bg-white'
               }`}
             >
               {currentNavItems.map((item, index) => (
@@ -225,7 +237,7 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                   <Link
                     href={item.href}
                     className={`text-2xl font-bold block py-3 ${
-                      isMemeMode ? 'font-meme text-black' : 'text-gray-800'
+                      isPlayfulMode ? 'font-meme text-black' : 'text-gray-800'
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
@@ -242,12 +254,24 @@ export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
                 <button
                   onClick={handleMemeModeToggle}
                   className={`w-full py-3 rounded-full font-bold text-lg ${
-                    isMemeMode
+                    isPlayfulMode
                       ? 'bg-yellow-400 text-black'
                       : 'bg-black text-white'
                   }`}
                 >
-                  {isMemeMode ? 'Normal Mode 🏁' : 'Meme Mode 🎉'}
+                  <span className="flex items-center gap-2">
+                    {isPlayfulMode ? (
+                      <>
+                        <FaBriefcase className="w-4 h-4" />
+                        Professional
+                      </>
+                    ) : (
+                      <>
+                        <FaPalette className="w-4 h-4" />
+                        Playful
+                      </>
+                    )}
+                  </span>
                 </button>
               </motion.div>
             </motion.div>

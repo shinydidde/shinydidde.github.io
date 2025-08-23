@@ -11,7 +11,7 @@ import {
 } from 'framer-motion';
 import Image from 'next/image';
 import { useEffect, useMemo, useState } from 'react';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 interface FloatingCharacterProps {
   src: string;
@@ -21,7 +21,7 @@ interface FloatingCharacterProps {
   motionRange?: [number, number];
   side?: 'left' | 'right' | 'center';
   className?: string;
-  memeOnly?: boolean;
+  playfulOnly?: boolean;
   idleBob?: boolean;
   bobHeight?: number;
   size?: number;
@@ -32,11 +32,11 @@ interface FloatingCharacterProps {
   mobileInitialY?: number;
   mobileMotionRange?: [number, number];
 
-  // Meme-mode overrides
-  memeSrc?: string;
-  memeSize?: number;
-  memeInitialY?: number;
-  memeMotionRange?: [number, number];
+  // Playful-mode overrides
+  playfulSrc?: string;
+  playfulSize?: number;
+  playfulInitialY?: number;
+  playfulMotionRange?: [number, number];
 }
 
 export default function FloatingCharacter({
@@ -47,7 +47,7 @@ export default function FloatingCharacter({
   motionRange = [-100, 100],
   side = 'right',
   className = '',
-  memeOnly = false,
+  playfulOnly = false,
   idleBob = false,
   bobHeight = 8,
   size = 300,
@@ -56,14 +56,14 @@ export default function FloatingCharacter({
   mobileInitialY,
   mobileMotionRange = [0, 0],
 
-  // meme overrides
-  memeSrc,
-  memeSize,
-  memeInitialY,
-  memeMotionRange,
+  // playful overrides
+  playfulSrc,
+  playfulSize,
+  playfulInitialY,
+  playfulMotionRange,
 }: FloatingCharacterProps) {
   // --- Hooks must be unconditional
-  const { isMemeMode } = useMemeMode();
+  const { isPlayfulMode } = usePlayfulMode();
   const { scrollYProgress } = useScroll();
 
   const [mounted, setMounted] = useState(false);
@@ -77,11 +77,11 @@ export default function FloatingCharacter({
     return () => mq.removeEventListener('change', update);
   }, []);
 
-  // Resolve meme-mode base props
-  const baseSrc = isMemeMode && memeSrc ? memeSrc : src;
-  const baseSize = isMemeMode && memeSize !== undefined ? memeSize : size;
-  const baseInitialY = isMemeMode && memeInitialY !== undefined ? memeInitialY : initialY;
-  const baseMotionRange = isMemeMode && memeMotionRange ? memeMotionRange : motionRange;
+  // Resolve playful-mode base props
+  const baseSrc = isPlayfulMode && playfulSrc ? playfulSrc : src;
+  const baseSize = isPlayfulMode && playfulSize !== undefined ? playfulSize : size;
+  const baseInitialY = isPlayfulMode && playfulInitialY !== undefined ? playfulInitialY : initialY;
+  const baseMotionRange = isPlayfulMode && playfulMotionRange ? playfulMotionRange : motionRange;
 
   // Then apply mobile overrides
   const effSize = isMobile ? (mobileSize ?? baseSize) : baseSize;
@@ -117,7 +117,7 @@ export default function FloatingCharacter({
   );
 
   // Render gate AFTER hooks
-  if (!mounted || (memeOnly && !isMemeMode) || (hideOnMobile && isMobile)) return null;
+  if (!mounted || (playfulOnly && !isPlayfulMode) || (hideOnMobile && isMobile)) return null;
 
   return (
     <div

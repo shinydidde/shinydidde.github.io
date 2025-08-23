@@ -26,7 +26,7 @@ type FloatingIcon = {
 
 interface FloatingIconsProps {
   count?: number;
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
 // Normal mode icons
@@ -43,8 +43,8 @@ const NORMAL_ICONS = [
   { icon: <FaDesktop key="desktop" className="text-gray-800" /> }
 ];
 
-// Meme mode icons
-const MEME_ICONS = [
+// Playful mode icons
+const PLAYFUL_ICONS = [
   { icon: <FaLaughSquint key="laugh" className="text-red-500" /> },
   { icon: <FaBug key="bug" className="text-green-600" /> },
   { icon: <FaStackOverflow key="stack" className="text-orange-500" /> },
@@ -55,11 +55,11 @@ const MEME_ICONS = [
   { icon: <FaGamepad key="gamepad" className="text-pink-500" /> }
 ];
 
-export function FloatingIcons({ count = 10, memeMode = false }: FloatingIconsProps) {
+export function FloatingIcons({ count = 10, playfulMode = false }: FloatingIconsProps) {
   const [icons, setIcons] = useState<FloatingIcon[]>([]);
 
   useEffect(() => {
-    const iconSet = memeMode ? MEME_ICONS : NORMAL_ICONS;
+    const iconSet = playfulMode ? PLAYFUL_ICONS : NORMAL_ICONS;
     const newIcons: FloatingIcon[] = Array.from({ length: count }, (_, i) => {
       const { icon } = iconSet[Math.floor(Math.random() * iconSet.length)];
       const rotateStart = Math.random() * 360;
@@ -78,7 +78,7 @@ export function FloatingIcons({ count = 10, memeMode = false }: FloatingIconsPro
       };
     });
     setIcons(newIcons);
-  }, [count, memeMode]);
+  }, [count, playfulMode]);
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">

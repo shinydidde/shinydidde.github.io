@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 import { ProjectCard } from './ui/ProjectCard';
 import { useMemo, useState } from 'react';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 /* ---------- Firestore payload ---------- */
 export type ProjectsData = Readonly<{
@@ -70,7 +70,7 @@ function toUIProjects(data?: ProjectsData): UIProject[] {
 }
 
 export default function ProjectsSection({ data }: { data: ProjectsData }) {
-  const { isMemeMode } = useMemeMode();
+  const { isPlayfulMode } = usePlayfulMode();
   const [filter, setFilter] = useState('all');
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
@@ -92,12 +92,12 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
     <section
       id="projects"
       className={`py-20 relative overflow-hidden ${
-        isMemeMode ? 'bg-gradient-to-br from-green-100 to-blue-100' : 'bg-gradient-to-br from-pink-50 to-purple-50'
+        isPlayfulMode ? 'bg-gradient-to-br from-green-100 to-blue-100' : 'bg-gradient-to-br from-pink-50 to-purple-50'
       }`}
     >
       {/* Background elements */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isMemeMode ? (
+        {isPlayfulMode ? (
           <>
             <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200 blur-3xl" />
             <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200 blur-3xl" />
@@ -121,14 +121,14 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
         >
           <h2
             className={`text-4xl sm:text-5xl font-bold mb-4 ${
-              isMemeMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500' : ''
+              isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500' : ''
             }`}
           >
-            {isMemeMode ? 'BUGGY ' : ''}
+            {isPlayfulMode ? 'BUGGY ' : ''}
             {title}
           </h2>
-          <p className={`text-lg ${isMemeMode ? 'text-blue-600' : 'text-gray-600'} max-w-2xl mx-auto`}>
-            {isMemeMode
+          <p className={`text-lg ${isPlayfulMode ? 'text-blue-600' : 'text-gray-600'} max-w-2xl mx-auto`}>
+            {isPlayfulMode
               ? 'A collection of my questionable creations and accidents'
               : 'A collection of my favorite creations and experiments'}
           </p>
@@ -149,17 +149,17 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                 onClick={() => setFilter(tag)}
                 className={`px-4 py-2 rounded-full text-sm font-medium capitalize ${
                   filter === tag
-                    ? isMemeMode
+                    ? isPlayfulMode
                       ? 'bg-green-400 text-black shadow-md'
                       : 'bg-black text-white shadow-md'
-                    : isMemeMode
+                    : isPlayfulMode
                     ? 'bg-blue-100 text-blue-800 hover:bg-blue-200'
                     : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                 }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {tag === 'all' ? (isMemeMode ? 'All Chaos' : 'All Projects') : tag}
+                {tag === 'all' ? (isPlayfulMode ? 'All Chaos' : 'All Projects') : tag}
               </motion.button>
             ))}
           </motion.div>
@@ -177,7 +177,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
               onHoverStart={() => setHoveredProject(project.id)}
               onHoverEnd={() => setHoveredProject(null)}
             >
-              <ProjectCard project={project} isHovered={hoveredProject === project.id} memeMode={isMemeMode} />
+              <ProjectCard project={project} isHovered={hoveredProject === project.id} playfulMode={isPlayfulMode} />
             </motion.div>
           ))}
         </div>
@@ -190,22 +190,22 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
           viewport={{ once: true }}
           className="text-center mt-20"
         >
-          <p className={`text-lg mb-6 ${isMemeMode ? 'text-blue-600' : 'text-gray-600'}`}>
-            {isMemeMode
+          <p className={`text-lg mb-6 ${isPlayfulMode ? 'text-blue-600' : 'text-gray-600'}`}>
+            {isPlayfulMode
               ? "Want to see more disasters? I've got bugs for days!"
               : "Want to see more? I've got side projects for days!"}
           </p>
           <motion.a
             href="#contact"
             className={`inline-block px-8 py-3 rounded-full font-bold border-2 transition-all ${
-              isMemeMode
+              isPlayfulMode
                 ? 'bg-gradient-to-r from-green-400 to-blue-500 text-black border-yellow-400 shadow-[4px_4px_0_0_rgba(245,158,11,1)] hover:from-blue-500 hover:to-green-400 hover:shadow-[8px_8px_0_0_rgba(59,130,246,1)]'
                 : 'bg-white text-black border-black shadow-[4px_4px_0_0_rgba(0,0,0,1)] hover:shadow-[8px_8px_0_0_rgba(168,85,247,1)]'
             }`}
             whileHover={{ y: -4 }}
             whileTap={{ scale: 0.95 }}
           >
-            {isMemeMode ? "Let's Break Things" : "Let's Talk Projects"}
+            {isPlayfulMode ? "Let's Break Things" : "Let's Talk Projects"}
           </motion.a>
         </motion.div>
       </div>

@@ -12,7 +12,7 @@ interface SkillBubbleProps {
   left?: string;
   right?: string;
   delay?: number;
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
 export function SkillBubble({
@@ -23,7 +23,7 @@ export function SkillBubble({
   left,
   right,
   delay = 0,
-  memeMode = false
+  playfulMode = false
 }: SkillBubbleProps) {
   return (
     <motion.div
@@ -35,14 +35,14 @@ export function SkillBubble({
       transition={{ delay, duration: 0.5, type: 'spring' }}
       whileHover={{ scale: 1.2 }}
     >
-      <div className={`w-16 h-16 rounded-full ${memeMode ? 'bg-yellow-100' : 'bg-white'} border-2 ${
-        memeMode ? 'border-blue-500' : 'border-black'
+      <div className={`w-16 h-16 rounded-full ${playfulMode ? 'bg-yellow-100' : 'bg-white'} border-2 ${
+        playfulMode ? 'border-blue-500' : 'border-black'
       } flex items-center justify-center text-2xl shadow-lg`}>
         {icon}
       </div>
       <motion.span
         className={`mt-2 text-xs font-bold px-2 py-1 rounded-full ${
-          memeMode ? 'bg-blue-500 text-white' : 'bg-black text-white'
+          playfulMode ? 'bg-blue-500 text-white' : 'bg-black text-white'
         }`}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}

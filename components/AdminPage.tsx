@@ -45,11 +45,11 @@ export default function AdminPage() {
       const data = JSON.parse(entry.raw)
       const docRef = doc(db, colName, entry.id)
       await setDoc(docRef, data)
-      alert(`✔️ Saved ${colName}/${entry.id}`)
+      alert(`✓ Saved ${colName}/${entry.id}`)
     } catch (err: unknown) {
       let msg = 'Unknown error'
       if (err instanceof Error) msg = err.message
-      alert('❌ JSON parse error: ' + msg)
+      alert('✗ JSON parse error: ' + msg)
     }
   }
 
@@ -65,7 +65,7 @@ export default function AdminPage() {
     } catch (err: unknown) {
       let msg = 'Unknown error'
       if (err instanceof Error) msg = err.message
-      alert('❌ Delete failed: ' + msg)
+      alert('✗ Delete failed: ' + msg)
     }
   }
 

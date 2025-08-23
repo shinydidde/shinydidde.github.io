@@ -11,12 +11,12 @@ import {
   FaFire,
   FaSpaceShuttle
 } from 'react-icons/fa';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 interface SocialIconProps {
   platform: 'github' | 'linkedin' | 'twitter' | 'instagram';
   url: string;
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
 const NORMAL_ICONS = {
@@ -54,19 +54,19 @@ const MEME_TOOLTIPS = {
   instagram: "Filtered Reality"
 };
 
-export function SocialIcon({ platform, url, memeMode: propMemeMode }: SocialIconProps) {
-  const { isMemeMode: contextMemeMode } = useMemeMode();
-  const isMemeMode = propMemeMode ?? contextMemeMode;
+export function SocialIcon({ platform, url, playfulMode: propMemeMode }: SocialIconProps) {
+  const { isPlayfulMode: contextMemeMode } = usePlayfulMode();
+  const isPlayfulMode = propMemeMode ?? contextMemeMode;
 
-  const icons = isMemeMode ? MEME_ICONS : NORMAL_ICONS;
-  const colors = isMemeMode ? MEME_COLORS : NORMAL_COLORS;
+  const icons = isPlayfulMode ? MEME_ICONS : NORMAL_ICONS;
+  const colors = isPlayfulMode ? MEME_COLORS : NORMAL_COLORS;
 
   return (
     <motion.div
       className="relative"
-      whileHover={isMemeMode ? { scale: 1.1 } : {}}
+      whileHover={isPlayfulMode ? { scale: 1.1 } : {}}
     >
-      {isMemeMode && (
+      {isPlayfulMode && (
         <motion.div
           className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs font-bold bg-yellow-400 text-black rounded-full shadow-lg"
           initial={{ opacity: 0, y: 10 }}
@@ -85,26 +85,26 @@ export function SocialIcon({ platform, url, memeMode: propMemeMode }: SocialIcon
           w-12 h-12 rounded-full
           ${colors[platform]}
           text-white text-2xl flex items-center justify-center shadow-md
-          ${isMemeMode ? 'border-2 border-black' : ''}
+          ${isPlayfulMode ? 'border-2 border-black' : ''}
           relative z-10
         `}
         whileHover={{
-          y: isMemeMode ? -8 : -4,
-          scale: isMemeMode ? 1.2 : 1.1,
-          rotate: isMemeMode ? [0, 10, -10, 0] : 0
+          y: isPlayfulMode ? -8 : -4,
+          scale: isPlayfulMode ? 1.2 : 1.1,
+          rotate: isPlayfulMode ? [0, 10, -10, 0] : 0
         }}
         whileTap={{
           scale: 0.9,
-          rotate: isMemeMode ? 360 : 0
+          rotate: isPlayfulMode ? 360 : 0
         }}
         transition={{
           type: 'spring',
-          stiffness: isMemeMode ? 300 : 500,
-          damping: isMemeMode ? 10 : 15
+          stiffness: isPlayfulMode ? 300 : 500,
+          damping: isPlayfulMode ? 10 : 15
         }}
       >
         {icons[platform]}
-        {isMemeMode && (
+        {isPlayfulMode && (
           <motion.div
             className="absolute inset-0 rounded-full border-2 border-white opacity-0"
             whileHover={{

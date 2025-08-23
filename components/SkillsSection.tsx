@@ -3,7 +3,7 @@
 
 import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { useMemeMode } from '@/contexts/MemeContext';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 import type { IconType } from 'react-icons';
 
 // Font Awesome / Simple Icons
@@ -99,19 +99,19 @@ function resolveIcon(item: { name: string; icon?: string }): IconType {
 }
 
 /* ---------- Small UI bits ---------- */
-function SkillRow({ name, Icon, level, meme }: { name: string; Icon: IconType; level: number; meme: boolean }) {
+function SkillRow({ name, Icon, level, playful }: { name: string; Icon: IconType; level: number; playful: boolean }) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-2">
-          <Icon className={meme ? 'text-blue-600' : 'text-fuchsia-700'} aria-hidden />
+          <Icon className={playful ? 'text-blue-600' : 'text-fuchsia-700'} aria-hidden />
           <span className="font-semibold text-sm tracking-wide">{name}</span>
         </div>
         <span className="text-xs font-bold opacity-70">{level}%</span>
       </div>
       <div className="h-2.5 rounded-full bg-zinc-200 overflow-hidden">
         <div
-          className={`h-full rounded-full transition-all duration-700 ${meme ? 'bg-gradient-to-r from-green-400 to-blue-500' : 'bg-gradient-to-r from-pink-500 to-fuchsia-600'
+          className={`h-full rounded-full transition-all duration-700 ${playful ? 'bg-gradient-to-r from-green-400 to-blue-500' : 'bg-gradient-to-r from-pink-500 to-fuchsia-600'
             }`}
           style={{ width: `${level}%` }}
         />
@@ -120,11 +120,11 @@ function SkillRow({ name, Icon, level, meme }: { name: string; Icon: IconType; l
   );
 }
 
-function CategoryHeader({ label, meme }: { label: string; meme: boolean }) {
+function CategoryHeader({ label, playful }: { label: string; playful: boolean }) {
   return (
     <div className="col-span-full -mx-1 mb-2">
       <div
-        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-black tracking-wider border-2 ${meme
+        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-black tracking-wider border-2 ${playful
             ? 'bg-gradient-to-r from-green-400 to-blue-500 text-black border-black'
             : 'bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white border-black'
           }`}
@@ -132,7 +132,7 @@ function CategoryHeader({ label, meme }: { label: string; meme: boolean }) {
         <span>{label}</span>
       </div>
       <div
-        className={`h-1 w-full rounded-full mt-2 ${meme ? 'bg-gradient-to-r from-green-300 to-blue-400' : 'bg-gradient-to-r from-pink-300 to-fuchsia-400'
+        className={`h-1 w-full rounded-full mt-2 ${playful ? 'bg-gradient-to-r from-green-300 to-blue-400' : 'bg-gradient-to-r from-pink-300 to-fuchsia-400'
           }`}
       />
     </div>
@@ -146,7 +146,7 @@ const DEFAULT_SQL_LEVEL = 60;
 const clamp01to100 = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 
 export default function SkillsSection({ data }: { data: SkillsData }) {
-  const { isMemeMode } = useMemeMode();
+  const { isPlayfulMode } = usePlayfulMode();
 
   // Build render model from Firestore with safe numeric level
   const model = useMemo(() => {
@@ -166,7 +166,7 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
   return (
     <section
       id="skills"
-      className={`py-20 relative overflow-hidden ${isMemeMode
+      className={`py-20 relative overflow-hidden ${isPlayfulMode
           ? 'bg-gradient-to-br from-green-100 to-blue-100'
           : 'bg-gradient-to-br from-pink-50 to-purple-50'
         }`}
@@ -174,7 +174,7 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
 
       {/* soft background accents */}
       <div className="absolute inset-0 pointer-events-none">
-        {isMemeMode ? (
+        {isPlayfulMode ? (
           <>
             <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-green-200/40 blur-xl" />
             <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-blue-200/40 blur-xl" />
@@ -198,9 +198,8 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
             className="text-center mb-10"
           >
             <h2
-              className={`text-4xl sm:text-5xl font-bold ${isMemeMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600' : ''
+              className={`text-4xl sm:text-5xl font-bold ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600' : 'text-gray-900'
                 }`}
-              style={{ fontFamily: 'Permanent Marker, cursive' }}
             >
               {model.title}
             </h2>
@@ -215,21 +214,21 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
           viewport={{ once: true }}
           className={[
             'mx-auto max-w-6xl rounded-2xl border-4',
-            isMemeMode ? 'border-yellow-400 bg-white' : 'border-black bg-white',
+            isPlayfulMode ? 'border-yellow-400 bg-white' : 'border-black bg-white',
             'p-6 shadow-[8px_8px_0_0_rgba(0,0,0,0.20)]',
           ].join(' ')}
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {model.cats.map((cat) => (
               <React.Fragment key={cat.label}>
-                <CategoryHeader label={cat.label} meme={isMemeMode} />
+                <CategoryHeader label={cat.label} playful={isPlayfulMode} />
                 {cat.items.map((s) => (
                   <SkillRow
                     key={`${cat.label}-${s.name}`}
                     name={s.name}
                     Icon={s.Icon}
                     level={s.level}
-                    meme={isMemeMode}
+                    playful={isPlayfulMode}
                   />
                 ))}
               </React.Fragment>

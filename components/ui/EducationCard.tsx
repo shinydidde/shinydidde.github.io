@@ -13,14 +13,14 @@ interface EducationCardProps {
     color: string;
   };
   index: number;
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
-export function EducationCard({ item, index, memeMode = false }: EducationCardProps) {
+export function EducationCard({ item, index, playfulMode = false }: EducationCardProps) {
   return (
     <motion.div
       className={`p-6 rounded-xl border-2 ${
-        memeMode
+        playfulMode
           ? 'border-green-500 bg-white shadow-[4px_4px_0_0_rgba(59,130,246,0.3)] hover:shadow-[8px_8px_0_0_rgba(245,158,11,0.5)]'
           : 'border-black bg-white shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] hover:shadow-[8px_8px_0_0_rgba(168,85,247,0.3)]'
       } transition-all`}
@@ -35,7 +35,7 @@ export function EducationCard({ item, index, memeMode = false }: EducationCardPr
         {/* Content */}
         <div className="flex-1">
           <h3 className={`text-lg font-bold mb-1 ${
-            memeMode ? 'text-blue-600' : 'text-gray-900'
+            playfulMode ? 'text-blue-600' : 'text-gray-900'
           }`}>
             {item.degree}
           </h3>
@@ -43,7 +43,7 @@ export function EducationCard({ item, index, memeMode = false }: EducationCardPr
             {item.institution} • {item.period}
           </p>
           <p className={`text-sm ${
-            memeMode ? 'text-gray-800 font-medium' : 'text-gray-600'
+            playfulMode ? 'text-gray-800 font-medium' : 'text-gray-600'
           }`}>
             {item.description}
           </p>
@@ -51,7 +51,7 @@ export function EducationCard({ item, index, memeMode = false }: EducationCardPr
       </div>
 
       {/* Decorative elements */}
-      {memeMode && (
+      {playfulMode && (
         <div className="absolute top-2 right-2 text-xs font-bold px-2 py-1 bg-yellow-400 rounded-full">
           #{index + 1}
         </div>

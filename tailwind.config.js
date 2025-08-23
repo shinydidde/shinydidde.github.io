@@ -15,7 +15,8 @@ module.exports = {
         lime:    "#a6d552",
       },
       fontFamily: {
-        sketch: ["Patrick Hand", "cursive"],
+        sans: ["var(--font-poppins)", "Poppins", "sans-serif"],
+        sketch: ["var(--font-patrick)", "Patrick Hand", "cursive"],
       },
     },
   },

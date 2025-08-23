@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { FaFire, FaStar } from 'react-icons/fa';
 
 interface TimelineItemProps {
   experience: {
@@ -11,10 +12,10 @@ interface TimelineItemProps {
     tags: string[];
   };
   alignment: 'left' | 'right';
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
-export function TimelineItem({ experience, alignment, memeMode = false }: TimelineItemProps) {
+export function TimelineItem({ experience, alignment, playfulMode = false }: TimelineItemProps) {
   return (
     <div
       className={`relative group ${
@@ -26,7 +27,7 @@ export function TimelineItem({ experience, alignment, memeMode = false }: Timeli
         className={`absolute top-4 ${
           alignment === 'left' ? 'md:-right-6' : 'md:-left-6'
         } w-4 h-4 rounded-full border-2 border-white shadow-lg ${
-          memeMode
+          playfulMode
             ? 'bg-green-500 group-hover:bg-blue-500'
             : 'bg-pink-500 group-hover:bg-purple-600'
         }`}
@@ -35,7 +36,7 @@ export function TimelineItem({ experience, alignment, memeMode = false }: Timeli
       {/* Content card */}
       <motion.div
         className={`p-6 rounded-lg border-2 transition-all ${
-          memeMode
+          playfulMode
             ? [
                 'border-green-500 bg-white',
                 'shadow-[4px_4px_0_0_rgba(59,130,246,0.5)]',
@@ -55,7 +56,7 @@ export function TimelineItem({ experience, alignment, memeMode = false }: Timeli
       >
         <h3
           className={`text-xl font-bold mb-1 ${
-            memeMode
+            playfulMode
               ? 'text-blue-600 group-hover:text-blue-700'
               : 'group-hover:text-fuchsia-700'
           }`}
@@ -63,15 +64,21 @@ export function TimelineItem({ experience, alignment, memeMode = false }: Timeli
           {experience.role}
         </h3>
 
-        <p className={`${memeMode ? 'text-blue-500' : 'text-gray-600'} mb-4`}>
+        <p className={`${playfulMode ? 'text-blue-500' : 'text-gray-600'} mb-4`}>
           {experience.period}
         </p>
 
         <ul className="space-y-2 mb-4">
           {experience.highlights.map((highlight, i) => (
             <li key={i} className="flex items-start">
-              <span className="mr-2">{memeMode ? '🔥' : '✨'}</span>
-              <span className={memeMode ? 'font-medium' : ''}>{highlight}</span>
+              <span className="mr-2">
+                {playfulMode ? (
+                  <FaFire className="w-3 h-3 text-orange-500" />
+                ) : (
+                  <FaStar className="w-3 h-3 text-yellow-500" />
+                )}
+              </span>
+              <span className={playfulMode ? 'font-medium' : ''}>{highlight}</span>
             </li>
           ))}
         </ul>
@@ -81,7 +88,7 @@ export function TimelineItem({ experience, alignment, memeMode = false }: Timeli
             <span
               key={tag}
               className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${
-                memeMode
+                playfulMode
                   ? 'bg-blue-100 text-blue-800 hover:bg-green-100 hover:text-green-800'
                   : 'bg-gray-100 text-gray-800 hover:bg-pink-100 hover:text-fuchsia-800'
               }`}

@@ -8,10 +8,10 @@ interface StickerProps {
   text: string;
   position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   rotate?: number;
-  memeMode?: boolean;
+  playfulMode?: boolean;
 }
 
-export function Sticker({ emoji, text, position, rotate = 0, memeMode = false }: StickerProps) {
+export function Sticker({ emoji, text, position, rotate = 0, playfulMode = false }: StickerProps) {
   const positionClasses = {
     'top-left': 'top-8 left-8',
     'top-right': 'top-8 right-8',
@@ -22,7 +22,7 @@ export function Sticker({ emoji, text, position, rotate = 0, memeMode = false }:
   return (
     <motion.div
       className={`absolute ${positionClasses[position]} px-4 py-2 rounded-full border-2 shadow-md flex items-center gap-2 z-20 ${
-        memeMode
+        playfulMode
           ? 'bg-yellow-100 border-red-500 text-red-600'
           : 'bg-white border-black text-black'
       }`}
