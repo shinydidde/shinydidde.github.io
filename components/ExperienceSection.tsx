@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { TimelineItem } from './ui/TimelineItem';
 import { CompanyLogo } from './ui/CompanyLogo';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
-import { FaRocket, FaSmileWink } from 'react-icons/fa';
+import { FaSmileWink } from 'react-icons/fa';
 
 /** Firestore shape passed from parent */
 export type ExperienceData = Readonly<{
@@ -59,151 +59,169 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
   return (
     <section
       id="experience"
-      className={`py-20 relative overflow-hidden ${isPlayfulMode
-          ? 'bg-gradient-to-br from-green-100 to-blue-100'
-          : 'bg-gradient-to-br from-pink-50 to-purple-50'
+      className={`relative ${isPlayfulMode
+          ? 'py-20 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden'
+          : 'py-32 bg-white'
         }`}
     >
 
-      {/* Decorative elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isPlayfulMode ? (
-          <>
-            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
-            <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-yellow-200/50 blur-3xl" />
-          </>
-        ) : (
-          <>
-            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-100/50 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-pink-100/50 blur-3xl" />
-            <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-yellow-100/50 blur-3xl" />
-          </>
-        )}
-      </div>
+      {/* Decorative elements - only for playful mode */}
+      {isPlayfulMode && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
+          <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-yellow-200/50 blur-3xl" />
+        </div>
+      )}
 
-      <div className="container mx-auto px-6">
+      <div className="max-w-5xl mx-auto px-6 lg:px-8">
         {/* Section header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2
-            className={`text-4xl sm:text-5xl font-bold mb-4 ${isPlayfulMode
-              ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500'
-              : ''
-              }`}
+        {isPlayfulMode ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
           >
-            {isPlayfulMode ? 'WORK CHAOS' : 'Work '}
-            <span className={isPlayfulMode ? 'text-yellow-400' : 'text-purple-500'}>
-              {isPlayfulMode ? 'EXPERIENCE' : 'Experience'}
-            </span>
-          </h2>
-          <p
-            className={`text-lg ${isPlayfulMode ? 'text-blue-600' : 'text-gray-600'
-              } max-w-2xl mx-auto`}
-          >
-            <span className="flex items-center justify-center gap-2">
-              {isPlayfulMode ? (
-                <>
-                  My professional journey through the tech chaos
-                  <FaSmileWink className="w-5 h-5 text-yellow-500" />
-                </>
-              ) : (
-                <>
-                  My professional journey through the tech universe
-                  <FaRocket className="w-5 h-5 text-blue-500" />
-                </>
-              )}
-            </span>
-          </p>
-        </motion.div>
+            <h2 className="text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500 font-bold mb-6">
+              WORK CHAOS
+              <span className="text-yellow-400">EXPERIENCE</span>
+            </h2>
+            <p className="text-lg text-blue-600 max-w-3xl mx-auto">
+              <span className="flex items-center justify-center gap-2">
+                My professional journey through the tech chaos
+                <FaSmileWink className="w-5 h-5 text-yellow-500" />
+              </span>
+            </p>
+          </motion.div>
+        ) : (
+          <div className="text-center mb-24">
+            <h2 className="text-5xl sm:text-6xl font-light text-gray-900 mb-8 tracking-tight">
+              Experience
+            </h2>
+            <div className="w-24 h-0.5 bg-gray-900 mx-auto mb-8"></div>
+            <p className="text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed">
+              A decade of crafting exceptional digital experiences and leading high-performance engineering teams
+            </p>
+          </div>
+        )}
 
         {/* Timeline */}
-        <div className="relative max-w-3xl mx-auto">
-          {/* Timeline line */}
-          <div
-            className={`absolute left-1/2 -translate-x-1/2 w-1 h-full rounded-full ${isPlayfulMode
-              ? 'bg-gradient-to-b from-green-300 to-blue-300'
-              : 'bg-gradient-to-b from-purple-300 to-pink-300'
-              }`}
-          />
+        {isPlayfulMode ? (
+          <div className="relative max-w-3xl mx-auto">
+            {/* Timeline line */}
+            <div className="absolute left-1/2 -translate-x-1/2 w-1 h-full rounded-full bg-gradient-to-b from-green-300 to-blue-300" />
 
-          {/* Timeline items */}
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true, margin: "-100px" }}
-              className={`relative mb-20 md:mb-16 md:px-0 ${index % 2 === 0 ? 'pr-8 md:pr-0 md:pl-8' : 'pl-8 md:pl-0 md:pr-8'}`}
-            >
-              <TimelineItem
-                experience={exp}
-                alignment={index % 2 === 0 ? 'left' : 'right'}
-                playfulMode={isPlayfulMode}
-              />
+            {/* Timeline items */}
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={exp.id}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className={`relative mb-20 md:mb-16 md:px-0 ${
+                  index % 2 === 0 ? 'pr-8 md:pr-0 md:pl-8' : 'pl-8 md:pl-0 md:pr-8'
+                }`}
+              >
+                <TimelineItem
+                  experience={exp}
+                  alignment={index % 2 === 0 ? 'left' : 'right'}
+                  playfulMode={isPlayfulMode}
+                />
 
-              <CompanyLogo
-                logo={exp.logo}
-                company={exp.company}
-                side={index % 2 === 0 ? 'right' : 'left'}
-                delay={index * 0.2}
-              />
-            </motion.div>
-          ))}
+                {/* Show company logo only in playful mode */}
+                <CompanyLogo
+                  logo={exp.logo}
+                  company={exp.company}
+                  side={index % 2 === 0 ? 'right' : 'left'}
+                  delay={index * 0.2}
+                />
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          /* Modern Professional Timeline */
+          <div className="space-y-16">
+            {experiences.map((exp) => (
+              <div key={exp.id} className="group">
+                <div className="grid md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
+                  {/* Year & Company */}
+                  <div className="md:text-right space-y-3">
+                    <div className="text-sm font-medium text-gray-500 tracking-wider uppercase">
+                      {exp.period}
+                    </div>
+                    <div className="text-lg font-light text-gray-900">
+                      {exp.company}
+                    </div>
+                  </div>
 
+                  {/* Role & Details */}
+                  <div className="relative md:pl-8">
+                    {/* Subtle vertical line */}
+                    <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px bg-gray-200 group-hover:bg-gray-400 transition-colors duration-300"></div>
+                    
+                    <div className="space-y-6">
+                      <h3 className="text-2xl font-light text-gray-900 leading-tight">
+                        {exp.role.split('@')[0].trim()}
+                      </h3>
+                      
+                      <div className="space-y-4">
+                        {exp.highlights.map((highlight, idx) => (
+                          <div key={idx} className="flex items-start gap-3 text-gray-600 leading-relaxed">
+                            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2.5 flex-shrink-0"></div>
+                            <span className="font-light">{highlight}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
-          {/* Fun timeline end marker */}
+        {/* CTA */}
+        {isPlayfulMode ? (
           <motion.div
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ type: 'spring', bounce: 0.6 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
             viewport={{ once: true }}
-            className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-12 rounded-full flex items-center justify-center font-bold shadow-lg ${isPlayfulMode ? 'bg-yellow-400 text-black' : 'bg-pink-500 text-white'
-              }`}
+            className="text-center mt-20"
           >
-            {isPlayfulMode ? 'STILL HERE??' : 'NOW'}
+            <p className="text-lg mb-6 text-blue-600">
+              WANT TO SEE MY FULL RESUME WITH ALL THE CHAOS?
+            </p>
+            <motion.a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-3 font-semibold transition-all bg-gradient-to-r from-green-400 to-blue-500 text-black shadow-[4px_4px_0_0_rgba(245,158,11,1)] hover:from-blue-500 hover:to-green-400 hover:text-black hover:shadow-[8px_8px_0_0_rgba(59,130,246,1)] rounded-full"
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              DOWNLOAD RESUME (GOOD LUCK)
+            </motion.a>
           </motion.div>
-        </div>
-
-        {/* Fun CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center mt-20"
-        >
-          <p
-            className={`text-lg mb-6 ${isPlayfulMode ? 'text-blue-600' : 'text-gray-600'
-              }`}
-          >
-            {isPlayfulMode
-              ? 'WANT TO SEE MY FULL RESUME WITH ALL THE CHAOS?'
-              : 'Want to see my full resume with all the nerdy details?'}
-          </p>
-          <motion.a
-            href="/resume.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-block px-8 py-3 rounded-full font-bold transition-all ${isPlayfulMode
-              // MEME MODE: green/blue gradient + blue hover swap
-              ? 'bg-gradient-to-r from-green-400 to-blue-500 text-black shadow-[4px_4px_0_0_rgba(245,158,11,1)] hover:from-blue-500 hover:to-green-400 hover:text-black hover:shadow-[8px_8px_0_0_rgba(59,130,246,1)]'
-              // NORMAL: purple/pink gradient + pink hover swap
-              : 'bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-[4px_4px_0_0_rgba(168,85,247,1)] hover:from-pink-600 hover:to-purple-600 hover:shadow-[8px_8px_0_0_rgba(236,72,153,1)]'
-              }`}
-            whileHover={{ y: -4 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isPlayfulMode ? 'DOWNLOAD RESUME (GOOD LUCK)' : 'Download Resume PDF'}
-          </motion.a>
-
-        </motion.div>
+        ) : (
+          <div className="text-center mt-20">
+            <div className="w-12 h-px bg-gray-300 mx-auto mb-8"></div>
+            <p className="text-base font-light text-gray-500 mb-8 tracking-wide">
+              View comprehensive experience details
+            </p>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-8 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            >
+              Download Resume
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

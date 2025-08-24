@@ -1,7 +1,7 @@
 // components/SkillsSection.tsx
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
 import type { IconType } from 'react-icons';
@@ -99,43 +99,82 @@ function resolveIcon(item: { name: string; icon?: string }): IconType {
 }
 
 /* ---------- Small UI bits ---------- */
-function SkillRow({ name, Icon, level, playful }: { name: string; Icon: IconType; level: number; playful: boolean }) {
+function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: IconType; level: number; playful: boolean; index: number }) {
   return (
-    <div className="space-y-2">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <Icon className={playful ? 'text-blue-600' : 'text-fuchsia-700'} aria-hidden />
-          <span className="font-semibold text-sm tracking-wide">{name}</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      whileHover={playful ? { scale: 1.05, y: -5 } : { y: -2 }}
+      className={`p-6 transition-all duration-200 ${
+        playful
+          ? 'bg-white border-yellow-400 border-2 rounded-xl shadow-[4px_4px_0_0_rgba(59,130,246,0.3)] hover:shadow-[8px_8px_0_0_rgba(34,197,94,0.4)]'
+          : 'bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-gray-300'
+      }`}
+    >
+      {/* Icon and name */}
+      <div className="flex items-center gap-4 mb-4">
+        {/* Show icon only in playful mode */}
+        {playful && (
+          <div className="p-3 rounded-lg bg-gradient-to-br from-green-100 to-blue-100">
+            <Icon 
+              className="text-2xl text-blue-600" 
+              aria-hidden 
+            />
+          </div>
+        )}
+        <div className="flex-1">
+          <h4 className="font-semibold text-lg mb-1 text-gray-900">{name}</h4>
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">Proficiency</span>
+            <span className={`text-base font-semibold ${
+              playful ? 'text-blue-600' : 'text-gray-900'
+            }`}>
+              {level}%
+            </span>
+          </div>
         </div>
-        <span className="text-xs font-bold opacity-70">{level}%</span>
       </div>
-      <div className="h-2.5 rounded-full bg-zinc-200 overflow-hidden">
-        <div
-          className={`h-full rounded-full transition-all duration-700 ${playful ? 'bg-gradient-to-r from-green-400 to-blue-500' : 'bg-gradient-to-r from-pink-500 to-fuchsia-600'
+
+      {/* Progress bar */}
+      <div className="relative">
+        <div className={`h-2 rounded-full overflow-hidden ${
+          playful ? 'bg-gray-200' : 'bg-gray-200'
+        }`}>
+          <motion.div
+            className={`h-full rounded-full ${
+              playful 
+                ? 'bg-gradient-to-r from-green-400 to-blue-500' 
+                : 'bg-gray-900'
             }`}
-          style={{ width: `${level}%` }}
-        />
+            initial={{ width: 0 }}
+            animate={{ width: `${level}%` }}
+            transition={{ duration: 1.2, delay: index * 0.05 + 0.2, ease: "easeOut" }}
+          />
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-function CategoryHeader({ label, playful }: { label: string; playful: boolean }) {
+function TabButton({ label, active, onClick, playful }: { label: string; active: boolean; onClick: () => void; playful: boolean }) {
   return (
-    <div className="col-span-full -mx-1 mb-2">
-      <div
-        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-black tracking-wider border-2 ${playful
-            ? 'bg-gradient-to-r from-green-400 to-blue-500 text-black border-black'
-            : 'bg-gradient-to-r from-pink-500 to-fuchsia-600 text-white border-black'
-          }`}
-      >
-        <span>{label}</span>
-      </div>
-      <div
-        className={`h-1 w-full rounded-full mt-2 ${playful ? 'bg-gradient-to-r from-green-300 to-blue-400' : 'bg-gradient-to-r from-pink-300 to-fuchsia-400'
-          }`}
-      />
-    </div>
+    <motion.button
+      onClick={onClick}
+      className={`px-6 py-3 font-medium transition-all duration-200 ${
+        active
+          ? playful
+            ? 'bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-full shadow-[4px_4px_0_0_rgba(59,130,246,1)]'
+            : 'bg-gray-900 text-white rounded-md shadow-sm'
+          : playful
+            ? 'bg-white text-gray-700 border-2 border-yellow-400 rounded-full hover:bg-yellow-50'
+            : 'bg-white text-gray-600 border border-gray-200 rounded-md hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300'
+      }`}
+      whileHover={playful ? { scale: 1.05 } : {}}
+      whileTap={{ scale: 0.98 }}
+    >
+      {label}
+    </motion.button>
   );
 }
 
@@ -147,6 +186,7 @@ const clamp01to100 = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 
 export default function SkillsSection({ data }: { data: SkillsData }) {
   const { isPlayfulMode } = usePlayfulMode();
+  const [activeTab, setActiveTab] = useState(0);
 
   // Build render model from Firestore with safe numeric level
   const model = useMemo(() => {
@@ -166,75 +206,168 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
   return (
     <section
       id="skills"
-      className={`py-20 relative overflow-hidden ${isPlayfulMode
-          ? 'bg-gradient-to-br from-green-100 to-blue-100'
-          : 'bg-gradient-to-br from-pink-50 to-purple-50'
+      className={`relative ${isPlayfulMode
+          ? 'py-20 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden'
+          : 'py-20 bg-white'
         }`}
     >
+      {/* soft background accents - only for playful mode */}
+      {isPlayfulMode && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-green-200/40 blur-xl" />
+          <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-blue-200/40 blur-xl" />
+        </div>
+      )}
 
-      {/* soft background accents */}
-      <div className="absolute inset-0 pointer-events-none">
-        {isPlayfulMode ? (
-          <>
-            <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-green-200/40 blur-xl" />
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-blue-200/40 blur-xl" />
-          </>
-        ) : (
-          <>
-            <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-purple-100/60 blur-3xl" />
-            <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-pink-100/60 blur-3xl" />
-          </>
-        )}
-      </div>
-
-      <div className="container mx-auto px-6">
+      <div className={`mx-auto px-6 ${isPlayfulMode ? 'container max-w-7xl' : 'max-w-6xl'}`}>
         {/* Title */}
         {model.title && (
+          isPlayfulMode ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600">
+                {model.title}
+              </h2>
+              <div className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-green-400 to-blue-500" />
+            </motion.div>
+          ) : (
+            <div className="text-center mb-16">
+              <h2 className="text-5xl sm:text-6xl font-light text-gray-900 mb-6 tracking-tight">
+                Technical Skills
+              </h2>
+              <div className="w-24 h-0.5 bg-gray-900 mx-auto mb-6"></div>
+              <p className="text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed">
+                A comprehensive overview of technologies, frameworks, and tools I use to craft exceptional digital experiences
+              </p>
+            </div>
+          )
+        )}
+
+        {/* Tab Navigation */}
+        {isPlayfulMode ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="text-center mb-10"
+            className="flex flex-wrap justify-center gap-4 mb-12"
           >
-            <h2
-              className={`text-4xl sm:text-5xl font-bold ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600' : 'text-gray-900'
-                }`}
-            >
-              {model.title}
-            </h2>
+            {model.cats.map((category, index) => (
+              <TabButton
+                key={category.label}
+                label={category.label}
+                active={activeTab === index}
+                onClick={() => setActiveTab(index)}
+                playful={isPlayfulMode}
+              />
+            ))}
           </motion.div>
+        ) : (
+          <div className="mb-12">
+            <div className="flex flex-wrap justify-center gap-3">
+              {model.cats.map((category, index) => (
+                <button
+                  key={category.label}
+                  onClick={() => setActiveTab(index)}
+                  className={`px-6 py-3 text-sm font-medium transition-all duration-200 ${
+                    activeTab === index
+                      ? 'text-gray-900 border-b-2 border-gray-900'
+                      : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300'
+                  }`}
+                >
+                  {category.label}
+                </button>
+              ))}
+            </div>
+          </div>
         )}
 
-        {/* Compact single panel */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
-          viewport={{ once: true }}
-          className={[
-            'mx-auto max-w-6xl rounded-2xl border-4',
-            isPlayfulMode ? 'border-yellow-400 bg-white' : 'border-black bg-white',
-            'p-6 shadow-[8px_8px_0_0_rgba(0,0,0,0.20)]',
-          ].join(' ')}
-        >
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
-            {model.cats.map((cat) => (
-              <React.Fragment key={cat.label}>
-                <CategoryHeader label={cat.label} playful={isPlayfulMode} />
-                {cat.items.map((s) => (
-                  <SkillRow
-                    key={`${cat.label}-${s.name}`}
-                    name={s.name}
-                    Icon={s.Icon}
-                    level={s.level}
-                    playful={isPlayfulMode}
-                  />
-                ))}
-              </React.Fragment>
-            ))}
+        {/* Tab Content */}
+        {isPlayfulMode ? (
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="min-h-[400px]"
+          >
+            {model.cats[activeTab] && (
+              <>
+                {/* Skills Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {model.cats[activeTab].items.map((skill, index) => (
+                    <SkillCard
+                      key={skill.name}
+                      name={skill.name}
+                      Icon={skill.Icon}
+                      level={skill.level}
+                      playful={isPlayfulMode}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </motion.div>
+        ) : (
+          /* Professional Skills Layout */
+          <div key={activeTab} className="min-h-[400px]">
+            {model.cats[activeTab] && (
+              <div>
+                {/* Professional Skills Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
+                  {model.cats[activeTab].items.map((skill, index) => (
+                    <div key={skill.name} className="group text-center space-y-4">
+                      {/* Icon */}
+                      <div className="flex justify-center mb-3">
+                        <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 group-hover:bg-gray-100 transition-colors duration-300">
+                          <skill.Icon className="w-6 h-6 text-gray-600 group-hover:text-gray-900 transition-colors duration-300" />
+                        </div>
+                      </div>
+                      
+                      {/* Skill name */}
+                      <div className="space-y-2">
+                        <h4 className="text-sm font-medium text-gray-900 tracking-wide">
+                          {skill.name}
+                        </h4>
+                        <div className="text-xs text-gray-500 font-light">
+                          {skill.level}% proficiency
+                        </div>
+                      </div>
+                      
+                      {/* Minimalist progress indicator */}
+                      <div className="space-y-2">
+                        <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-gray-900 rounded-full transition-all duration-1000 ease-out"
+                            style={{
+                              width: `${skill.level}%`,
+                              transitionDelay: `${index * 50}ms`
+                            }}
+                          />
+                        </div>
+                        
+                        {/* Subtle hover effect */}
+                        <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="text-xs text-gray-400 font-light">
+                            {skill.level >= 90 ? 'Expert' : 
+                             skill.level >= 75 ? 'Advanced' : 
+                             skill.level >= 60 ? 'Proficient' : 'Intermediate'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </motion.div>
+        )}
       </div>
     </section>
   );

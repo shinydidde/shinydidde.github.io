@@ -22,13 +22,13 @@ export function EducationCard({ item, index, playfulMode = false }: EducationCar
       className={`p-6 rounded-xl border-2 ${
         playfulMode
           ? 'border-green-500 bg-white shadow-[4px_4px_0_0_rgba(59,130,246,0.3)] hover:shadow-[8px_8px_0_0_rgba(245,158,11,0.5)]'
-          : 'border-black bg-white shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] hover:shadow-[8px_8px_0_0_rgba(168,85,247,0.3)]'
+          : 'border-black bg-white shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.4)]'
       } transition-all`}
       whileHover={{ y: -5 }}
     >
       <div className="flex gap-4">
         {/* Icon */}
-        <div className={`${item.color} w-12 h-12 rounded-full flex items-center justify-center text-xl`}>
+        <div className={`${playfulMode ? item.color : 'bg-gray-100'} w-12 h-12 rounded-full flex items-center justify-center text-xl text-gray-800`}>
           {item.icon}
         </div>
 

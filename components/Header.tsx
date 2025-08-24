@@ -1,283 +1,264 @@
-// app/components/Header.tsx
+// components/Header.tsx
 'use client';
 
-import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { SquigglyUnderline } from './ui/SquigglyUnderline';
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
-import { FaLaughSquint, FaGraduationCap, FaBriefcase, FaPalette } from 'react-icons/fa';
 
 interface HeaderProps {
-  hero: {
-    name: string;
-    logo: string;
-  };
-  navItems?: {
-    name: string;
-    href: string;
-  }[];
-  memeNavItems?: {
-    name: string;
-    href: string;
-  }[];
+  initials?: string;
 }
 
-const DEFAULT_NAV_ITEMS = [
+const NAV_ITEMS = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
-  { name: 'Work', href: '#experience' },
+  { name: 'Experience', href: '#experience' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
 ];
 
-const DEFAULT_MEME_NAV_ITEMS = [
-  { name: 'About', href: '#about' },
-  { name: 'Skillz', href: '#skills' },
-  { name: 'Work', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Edu-meme-cation', href: '#education' },
+const SOCIAL_LINKS = [
+  { name: 'GitHub', href: 'https://github.com/shinydidde', icon: FaGithub },
+  { name: 'LinkedIn', href: 'https://linkedin.com/in/mruduladidde', icon: FaLinkedin },
+  { name: 'Twitter', href: 'https://twitter.com/mruduladidde', icon: FaTwitter },
 ];
 
-export default function Header({ hero, navItems, memeNavItems }: HeaderProps) {
+export default function Header({ initials = 'MD' }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isPlayfulMode, togglePlayfulMode } = usePlayfulMode();
 
-  // Use provided nav items or fallback to defaults
-  const currentNavItems = isPlayfulMode
-    ? memeNavItems || DEFAULT_MEME_NAV_ITEMS
-    : navItems || DEFAULT_NAV_ITEMS;
-
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+      
+      // Update active section based on scroll position
+      const sections = NAV_ITEMS.map(item => item.href.substring(1));
+      const current = sections.find(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+      setActiveSection(current || '');
+    };
+    
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleMemeModeToggle = () => {
-    togglePlayfulMode();
-    setMobileMenuOpen(false);
-  };
-
-  const getNavItemDisplay = (name: string) => {
-    if (isPlayfulMode && name === 'Education') {
-      return (
-        <span className="flex items-center">
-          Edu-meme-cation <FaGraduationCap className="ml-2" />
-        </span>
-      );
-    }
-    if (isPlayfulMode && name === 'Skills') {
-      return (
-        <span className="flex items-center">
-          Skillz <FaLaughSquint className="ml-2" />
-        </span>
-      );
-    }
-    return name;
+  const handleMobileNavClick = () => {
+    setIsMobileMenuOpen(false);
   };
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ type: 'spring', damping: 20 }}
+    <header
       className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/90 shadow-lg py-2 border-b-2 border-black'
-          : 'bg-transparent py-4'
-      } ${isPlayfulMode ? 'meme-mode-header' : ''}`}
+        isPlayfulMode 
+          ? (isScrolled 
+              ? 'bg-green-50/80 backdrop-blur-md shadow-lg py-4 border-b-2 border-yellow-300' 
+              : 'bg-transparent py-6'
+            )
+          : (isScrolled
+              ? 'bg-white/95 backdrop-blur-sm shadow-sm py-4'
+              : 'bg-transparent py-6'
+            )
+      }`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center">
-          {/* Logo with fun hover effect */}
-          <motion.div
-            whileHover={{
-              scale: 1.05,
-              rotate: isPlayfulMode ? [0, -10, 10, -10, 0] : [0, -5, 5, -5, 0],
-              transition: { duration: 0.5 }
-            }}
-          >
-            <Link href="#" className="flex items-center gap-3 group" aria-label="Home">
-              <div className="relative w-10 h-10">
-                <Image
-                  src={hero.logo}
-                  alt={`${hero.name} Logo`}
-                  fill
-                  className={`rounded-full border-2 ${
-                    isPlayfulMode
-                      ? 'border-yellow-400 group-hover:border-red-500'
-                      : 'border-purple-500 group-hover:border-pink-500'
-                  } transition-colors`}
-                  priority
-                />
-                <motion.div
-                  className="absolute -right-1 -bottom-1 w-4 h-4 rounded-full border-2 border-white"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    backgroundColor: isPlayfulMode
-                      ? ['#ff0000', '#00ff00', '#0000ff']
-                      : ['#4ade80', '#22d3ee', '#4ade80']
-                  }}
-                  transition={{ repeat: Infinity, duration: 2 }}
-                />
-              </div>
-              <span className={`text-xl font-bold bg-clip-text ${
-                isPlayfulMode
-                  ? 'text-transparent bg-gradient-to-r from-red-500 via-green-500 to-blue-500'
-                  : 'text-transparent bg-gradient-to-r from-purple-500 to-pink-500'
+          {/* Monogram Logo */}
+          <div className="relative">
+            <Link href="#" className="group" aria-label="Home">
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
+                isPlayfulMode 
+                  ? 'bg-gradient-to-br from-green-400 to-blue-500 group-hover:from-blue-500 group-hover:to-green-400 shadow-lg group-hover:shadow-xl group-hover:scale-110' 
+                  : 'bg-black group-hover:bg-gray-700'
               }`}>
-                {hero.name}
-              </span>
+                <span className={`font-bold text-lg ${isPlayfulMode ? 'text-black' : 'text-white font-mono'}`}>
+                  {initials}
+                </span>
+                {isPlayfulMode && (
+                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center animate-bounce">
+                    <span className="text-xs">✨</span>
+                  </div>
+                )}
+              </div>
             </Link>
-          </motion.div>
+          </div>
 
-          {/* Desktop Nav */}
-          <nav className="hidden md:flex gap-6 items-center">
-            {currentNavItems.map((item) => (
+          {/* Center Navigation */}
+          <nav className="hidden md:flex gap-8 items-center">
+            {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="relative px-2 py-1 font-medium group"
+                className={`relative font-medium text-sm tracking-wide transition-all duration-300 focus:outline-none rounded-sm px-2 py-1 ${
+                  isPlayfulMode 
+                    ? (activeSection === item.href.substring(1)
+                        ? 'text-blue-600 hover:text-green-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                        : 'text-blue-700 hover:text-green-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                      )
+                    : (activeSection === item.href.substring(1)
+                        ? 'text-black hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                        : 'text-gray-700 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                      )
+                }`}
               >
-                <span className={`relative z-10 ${isPlayfulMode ? 'font-meme' : ''}`}>
-                  {getNavItemDisplay(item.name)}
-                </span>
-                <SquigglyUnderline color={isPlayfulMode ? '#FFD700' : '#EC4899'} />
-                {pathname === item.href && (
-                  <motion.span
-                    layoutId="activeNavItem"
-                    className={`absolute left-0 top-full w-full h-0.5 ${
-                      isPlayfulMode ? 'bg-yellow-400' : 'bg-pink-500'
-                    }`}
-                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                  />
+                {isPlayfulMode ? item.name.toUpperCase() : item.name}
+                {activeSection === item.href.substring(1) && (
+                  <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${
+                    isPlayfulMode ? 'bg-gradient-to-r from-green-400 to-blue-500' : 'bg-black'
+                  }`} />
                 )}
               </Link>
             ))}
-            <motion.button
-              onClick={handleMemeModeToggle}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
-                isPlayfulMode
-                  ? 'bg-yellow-400 text-black shadow-[4px_4px_0_0_rgba(255,0,0,1)] hover:shadow-[6px_6px_0_0_rgba(0,255,0,1)]'
-                  : 'bg-black text-white shadow-[4px_4px_0_0_rgba(236,72,153,1)] hover:shadow-[6px_6px_0_0_rgba(236,72,153,1)]'
+          </nav>
+
+          {/* Social Links & Mode Toggle */}
+          <div className="hidden md:flex gap-4 items-center">
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`transition-all duration-300 focus:outline-none rounded-sm p-1 ${
+                    isPlayfulMode 
+                      ? 'text-blue-600 hover:text-green-500 hover:scale-110 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' 
+                      : 'text-gray-600 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                  }`}
+                  aria-label={social.name}
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              );
+            })}
+            
+            {/* Mode Toggle */}
+            <button
+              onClick={togglePlayfulMode}
+              className={`ml-2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                isPlayfulMode 
+                  ? 'bg-gradient-to-br from-yellow-300 to-yellow-400 hover:from-yellow-400 hover:to-yellow-500 shadow-md hover:shadow-lg hover:scale-110 focus:ring-yellow-500' 
+                  : 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-500'
+              }`}
+              aria-label={isPlayfulMode ? 'Switch to professional mode' : 'Switch to playful mode'}
+              title={isPlayfulMode ? 'Go Professional 🎯' : 'Get Playful 🎉'}
+            >
+              {isPlayfulMode ? (
+                <span className="text-xs">🎯</span>
+              ) : (
+                <div className="w-3 h-3 rounded-full bg-gray-400" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu Button & Toggle */}
+          <div className="md:hidden flex items-center gap-3">
+            {/* Mobile Mode Toggle */}
+            <button
+              onClick={togglePlayfulMode}
+              className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                isPlayfulMode 
+                  ? 'bg-gradient-to-br from-yellow-300 to-yellow-400 hover:from-yellow-400 hover:to-yellow-500 shadow-md hover:shadow-lg hover:scale-110 focus:ring-yellow-500' 
+                  : 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-500'
               }`}
               aria-label={isPlayfulMode ? 'Switch to professional mode' : 'Switch to playful mode'}
             >
-              <span className="flex items-center gap-2">
-                {isPlayfulMode ? (
-                  <>
-                    <FaBriefcase className="w-4 h-4" />
-                    Professional
-                  </>
-                ) : (
-                  <>
-                    <FaPalette className="w-4 h-4" />
-                    Playful
-                  </>
-                )}
-              </span>
-            </motion.button>
-          </nav>
-
-          {/* Mobile Toggle */}
-          <motion.button
-            className="md:hidden text-black focus:outline-none relative z-50"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            whileTap={{ scale: 0.9 }}
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <motion.div
-                initial={{ rotate: 0 }}
-                animate={{ rotate: 180 }}
-                className="text-2xl"
-              >
-                ✕
-              </motion.div>
-            ) : (
-              <motion.div
-                initial={{ rotate: 0 }}
-                animate={{ rotate: 0 }}
-                className="flex flex-col gap-1"
-              >
-                <motion.span className={`w-6 h-0.5 rounded-full ${isPlayfulMode ? 'bg-yellow-500' : 'bg-black'}`} />
-                <motion.span className={`w-6 h-0.5 rounded-full ${isPlayfulMode ? 'bg-yellow-500' : 'bg-black'}`} />
-                <motion.span className={`w-6 h-0.5 rounded-full ${isPlayfulMode ? 'bg-yellow-500' : 'bg-black'}`} />
-              </motion.div>
-            )}
-          </motion.button>
-        </div>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className={`md:hidden fixed inset-0 z-40 pt-24 px-6 flex flex-col gap-6 ${
-                isPlayfulMode ? 'bg-yellow-50' : 'bg-white'
+              {isPlayfulMode ? (
+                <span className="text-xs">🎯</span>
+              ) : (
+                <div className="w-3 h-3 rounded-full bg-gray-400" />
+              )}
+            </button>
+            
+            {/* Hamburger Menu */}
+            <button 
+              className={`transition-all duration-300 ${
+                isPlayfulMode 
+                  ? 'text-blue-700 hover:text-green-600 hover:scale-110' 
+                  : 'text-gray-700 hover:text-black'
               }`}
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
             >
-              {currentNavItems.map((item, index) => (
-                <motion.div
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className={`md:hidden absolute top-full left-0 right-0 backdrop-blur-sm shadow-lg ${
+          isPlayfulMode 
+            ? 'bg-green-50/90 border-t-2 border-yellow-300' 
+            : 'bg-white/95 border-t border-gray-200'
+        }`}>
+          <nav className="px-6 py-4">
+            <div className="space-y-4">
+              {NAV_ITEMS.map((item) => (
+                <Link
                   key={item.href}
-                  initial={{ x: -20, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                >
-                  <Link
-                    href={item.href}
-                    className={`text-2xl font-bold block py-3 ${
-                      isPlayfulMode ? 'font-meme text-black' : 'text-gray-800'
-                    }`}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {getNavItemDisplay(item.name)}
-                  </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: currentNavItems.length * 0.1 }}
-                className="mt-8"
-              >
-                <button
-                  onClick={handleMemeModeToggle}
-                  className={`w-full py-3 rounded-full font-bold text-lg ${
-                    isPlayfulMode
-                      ? 'bg-yellow-400 text-black'
-                      : 'bg-black text-white'
+                  href={item.href}
+                  onClick={handleMobileNavClick}
+                  className={`block text-lg font-medium transition-all duration-300 focus:outline-none rounded-sm px-2 py-2 ${
+                    isPlayfulMode 
+                      ? (activeSection === item.href.substring(1)
+                          ? 'text-blue-600 hover:text-green-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                          : 'text-blue-700 hover:text-green-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                        )
+                      : (activeSection === item.href.substring(1)
+                          ? 'text-black hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                          : 'text-gray-700 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                        )
                   }`}
                 >
-                  <span className="flex items-center gap-2">
-                    {isPlayfulMode ? (
-                      <>
-                        <FaBriefcase className="w-4 h-4" />
-                        Professional
-                      </>
-                    ) : (
-                      <>
-                        <FaPalette className="w-4 h-4" />
-                        Playful
-                      </>
-                    )}
-                  </span>
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </motion.header>
+                  {isPlayfulMode ? `🎨 ${item.name.toUpperCase()}` : item.name}
+                </Link>
+              ))}
+              
+              {/* Mobile Social Links */}
+              <div className={`pt-4 ${isPlayfulMode ? 'border-t-2 border-yellow-300' : 'border-t border-gray-200'}`}>
+                <div className="flex justify-center gap-6">
+                  {SOCIAL_LINKS.map((social) => {
+                    const Icon = social.icon;
+                    return (
+                      <a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`transition-all duration-300 focus:outline-none rounded-sm p-2 ${
+                          isPlayfulMode 
+                            ? 'text-blue-600 hover:text-green-500 hover:scale-110 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2' 
+                            : 'text-gray-600 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                        }`}
+                        aria-label={social.name}
+                      >
+                        <Icon className="w-6 h-6" />
+                      </a>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+      )}
+    </header>
   );
 }

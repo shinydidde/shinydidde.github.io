@@ -11,7 +11,7 @@ const BlinkingFaces = dynamic(() => import('@/components/BlinkingFaces'), { ssr:
 
 export default function ClientAnimations() {
   const { isPlayfulMode } = usePlayfulMode();
-  
+
   useEffect(() => {
     // Apply conditional font directly to body style
     const body = document.body;
@@ -27,19 +27,20 @@ export default function ClientAnimations() {
       <div className="fixed inset-0 pointer-events-none z-20">
         <FloatingCharacter
           src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fcoder-on-lift.png?alt=media&token=aa7bb9c5-73c2-492f-8758-b4b677c63757"
-          playfulSrc="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fparty.png?alt=media&token=96813a37-360e-4f1b-962b-5c923a1fa377"
+          playfulSrc="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fcoder-on-lift.png?alt=media&token=aa7bb9c5-73c2-492f-8758-b4b677c63757"
           alt="Floating friend"
           initialY={-130}
-          playfulInitialY={-110}
+          playfulInitialY={-150}
           scrollRange={[0, 0.8]}
           motionRange={[200, -100]}
           playfulMotionRange={[140, -60]}
           side="left"
-          size={320}
-          playfulSize={320}
+          size={120}
+          playfulSize={120}
           mobileSize={60}
           mobileInitialY={30}
           mobileMotionRange={[15, -15]}
+          playfulOnly={true}
         />
 
         <FloatingCharacter

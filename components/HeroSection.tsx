@@ -1,357 +1,216 @@
 // components/HeroSection.tsx
 'use client';
 
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { FloatingIcons } from './ui/FloatingIcons';
-import { Sticker } from './ui/Sticker';
+import { FaGithub, FaDownload } from 'react-icons/fa';
+import React from 'react';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
-import Modal from '@/components/ui/Modal';
-import {
-  FaLaughSquint,
-  FaBug,
-  FaCode,
-  FaLeaf,
-  FaPaw,
-  FaGlobeAmericas,
-  FaMagic,
-  FaTerminal,
-  FaStackOverflow
-} from 'react-icons/fa';
-import { GiBrain, GiElephant, GiButterfly } from 'react-icons/gi';
-import { TbTrees } from 'react-icons/tb';
 
 interface HeroData {
-  name: string;
-  avatarUrl: string;
-  catchPhrase: string;
-  scrollPrompt: string;
+  name?: string;
   normalRoles?: string[];
-  playfulRoles?: string[];
-  normalFacts?: string[];
-  playfulFacts?: string[];
-  playfulTitle?: string;
-  playfulButtonText?: string;
-  normalButtonText?: string;
-  sticker1?: { emoji: string; text: string };
-  sticker2?: { emoji: string; text: string };
+  memeRoles?: string[];
+  catchPhrase?: string;
+  bio?: string;
+  normalFacts?: string[] | Array<{text: string, icon: string}>;
+  memeFacts?: string[] | Array<{text: string, icon: string}>;
+  title?: string;
+  subtitle?: string;
+  [key: string]: unknown; // Allow additional properties from merged data
 }
 
-const DEFAULT_NORMAL_ROLES = ["Web Developer", "Tech Lead", "Nature Lover"];
-const DEFAULT_PLAYFUL_ROLES = ["Bug Creator", "Stack Overflow Expert", "Console.log() Master"];
-
-const ICON_MAP = {
-  code: <FaCode className="inline mr-2" />,
-  brain: <GiBrain className="inline mr-2" />,
-  leaf: <FaLeaf className="inline mr-2" />,
-  paw: <FaPaw className="inline mr-2" />,
-  globe: <FaGlobeAmericas className="inline mr-2" />,
-  magic: <FaMagic className="inline mr-2" />,
-  laugh: <FaLaughSquint className="inline mr-2" />,
-  bug: <FaBug className="inline mr-2" />,
-  stack: <FaStackOverflow className="inline mr-2" />,
-  terminal: <FaTerminal className="inline mr-2" />,
-  elephant: <GiElephant className="inline mr-2" />,
-  trees: <TbTrees className="inline mr-2" />,
-  butterfly: <GiButterfly className="inline mr-2" />
-};
-
-export default function HeroSection({ data }: { data: HeroData }) {
-  const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const [currentLogoIndex, setCurrentLogoIndex] = useState(0);
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-100, 100], [-15, 15]);
-  const scale = useTransform(x, [-100, 100], [0.9, 1.1]);
+export default function HeroSection({ data = {} }: { data?: HeroData }) {
   const { isPlayfulMode } = usePlayfulMode();
 
-  // Modal state for "random fact"
-  const [factOpen, setFactOpen] = useState(false);
-  const [factText, setFactText] = useState<string>('');
+  const name = data.name || 'Mrudula Didde';
+  const roles = isPlayfulMode ? (data.memeRoles || [
+    "Bug Creator Extraordinaire",
+    "Stack Overflow Connoisseur",
+    "console.log() Wizard",
+    "CSS Battle Veteran",
+    "Wildlife Coder",
+    "Digital Nomad"
+  ]) : (data.normalRoles || [
+    "Web Developer",
+    "Tech Lead",
+    "Nature Lover",
+    "Animal Advocate",
+    "Travel Enthusiast",
+    "UI/UX Magician"
+  ]);
 
-  // All company logos for meme mode cycling
-  const companyLogos = [
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme10.png?alt=media&token=adaef0b7-b922-43bd-9b0e-05f5bcdf6e57',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme13.png?alt=media&token=da893878-9802-4c89-804a-ed365f65858f',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme2.png?alt=media&token=04f22ca3-c55b-46d0-ac89-afef6b7dd015',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme1.png?alt=media&token=28c6dacb-d8bf-4d9e-826b-74a685cd5288',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme11.png?alt=media&token=74e449c2-66dd-4d59-8e10-b7f95387bfe8',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme12.png?alt=media&token=d38704ed-1946-4faa-ad4d-7084cdb82049',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme14.png?alt=media&token=9eb04aff-8b07-4dc6-a427-9ad4b07286f3',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme15.png?alt=media&token=d1ae069d-119f-44b7-a5ee-d3594e243f57',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme16.png?alt=media&token=23858447-6143-4b15-908c-0f96ec96ef04',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme18.png?alt=media&token=69b6b50d-e4d4-4afc-83c2-dcd83d17e17f',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme19.png?alt=media&token=6b857c78-0a8a-49c6-879c-2abf26dfebbe',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme20.png?alt=media&token=a4905b2c-87fe-4179-81b1-3ed6608718ed',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme4.png?alt=media&token=ac66531b-b88f-4fe4-a9f3-77b436fb23d7',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme5.png?alt=media&token=7fe5df8f-8d4d-4711-b7d5-d61dbdbbbe97',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme6.png?alt=media&token=0d1e790a-df98-483e-a7c6-471d371f4217',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme7.png?alt=media&token=a84179a3-d8fd-4ab9-9d40-57954867a904',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme8.png?alt=media&token=80520d0d-d05a-424e-abbd-f72185a2791c',
-    'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/logos%2Fme9.png?alt=media&token=758c1433-f749-46f3-9f6f-5efeeab12c30'
-  ];
-
-  const normalRoles = data.normalRoles || DEFAULT_NORMAL_ROLES;
-  const playfulRoles = data.playfulRoles || DEFAULT_PLAYFUL_ROLES;
-
-  const roles = isPlayfulMode
-    ? playfulRoles.map(role => ({
-        text: role,
-        icon:
-          ICON_MAP[
-            role.toLowerCase().includes('bug') ? 'bug' :
-            role.toLowerCase().includes('elephant') ? 'elephant' :
-            role.toLowerCase().includes('nature') ? 'leaf' :
-            role.toLowerCase().includes('stack') ? 'stack' :
-            role.toLowerCase().includes('console') ? 'terminal' :
-            'laugh'
-          ] || ICON_MAP.laugh
-      }))
-    : normalRoles.map(role => ({
-        text: role,
-        icon:
-          ICON_MAP[
-            role.toLowerCase().includes('nature') ? 'leaf' :
-            role.toLowerCase().includes('animal') ? 'paw' :
-            role.toLowerCase().includes('travel') ? 'globe' :
-            role.toLowerCase().includes('tech') ? 'brain' :
-            role.toLowerCase().includes('magic') ? 'magic' :
-            'code'
-          ] || ICON_MAP.code
-      }));
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentRoleIndex(prev => (prev + 1) % roles.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isPlayfulMode, roles.length]);
-
-  // Logo cycling effect for meme mode
-  useEffect(() => {
-    if (!isPlayfulMode) return;
-
-    const logoInterval = setInterval(() => {
-      setCurrentLogoIndex(prev => (prev + 1) % companyLogos.length);
-    }, 5000);
-
-    return () => clearInterval(logoInterval);
-  }, [isPlayfulMode, companyLogos.length]);
-
-  // Open modal instead of alert()
-  const showRandomFact = () => {
-    const facts = isPlayfulMode
-      ? data.playfulFacts || ["Check out my creativity!"]
-      : data.normalFacts || ["Interesting fact about me"];
-    const randomFact = facts[Math.floor(Math.random() * facts.length)];
-    setFactText(randomFact);
-    setFactOpen(true);
-  };
+  const bio = data.bio;
 
   return (
-    <section
-      className={`relative w-full min-h-screen flex items-center justify-center pt-20 pb-20 overflow-hidden ${
-        isPlayfulMode ? 'bg-gradient-to-br from-green-100 to-blue-100'
-                   : 'bg-gradient-to-br from-purple-50 to-pink-50'
-      }`}
-    >
-      {/* Background blobs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {isPlayfulMode ? (
+    <section id="about" className={`relative w-full min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-12 lg:pt-32 lg:min-h-[88vh] overflow-hidden ${isPlayfulMode ? 'bg-gradient-to-br from-green-100 to-blue-100' : 'bg-white'}`}>
+      {/* Background */}
+      <div className={`pointer-events-none absolute inset-0 ${isPlayfulMode ? '' : 'bg-white'}`}>
+        {isPlayfulMode && (
           <>
-            <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-green-200/40 blur-xl" />
-            <div className="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-blue-200/40 blur-xl" />
-          </>
-        ) : (
-          <>
-            <div className="absolute top-10 left-10 w-32 h-32 rounded-full bg-purple-200/40 blur-xl" />
-            <div className="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-pink-200/40 blur-xl" />
+            <div className="absolute inset-0 bg-gradient-to-br from-green-100 to-blue-100" />
+            <div className="absolute inset-0 bg-[radial-gradient(80%_60%_at_85%_45%,rgba(16,185,129,0.12),transparent_60%)]" />
           </>
         )}
       </div>
 
-      <FloatingIcons count={15} playfulMode={isPlayfulMode} />
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6">
+        <div className="flex flex-col lg:grid lg:grid-cols-[1.05fr_1fr] gap-4 sm:gap-8 lg:gap-16 items-start lg:items-center justify-center min-h-0">
+          {/* TEXT */}
+          <div className="order-2 lg:order-1 space-y-4 sm:space-y-6 lg:space-y-8 text-center lg:text-left relative z-20 -mt-32 sm:-mt-16 lg:mt-0">
+            <div className="space-y-2 sm:space-y-3">
+              <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.95] ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500' : 'text-gray-900'}`}>
+                {isPlayfulMode ? 'CHAOS' : 'frontend'}
+              </h1>
+              <h2 className={`text-xl sm:text-2xl md:text-4xl lg:text-5xl font-mono ${isPlayfulMode ? 'text-blue-600' : 'text-gray-600'}`}>
+                {isPlayfulMode ? '<WIZARD>' : '<engineer>'}
+              </h2>
+            </div>
 
-      <motion.div
-        className="relative z-10 mx-auto px-6 sm:px-0 flex flex-col items-center text-center max-w-2xl"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        {/* Avatar */}
-        <motion.div
-          className={`relative mb-8 w-40 h-40 border-black rounded-full border-4 ${
-            isPlayfulMode
-              ? 'shadow-[8px_8px_0_0_rgba(34,197,94,0.5)] hover:shadow-[12px_12px_0_0_rgba(59,130,246,0.5)]'
-              : 'shadow-[8px_8px_0_0_rgba(168,85,247,0.5)] hover:shadow-[12px_12px_0_0_rgba(236,72,153,0.5)]'
-          } transition-all`}
-          whileHover={{
-            rotate: isPlayfulMode ? [0, -10, 10, -10, 0] : [0, -5, 5, -5, 0],
-            transition: { duration: 0.5 }
-          }}
-          drag="x"
-          dragConstraints={{ left: -50, right: 50 }}
-          style={{ x, rotate, scale }}
-          onDragEnd={() => animate(x, 0, { type: 'spring', stiffness: 300 })}
-        >
-          <Image
-            src={isPlayfulMode ? companyLogos[currentLogoIndex] : data.avatarUrl}
-            alt={isPlayfulMode ? `Company logo ${currentLogoIndex + 1}` : `${data.name} avatar`}
-            fill
-            className="object-contain rounded-full"
-            priority
-          />
-          <motion.div
-            className="absolute bottom-2 right-2 w-5 h-5 rounded-full border-2 border-white"
-            animate={{
-              scale: [1, 1.2, 1],
-              backgroundColor: isPlayfulMode
-                ? ['#10b981', '#3b82f6', '#f59e0b']
-                : ['#8b5cf6', '#ec4899', '#8b5cf6']
-            }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-          />
-        </motion.div>
+            {/* Roles */}
+            <div className="mb-6">
+              <div className={`flex flex-wrap gap-2 justify-center lg:justify-start ${isPlayfulMode ? 'text-sm' : 'text-xs'}`}>
+                {roles.slice(0, isPlayfulMode ? 4 : 6).map((role, index) => (
+                  <span
+                    key={index}
+                    className={`px-3 py-1 rounded-full border transition-colors duration-200 ${
+                      isPlayfulMode
+                        ? 'bg-green-100 border-green-300 text-green-700'
+                        : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200'
+                    }`}
+                  >
+                    {role}
+                  </span>
+                ))}
+              </div>
+            </div>
 
-        {/* Name */}
-        <motion.h1
-          className="text-5xl sm:text-6xl font-bold mb-2 bg-clip-text text-transparent"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          style={{
-            backgroundImage: isPlayfulMode
-              ? 'linear-gradient(to right, #10b981, #3b82f6, #f59e0b)'
-              : 'linear-gradient(to right, #9333ea, #ec4899)'
-          }}
-        >
-          {isPlayfulMode ? data.playfulTitle || data.name.toUpperCase() : data.name}
-        </motion.h1>
+            {/* Bio */}
+            <div className={`space-y-3 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 ${isPlayfulMode ? 'text-blue-700' : 'text-gray-700'}`}>
+              {isPlayfulMode ? (
+                <>
+                  <p>I turn caffeine into chaos-resistant code with React magic and TypeScript wizardry!</p>
+                  <p>Performance obsessed, bug squashing, clean code creating maniac!</p>
+                </>
+              ) : bio ? (
+                <div dangerouslySetInnerHTML={{ __html: bio }} />
+              ) : (
+                <p>Frontend Architect & Tech Lead with 10+ years building scalable, high-performance React, Next.js & Vue applications. At QuestDot, I drove the adoption of TypeScript micro-frontends and CI/CD pipelines—boosting delivery speed by 50% and maintaining Lighthouse scores above 90.</p>
+              )}
+            </div>
 
-        {/* Role */}
-        <motion.div
-          className="text-2xl sm:text-3xl font-medium mb-6 h-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          <motion.span
-            key={currentRoleIndex}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -20, opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className={`inline-block bg-clip-text text-transparent ${
-              isPlayfulMode ? 'bg-gradient-to-r from-green-500 to-blue-500'
-                         : 'bg-gradient-to-r from-purple-500 to-pink-500'
-            }`}
-          >
-            {roles[currentRoleIndex].icon}
-            {roles[currentRoleIndex].text}
-          </motion.span>
-        </motion.div>
+            {/* Mobile: Circular buttons side by side */}
+            <div className="flex sm:hidden justify-center gap-4">
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none ${
+                  isPlayfulMode
+                    ? 'border-2 border-yellow-400 text-blue-700 hover:bg-yellow-100 shadow-[1px_1px_0_0_rgba(245,158,11,1)]'
+                    : 'border border-gray-300 text-gray-800 hover:bg-gray-50'
+                }`}
+                title="Download Resume"
+              >
+                <FaDownload className="w-4 h-4" />
+              </a>
 
-        {/* Tagline */}
-        <motion.p
-          className="text-lg sm:text-xl mb-8 max-w-lg relative"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          {data.catchPhrase}
-          <svg className="absolute -bottom-2 left-0 w-full h-2" viewBox="0 0 200 10" preserveAspectRatio="none">
-            <path
-              d="M0,5 C50,0 50,10 100,5 C150,0 150,10 200,5"
-              fill="none"
-              stroke={isPlayfulMode ? "#3b82f6" : "currentColor"}
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </motion.p>
+              <a
+                href="https://github.com/shinydidde"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 ${
+                  isPlayfulMode
+                    ? 'text-green-600 hover:text-blue-600 hover:bg-green-100'
+                    : 'text-gray-600 hover:text-black hover:bg-gray-100'
+                }`}
+                title="GitHub Profile"
+              >
+                <FaGithub className="w-5 h-5" />
+              </a>
+            </div>
 
-        {/* Buttons */}
-        <motion.div
-          className="flex flex-wrap justify-center gap-4 mb-12"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-        >
-          <motion.a
-            href="#projects"
-            className={`px-6 py-3 rounded-full font-bold ${
-              isPlayfulMode
-                ? 'bg-green-400 text-black shadow-[4px_4px_0_0_rgba(59,130,246,1)] hover:shadow-[8px_8px_0_0_rgba(245,158,11,1)]'
-                : 'bg-purple-600 text-white shadow-[4px_4px_0_0_rgba(168,85,247,1)] hover:shadow-[8px_8px_0_0_rgba(236,72,153,1)]'
-            } transition-all`}
-            whileHover={{ y: -4 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isPlayfulMode ? data.playfulButtonText || 'Explore My Work' : data.normalButtonText || 'View My Work'}
-          </motion.a>
+            {/* Desktop: Regular buttons */}
+            <div className="hidden sm:flex flex-row flex-wrap gap-3 lg:gap-4 items-center justify-center lg:justify-start">
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`px-6 lg:px-7 py-3 lg:py-3.5 rounded-xl text-base font-semibold transition-all duration-200 flex items-center justify-center gap-2 focus:outline-none ${
+                  isPlayfulMode
+                    ? 'border-2 border-yellow-400 text-blue-700 hover:bg-yellow-100 shadow-[2px_2px_0_0_rgba(245,158,11,1)] focus:ring-4 focus:ring-yellow-500/30'
+                    : 'border border-gray-300 text-gray-800 hover:bg-gray-50 focus:ring-4 focus:ring-gray-500/20'
+                }`}
+              >
+                <FaDownload className="w-4 h-4" />
+                <span>{isPlayfulMode ? 'GRAB MY ' : 'Download '}Resume</span>
+              </a>
 
-          <motion.button
-            onClick={showRandomFact}
-            className={`px-6 py-3 rounded-full font-bold border-2 ${
-              isPlayfulMode ? 'bg-white text-black border-blue-500'
-                         : 'bg-white text-black border-pink-500'
-            } transition-all`}
-            whileHover={{ y: -4 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {isPlayfulMode ? (
-              <>
-                {/* keep icon visual parity with playful mode */}
-                <FaLaughSquint className="inline mr-2" />
-                {data.playfulButtonText || 'Random Fact'}
-              </>
-            ) : (
-              <>
-                <FaLeaf className="inline mr-2" />
-                {data.normalButtonText || 'Fun Fact'}
-              </>
-            )}
-          </motion.button>
-        </motion.div>
+              <a
+                href="https://github.com/shinydidde"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`flex items-center justify-center gap-2 text-base font-medium py-3 transition-colors duration-200 ${
+                  isPlayfulMode
+                    ? 'text-green-600 hover:text-blue-600'
+                    : 'text-gray-600 hover:text-black'
+                }`}
+              >
+                <FaGithub className="w-5 h-5" />
+                {isPlayfulMode ? 'CODE CHAOS →' : 'GitHub →'}
+              </a>
+            </div>
+          </div>
 
-        {/* Scroll */}
-        <motion.div
-          className="flex flex-col items-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        >
-          <span className="text-sm mb-2">{data.scrollPrompt}</span>
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="w-6 h-6"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke={isPlayfulMode ? "#3b82f6" : "currentColor"}>
-              <path d="M12 5v14M19 12l-7 7-7-7" strokeWidth="2" strokeLinecap="round" />
-            </svg>
-          </motion.div>
-        </motion.div>
+          {/* PORTRAIT - MOBILE OPTIMIZED */}
+          <div className="order-1 lg:order-2 relative w-full mx-auto -mt-8 sm:mt-0">
+            {/* Mobile: Full seamless portrait */}
+            <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
+              <Image
+                src={isPlayfulMode
+                  ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F7.png?alt=media&token=a39d471e-1236-4ceb-93dc-76e685c32aaa"
+                  : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F8.png?alt=media&token=9a386e85-9eaf-400f-8d6f-20ba951da39a"
+                }
+                alt={`${name} - Web Developer`}
+                fill
+                className={`object-cover object-center scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
+                style={{
+                  WebkitMaskImage: isPlayfulMode
+                    ? 'linear-gradient(to bottom, black 40%, transparent 95%, transparent 100%)'
+                    : 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
+                  maskImage: isPlayfulMode
+                    ? 'linear-gradient(to bottom, black 40%, transparent 95%, transparent 100%)'
+                    : 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
+                }}
+                priority
+              />
+            </div>
 
-        {/* Stickers */}
-        {data.sticker1 && (
-          <Sticker emoji={data.sticker1.emoji} text={data.sticker1.text} position="top-right" rotate={15} playfulMode={isPlayfulMode} />
-        )}
-        {data.sticker2 && (
-          <Sticker emoji={data.sticker2.emoji} text={data.sticker2.text} position="bottom-left" rotate={-10} playfulMode={isPlayfulMode} />
-        )}
-      </motion.div>
-
-      {/* Random Fact Modal */}
-      <Modal
-        isOpen={factOpen}
-        onClose={() => setFactOpen(false)}
-        title={isPlayfulMode ? 'RANDOM CHAOS FACT' : 'Random Fun Fact'}
-        icon={isPlayfulMode ? FaLaughSquint : FaLeaf}
-        size="sm"
-      >
-        <p className="text-lg">{factText}</p>
-      </Modal>
+            {/* Tablet and up: Full portrait */}
+            <div className="hidden sm:block relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto">
+              <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
+                <Image
+                  src={isPlayfulMode
+                    ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F7.png?alt=media&token=a39d471e-1236-4ceb-93dc-76e685c32aaa"
+                    : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F8.png?alt=media&token=9a386e85-9eaf-400f-8d6f-20ba951da39a"
+                  }
+                  alt={`${name} - Web Developer`}
+                  fill
+                  className={`object-cover object-center scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
+                  style={{
+                    WebkitMaskImage: isPlayfulMode
+                      ? 'linear-gradient(to bottom, black 50%, transparent 95%, transparent 100%)'
+                      : 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
+                    maskImage: isPlayfulMode
+                      ? 'linear-gradient(to bottom, black 50%, transparent 95%, transparent 100%)'
+                      : 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
+                  }}
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

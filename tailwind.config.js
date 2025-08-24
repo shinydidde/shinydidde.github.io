@@ -15,7 +15,9 @@ module.exports = {
         lime:    "#a6d552",
       },
       fontFamily: {
-        sans: ["var(--font-poppins)", "Poppins", "sans-serif"],
+        sans: ["var(--font-poppins)", "Poppins", "Inter", "system-ui", "sans-serif"],
+        serif: ["Georgia", "serif"],
+        mono: ["JetBrains Mono", "Monaco", "Consolas", "monospace"],
         sketch: ["var(--font-patrick)", "Patrick Hand", "cursive"],
       },
     },

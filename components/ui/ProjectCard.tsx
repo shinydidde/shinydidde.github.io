@@ -36,7 +36,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
         y: -5,
         boxShadow: activeMemeMode
           ? "8px 8px 0 rgba(245, 158, 11, 0.7)"
-          : "8px 8px 0 rgba(168, 85, 247, 0.5)"
+          : "8px 8px 0 rgba(0, 0, 0, 0.3)"
       }}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -131,7 +131,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
         <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold shadow-md ${
           activeMemeMode
             ? 'bg-yellow-400 text-black'
-            : 'bg-purple-500 text-white'
+            : 'bg-gray-900 text-white'
         }`}>
           {activeMemeMode ? 'BUGGY' : 'Featured'}
         </div>

@@ -2,6 +2,7 @@
 "use client";
 
 import dynamic from 'next/dynamic';
+import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 const DesktopBlackCat = dynamic(
   () => import('@/components/DesktopBlackCat'),
@@ -12,6 +13,12 @@ const DesktopBlackCat = dynamic(
 );
 
 export default function DesktopBlackCatWrapper() {
+  const { isPlayfulMode } = usePlayfulMode();
+
+  if (!isPlayfulMode) {
+    return null;
+  }
+
   return (
     <div className="hidden md:block">
       <DesktopBlackCat />

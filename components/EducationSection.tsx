@@ -61,98 +61,105 @@ export default function EducationSection({ data }: { data: EducationData }) {
   return (
     <section
       id="education"
-      className={`py-20 relative overflow-hidden ${
+      className={`relative ${
         isPlayfulMode
-          ? 'bg-gradient-to-br from-green-100 to-blue-100'
-          : 'bg-gradient-to-br from-pink-50 to-purple-50'
+          ? 'py-16 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden'
+          : 'py-16 bg-white'
       }`}
     >
-      {/* Background blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isPlayfulMode ? (
-          <>
-            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
-          </>
-        ) : (
-          <>
-            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-100/50 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-pink-100/50 blur-3xl" />
-          </>
-        )}
-      </div>
-
-      <div className="container mx-auto px-6">
-        {/* Section header (title from Firestore) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2
-            className={`text-4xl sm:text-5xl font-bold mb-4 ${
-              isPlayfulMode
-                ? 'text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500'
-                : ''
-            }`}
-          >
-            {data.title ?? (isPlayfulMode ? 'EDU-PLAYFUL-CATION' : 'Education')}
-          </h2>
-          <p
-            className={`text-lg ${
-              isPlayfulMode ? 'text-blue-600' : 'text-gray-600'
-            } max-w-2xl mx-auto`}
-          >
-            {isPlayfulMode
-              ? 'Where I officially learned to Google error messages'
-              : 'A snapshot of my academic journey'}
-          </p>
-        </motion.div>
-
-        {/* Education cards from Firestore */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {items.map((item, index) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
-              viewport={{ once: true }}
-            >
-              <EducationCard item={item} index={index} playfulMode={isPlayfulMode} />
-            </motion.div>
-          ))}
+      {/* Background blobs - only for playful mode */}
+      {isPlayfulMode && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
         </div>
+      )}
 
-        {/* Fun fact / note */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          viewport={{ once: true }}
-          className={`mt-20 text-center p-6 rounded-xl border-2 ${
-            isPlayfulMode
-              ? 'bg-white border-green-500 shadow-[6px_6px_0_0_rgba(59,130,246,0.5)]'
-              : 'bg-white border-black shadow-[6px_6px_0_0_rgba(0,0,0,1)]'
-          } max-w-2xl mx-auto`}
-        >
-          <h3 className={`text-xl font-bold mb-2 ${isPlayfulMode ? 'text-blue-600' : ''}`}>
-            {isPlayfulMode ? 'REAL TALK (KINDA):' : 'Real Talk:'}
-          </h3>
-          <p className={isPlayfulMode ? 'text-gray-800' : 'text-gray-700'}>
-            {isPlayfulMode
-              ? '99% OF MY SKILLS CAME FROM STACK OVERFLOW AND RANDOM BLOG POSTS. THE DEGREE JUST MADE MY LINKEDIN LOOK FANCY'
-              : 'A lot of the practical skills came from projects, tinkering, and '}
-            {!isPlayfulMode && (
-              <span className="text-pink-500 font-bold">
-                countless hours of trial and error
-              </span>
-            )}
-            {!isPlayfulMode && '.'}
-          </p>
-        </motion.div>
+      <div className={`mx-auto px-6 ${isPlayfulMode ? 'container max-w-7xl' : 'max-w-5xl'}`}>
+        {/* Section header */}
+        {isPlayfulMode ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500">
+              EDU-PLAYFUL-CATION
+            </h2>
+            <p className="text-lg text-blue-600 max-w-2xl mx-auto">
+              Where I officially learned to Google error messages
+            </p>
+          </motion.div>
+        ) : (
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-light text-gray-900 mb-2 tracking-tight">
+              Education
+            </h2>
+          </div>
+        )}
+
+        {/* Education content */}
+        {isPlayfulMode ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {items.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <EducationCard item={item} index={index} playfulMode={isPlayfulMode} />
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          /* Minimal Education List */
+          <div className="space-y-4 max-w-2xl mx-auto">
+            {items.map((item) => (
+              <div key={item.id} className="group border-b border-gray-200 last:border-b-0 pb-4 last:pb-0">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div className="space-y-1">
+                    <h3 className="text-base font-medium text-gray-900">
+                      {item.degree}
+                    </h3>
+                    <div className="text-sm text-gray-600">
+                      {item.institution}
+                    </div>
+                  </div>
+                  <div className="text-sm text-gray-500 sm:text-right">
+                    {item.period}
+                    {item.description && (
+                      <div className="text-xs mt-1">
+                        {item.description}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Note */}
+        {isPlayfulMode && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            viewport={{ once: true }}
+            className="mt-20 text-center p-6 rounded-xl max-w-2xl mx-auto bg-white border-green-500 border-2 shadow-[6px_6px_0_0_rgba(59,130,246,0.5)]"
+          >
+            <h3 className="text-xl font-bold mb-2 text-blue-600">
+              REAL TALK (KINDA):
+            </h3>
+            <p className="text-gray-800">
+              99% OF MY SKILLS CAME FROM STACK OVERFLOW AND RANDOM BLOG POSTS. THE DEGREE JUST MADE MY LINKEDIN LOOK FANCY
+            </p>
+          </motion.div>
+        )}
       </div>
     </section>
   );

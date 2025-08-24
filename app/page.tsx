@@ -3,7 +3,6 @@ import React from 'react'
 
 import Header            from '@/components/Header'
 import HeroSection       from '@/components/HeroSection'
-import AboutSection      from '@/components/AboutSection'
 import SkillsSection     from '@/components/SkillsSection'
 import ExperienceSection from '@/components/ExperienceSection'
 import ProjectsSection   from '@/components/ProjectsSection'
@@ -40,13 +39,15 @@ export default async function Home() {
     fetchFooterInfo()
   ])
 
+  // Merge about data into hero data
+  const enhancedHeroData = { ...heroData, ...aboutData }
+
   return (
     <div className="min-h-screen">
-      <Header hero={heroData} />
+      <Header />
 
       <main>
-        <HeroSection       data={heroData} />
-        <AboutSection      data={aboutData} />
+        <HeroSection       data={enhancedHeroData} />
         <SkillsSection     data={skillsData} />
         <ExperienceSection data={experienceData} />
         <ProjectsSection   data={projectsData} />

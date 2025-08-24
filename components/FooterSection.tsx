@@ -6,13 +6,8 @@ import { SocialIcon } from './ui/SocialIcon';
 import {
   FaEnvelope,
   FaPhone,
-  FaMapMarkerAlt,
-  FaHeart,
-  FaLaughSquint,
-  FaSkype,
-  FaCode
+  FaMapMarkerAlt
 } from 'react-icons/fa';
-import { SiReact } from 'react-icons/si';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
 export type FooterData = Readonly<{
@@ -63,13 +58,9 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
 
   const heading = isPlayfulMode ? (copy.headingPlayful ?? '') : (copy.headingNormal ?? '');
   const bio = isPlayfulMode ? (copy.bioPlayful ?? '') : (copy.bioNormal ?? '');
-  const footerText = isPlayfulMode ? (copy.footerTextPlayful ?? '') : (copy.footerTextNormal ?? '');
   const copyright = isPlayfulMode
     ? withYear(copy.copyrightPlayful, year)
     : withYear(copy.copyrightNormal, year);
-
-  const dmTitle = isPlayfulMode ? (copy.dmTitlePlayful ?? '') : (copy.dmTitleNormal ?? '');
-  const dmList = isPlayfulMode ? (copy.dmListPlayful ?? []) : (copy.dmListNormal ?? []);
 
   const displayName = isPlayfulMode
     ? `${(name || 'YOU').toUpperCase()}${copy.nameSuffixPlayful ?? ''}`
@@ -84,187 +75,132 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
 
   return (
     <footer
-      className={`py-16 relative overflow-hidden ${
-        isPlayfulMode ? 'bg-gradient-to-br from-green-900 to-blue-900' : 'bg-black text-white'
+      className={`relative ${
+        isPlayfulMode ? 'py-16 bg-gradient-to-br from-green-900 to-blue-900 overflow-hidden' : 'py-12 bg-black text-white'
       }`}
     >
-      {/* Background blobs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {isPlayfulMode ? (
-          <>
-            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-700/20 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-700/20 blur-3xl" />
-          </>
-        ) : (
-          <>
-            <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-purple-900/20 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-pink-900/20 blur-3xl" />
-          </>
-        )}
-      </div>
+      {/* Background blobs - only for playful mode */}
+      {isPlayfulMode && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-700/20 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-700/20 blur-3xl" />
+        </div>
+      )}
 
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between gap-12">
-          {/* Left: avatar/name/bio */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex-1"
-          >
-            <div className="flex items-center gap-3 mb-6">
-              {avatar && (
-                <div className="relative w-12 h-12">
-                  <Image
-                    src={avatar}
-                    alt={`${name || 'Portfolio'} avatar`}
-                    fill
-                    className={`rounded-full border-2 object-cover ${
-                      isPlayfulMode ? 'border-yellow-400' : 'border-pink-500'
-                    }`}
-                  />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+        {isPlayfulMode ? (
+          /* Playful Footer - Keep Original */
+          <div className="flex flex-col md:flex-row justify-between gap-12">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                {avatar && (
+                  <div className="relative w-12 h-12">
+                    <Image
+                      src={avatar}
+                      alt={`${name || 'Portfolio'} avatar`}
+                      fill
+                      className="rounded-full border-2 border-yellow-400 object-cover"
+                    />
+                  </div>
+                )}
+                {displayName && (
+                  <h2 className="text-2xl font-bold text-yellow-300">
+                    {displayName}
+                  </h2>
+                )}
+              </div>
+              {bio && <p className="mb-6 max-w-md text-blue-200">{bio}</p>}
+              {copyright && <p className="text-blue-200">{copyright}</p>}
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              {heading && (
+                <h3 className="text-xl font-bold mb-6 text-yellow-300">{heading}</h3>
+              )}
+              <ul className="space-y-4">
+                {c.email && (
+                  <li className="flex items-center gap-3">
+                    <FaEnvelope className="text-2xl text-yellow-400" />
+                    <a href={`mailto:${c.email}`} className="transition-colors hover:text-yellow-400">
+                      {c.email.toUpperCase()}
+                    </a>
+                  </li>
+                )}
+                {c.phone && (
+                  <li className="flex items-center gap-3">
+                    <FaPhone className="text-2xl text-yellow-400" />
+                    <span>{c.phone}</span>
+                  </li>
+                )}
+                {c.location && (
+                  <li className="flex items-center gap-3">
+                    <FaMapMarkerAlt className="text-2xl text-yellow-400" />
+                    <span>{c.location.toUpperCase()}</span>
+                  </li>
+                )}
+              </ul>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex-1"
+            >
+              <h3 className="text-xl font-bold mb-6 text-yellow-300">STALK MY CHAOS</h3>
+              {socialLinks.length > 0 && (
+                <div className="flex gap-4">
+                  {socialLinks.map((s) => (
+                    <SocialIcon key={s.name} platform={s.icon} url={s.url!} playfulMode={true} />
+                  ))}
                 </div>
               )}
-              {displayName && (
-                <h2 className={`text-2xl font-bold ${isPlayfulMode ? 'text-yellow-300' : ''}`}>
-                  {displayName}
-                </h2>
-              )}
-            </div>
-
-            {bio && (
-              <p className={`mb-6 max-w-md ${isPlayfulMode ? 'text-blue-200' : 'text-gray-300'}`}>
-                {bio}
-              </p>
-            )}
-
-            {copyright && (
-              <p className={isPlayfulMode ? 'text-blue-200' : 'text-gray-300'}>
-                {copyright}
-              </p>
-            )}
-          </motion.div>
-
-          {/* Middle: contact */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex-1"
-          >
-            {heading && (
-              <h3 className={`text-xl font-bold mb-6 ${isPlayfulMode ? 'text-yellow-300' : ''}`}>
-                {heading}
-              </h3>
-            )}
-
-            <ul className="space-y-4">
+            </motion.div>
+          </div>
+        ) : (
+          /* Minimal Professional Footer - Responsive */
+          <div className="text-center space-y-4 md:space-y-6">
+            {/* Contact Info - Stack on mobile, inline on desktop */}
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-sm text-white">
               {c.email && (
-                <li className="flex items-center gap-3">
-                  <FaEnvelope className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
-                  <a
-                    href={`mailto:${c.email}`}
-                    className={`transition-colors hover:${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`}
-                  >
-                    {isPlayfulMode ? c.email.toUpperCase() : c.email}
-                  </a>
-                </li>
+                <a href={`mailto:${c.email}`} className="hover:text-gray-300 transition-colors break-all">
+                  {c.email}
+                </a>
               )}
-
-              {c.phone && (
-                <li className="flex items-center gap-3">
-                  <FaPhone className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
-                  <span>{c.phone}</span>
-                </li>
-              )}
-
-              {c.skype && (
-                <li className="flex items-center gap-3">
-                  <FaSkype className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
-                  <span>{isPlayfulMode ? c.skype.toUpperCase() : c.skype}</span>
-                </li>
-              )}
-
-              {c.location && (
-                <li className="flex items-center gap-3">
-                  <FaMapMarkerAlt className={`text-2xl ${isPlayfulMode ? 'text-yellow-400' : 'text-pink-400'}`} />
-                  <span>{isPlayfulMode ? c.location.toUpperCase() : c.location}</span>
-                </li>
-              )}
-            </ul>
-          </motion.div>
-
-          {/* Right: social & DM list */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            viewport={{ once: true }}
-            className="flex-1"
-          >
-            {(socialLinks.length > 0 || dmTitle) && (
-              <h3 className={`text-xl font-bold mb-6 ${isPlayfulMode ? 'text-yellow-300' : ''}`}>
-                {isPlayfulMode ? 'STALK MY CHAOS' : 'Connect With Me'}
-              </h3>
-            )}
-
+              {c.phone && <span className="whitespace-nowrap">{c.phone}</span>}
+              {c.location && <span className="whitespace-nowrap">{c.location}</span>}
+            </div>
+            
+            {/* Social Links - Responsive sizing */}
             {socialLinks.length > 0 && (
-              <div className="flex gap-4 mb-8">
+              <div className="flex justify-center gap-3 sm:gap-4">
                 {socialLinks.map((s) => (
-                  <SocialIcon key={s.name} platform={s.icon} url={s.url!} playfulMode={isPlayfulMode} />
+                  <SocialIcon key={s.name} platform={s.icon} url={s.url!} playfulMode={false} />
                 ))}
               </div>
             )}
-
-            {dmTitle && (
-              <p className={`${isPlayfulMode ? 'text-blue-200' : 'text-gray-300'} mb-4`}>
-                {dmTitle}
+            
+            {/* Copyright - Responsive text size */}
+            <div className="pt-3 md:pt-4 border-t border-white">
+              <p className="text-xs sm:text-sm text-white px-4">
+                {copyright || `© ${year} ${name}. All rights reserved.`}
               </p>
-            )}
-
-            {dmList.length > 0 && (
-              <ul className={`${isPlayfulMode ? 'text-blue-200' : 'text-gray-300'} space-y-2`}>
-                {dmList.map((line, i) => (
-                  <li key={`${line}-${i}`} className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${isPlayfulMode ? 'bg-yellow-400' : 'bg-pink-500'}`} />
-                    {line}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </motion.div>
-        </div>
-
-        {/* Bottom strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          viewport={{ once: true }}
-          className={`mt-16 pt-8 border-t ${
-            isPlayfulMode ? 'border-blue-700 text-blue-200' : 'border-gray-800 text-gray-400'
-          } text-center text-sm`}
-        >
-          <p>
-            {isPlayfulMode ? (
-              <>
-                MADE WITH <FaLaughSquint className="inline text-yellow-400" />,{' '}
-                <SiReact className="inline mx-1 text-blue-400" /> AND{' '}
-                <FaCode className="inline mx-1 text-green-400" />
-              </>
-            ) : (
-              <>
-                Made with <FaHeart className="inline text-pink-500" />,{' '}
-                <SiReact className="inline mx-1 text-purple-500" /> and{' '}
-                <FaCode className="inline mx-1 text-yellow-500" />
-              </>
-            )}
-          </p>
-
-          {footerText && <p className="mt-2">{isPlayfulMode ? footerText.toUpperCase() : footerText}</p>}
-        </motion.div>
+            </div>
+          </div>
+        )}
       </div>
     </footer>
   );
