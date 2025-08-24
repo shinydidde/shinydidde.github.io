@@ -270,7 +270,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
             className="text-center mt-20"
           >
             <p className="text-lg mb-6 text-blue-600">
-              Want to see more disasters? I've got bugs for days!
+              Want to see more disasters? I&apos;ve got bugs for days!
             </p>
             <motion.a
               href="#contact"
@@ -278,7 +278,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
               whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
             >
-              Let's Break Things
+              Let&apos;s Break Things
             </motion.a>
           </motion.div>
         )}
