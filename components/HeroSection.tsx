@@ -167,8 +167,8 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
               <Image
                 src={isPlayfulMode
-                  ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F7.png?alt=media&token=a39d471e-1236-4ceb-93dc-76e685c32aaa"
-                  : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F8.png?alt=media&token=9a386e85-9eaf-400f-8d6f-20ba951da39a"
+                  ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fcolor1.png?alt=media&token=670494ad-e1a3-44b1-9301-bb327d951064"
+                  : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
                 }
                 alt={`${name} - Web Developer`}
                 fill
@@ -190,8 +190,8 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
               <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
                 <Image
                   src={isPlayfulMode
-                    ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F7.png?alt=media&token=a39d471e-1236-4ceb-93dc-76e685c32aaa"
-                    : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2F8.png?alt=media&token=9a386e85-9eaf-400f-8d6f-20ba951da39a"
+                    ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fcolor1.png?alt=media&token=670494ad-e1a3-44b1-9301-bb327d951064"
+                    : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
                   }
                   alt={`${name} - Web Developer`}
                   fill
