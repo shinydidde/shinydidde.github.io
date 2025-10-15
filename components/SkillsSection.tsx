@@ -108,7 +108,14 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
       whileHover={playful ? { scale: 1.05, y: -5 } : { y: -2 }}
       className={`p-6 transition-all duration-200 ${
         playful
-          ? 'bg-white border-yellow-400 border-2 rounded-xl shadow-[4px_4px_0_0_rgba(59,130,246,0.3)] hover:shadow-[8px_8px_0_0_rgba(34,197,94,0.4)]'
+          ? `bg-white border-2 rounded-xl ${
+              index % 6 === 0 ? 'border-vibrant-pink shadow-[4px_4px_0_0_rgba(255,107,157,0.3)] hover:shadow-[8px_8px_0_0_rgba(34,211,238,0.4)]' :
+              index % 6 === 1 ? 'border-vibrant-cyan shadow-[4px_4px_0_0_rgba(34,211,238,0.3)] hover:shadow-[8px_8px_0_0_rgba(255,212,59,0.4)]' :
+              index % 6 === 2 ? 'border-vibrant-yellow shadow-[4px_4px_0_0_rgba(255,212,59,0.3)] hover:shadow-[8px_8px_0_0_rgba(255,146,43,0.4)]' :
+              index % 6 === 3 ? 'border-vibrant-orange shadow-[4px_4px_0_0_rgba(255,146,43,0.3)] hover:shadow-[8px_8px_0_0_rgba(255,107,107,0.4)]' :
+              index % 6 === 4 ? 'border-vibrant-red shadow-[4px_4px_0_0_rgba(255,107,107,0.3)] hover:shadow-[8px_8px_0_0_rgba(196,69,105,0.4)]' :
+              'border-vibrant-purple shadow-[4px_4px_0_0_rgba(196,69,105,0.3)] hover:shadow-[8px_8px_0_0_rgba(255,107,157,0.4)]'
+            }`
           : 'bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-gray-300'
       }`}
     >
@@ -116,10 +123,24 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
       <div className="flex items-center gap-4 mb-4">
         {/* Show icon only in playful mode */}
         {playful && (
-          <div className="p-3 rounded-lg bg-gradient-to-br from-green-100 to-blue-100">
-            <Icon 
-              className="text-2xl text-blue-600" 
-              aria-hidden 
+          <div className={`p-3 rounded-lg ${
+            index % 6 === 0 ? 'bg-gradient-to-br from-vibrant-pink/20 to-vibrant-cyan/20' :
+            index % 6 === 1 ? 'bg-gradient-to-br from-vibrant-cyan/20 to-vibrant-yellow/20' :
+            index % 6 === 2 ? 'bg-gradient-to-br from-vibrant-yellow/20 to-vibrant-orange/20' :
+            index % 6 === 3 ? 'bg-gradient-to-br from-vibrant-orange/20 to-vibrant-red/20' :
+            index % 6 === 4 ? 'bg-gradient-to-br from-vibrant-red/20 to-vibrant-purple/20' :
+            'bg-gradient-to-br from-vibrant-purple/20 to-vibrant-pink/20'
+          }`}>
+            <Icon
+              className={`text-2xl ${
+                index % 6 === 0 ? 'text-vibrant-pink' :
+                index % 6 === 1 ? 'text-vibrant-cyan' :
+                index % 6 === 2 ? 'text-vibrant-yellow' :
+                index % 6 === 3 ? 'text-vibrant-orange' :
+                index % 6 === 4 ? 'text-vibrant-red' :
+                'text-vibrant-purple'
+              }`}
+              aria-hidden
             />
           </div>
         )}
@@ -128,7 +149,14 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-500">Proficiency</span>
             <span className={`text-base font-semibold ${
-              playful ? 'text-blue-600' : 'text-gray-900'
+              playful ? (
+                index % 6 === 0 ? 'text-vibrant-pink' :
+                index % 6 === 1 ? 'text-vibrant-cyan' :
+                index % 6 === 2 ? 'text-vibrant-yellow' :
+                index % 6 === 3 ? 'text-vibrant-orange' :
+                index % 6 === 4 ? 'text-vibrant-red' :
+                'text-vibrant-purple'
+              ) : 'text-gray-900'
             }`}>
               {level}%
             </span>
@@ -143,8 +171,15 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
         }`}>
           <motion.div
             className={`h-full rounded-full ${
-              playful 
-                ? 'bg-gradient-to-r from-green-400 to-blue-500' 
+              playful
+                ? (
+                  index % 6 === 0 ? 'bg-gradient-to-r from-vibrant-pink to-vibrant-cyan' :
+                  index % 6 === 1 ? 'bg-gradient-to-r from-vibrant-cyan to-vibrant-yellow' :
+                  index % 6 === 2 ? 'bg-gradient-to-r from-vibrant-yellow to-vibrant-orange' :
+                  index % 6 === 3 ? 'bg-gradient-to-r from-vibrant-orange to-vibrant-red' :
+                  index % 6 === 4 ? 'bg-gradient-to-r from-vibrant-red to-vibrant-purple' :
+                  'bg-gradient-to-r from-vibrant-purple to-vibrant-pink'
+                )
                 : 'bg-gray-900'
             }`}
             initial={{ width: 0 }}
@@ -157,17 +192,31 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
   );
 }
 
-function TabButton({ label, active, onClick, playful }: { label: string; active: boolean; onClick: () => void; playful: boolean }) {
+function TabButton({ label, active, onClick, playful, index = 0 }: { label: string; active: boolean; onClick: () => void; playful: boolean; index?: number }) {
   return (
     <motion.button
       onClick={onClick}
       className={`px-6 py-3 font-medium transition-all duration-200 ${
         active
           ? playful
-            ? 'bg-gradient-to-r from-green-400 to-blue-500 text-white rounded-full shadow-[4px_4px_0_0_rgba(59,130,246,1)]'
+            ? `text-white rounded-full ${
+                index % 6 === 0 ? 'bg-gradient-to-r from-vibrant-pink to-vibrant-cyan shadow-[4px_4px_0_0_rgba(255,107,157,1)]' :
+                index % 6 === 1 ? 'bg-gradient-to-r from-vibrant-cyan to-vibrant-yellow shadow-[4px_4px_0_0_rgba(34,211,238,1)]' :
+                index % 6 === 2 ? 'bg-gradient-to-r from-vibrant-yellow to-vibrant-orange shadow-[4px_4px_0_0_rgba(255,212,59,1)]' :
+                index % 6 === 3 ? 'bg-gradient-to-r from-vibrant-orange to-vibrant-red shadow-[4px_4px_0_0_rgba(255,146,43,1)]' :
+                index % 6 === 4 ? 'bg-gradient-to-r from-vibrant-red to-vibrant-purple shadow-[4px_4px_0_0_rgba(255,107,107,1)]' :
+                'bg-gradient-to-r from-vibrant-purple to-vibrant-pink shadow-[4px_4px_0_0_rgba(196,69,105,1)]'
+              }`
             : 'bg-gray-900 text-white rounded-md shadow-sm'
           : playful
-            ? 'bg-white text-gray-700 border-2 border-yellow-400 rounded-full hover:bg-yellow-50'
+            ? `bg-white text-gray-700 border-2 rounded-full hover:bg-opacity-10 ${
+                index % 6 === 0 ? 'border-vibrant-pink hover:bg-vibrant-pink' :
+                index % 6 === 1 ? 'border-vibrant-cyan hover:bg-vibrant-cyan' :
+                index % 6 === 2 ? 'border-vibrant-yellow hover:bg-vibrant-yellow' :
+                index % 6 === 3 ? 'border-vibrant-orange hover:bg-vibrant-orange' :
+                index % 6 === 4 ? 'border-vibrant-red hover:bg-vibrant-red' :
+                'border-vibrant-purple hover:bg-vibrant-purple'
+              }`
             : 'bg-white text-gray-600 border border-gray-200 rounded-md hover:bg-gray-50 hover:text-gray-900 hover:border-gray-300'
       }`}
       whileHover={playful ? { scale: 1.05 } : {}}
@@ -207,15 +256,19 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
     <section
       id="skills"
       className={`relative ${isPlayfulMode
-          ? 'py-20 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden'
-          : 'py-20 bg-white'
+          ? 'py-20 bg-gradient-to-br from-vibrant-pink/10 via-vibrant-cyan/10 via-vibrant-yellow/10 via-vibrant-orange/10 to-vibrant-red/10 overflow-hidden'
+          : 'py-20 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
         }`}
     >
       {/* soft background accents - only for playful mode */}
       {isPlayfulMode && (
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-green-200/40 blur-xl" />
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-blue-200/40 blur-xl" />
+          <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-vibrant-pink/20 blur-xl" />
+          <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-vibrant-cyan/20 blur-xl" />
+          <div className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full bg-vibrant-yellow/20 blur-xl" />
+          <div className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-vibrant-orange/20 blur-xl" />
+          <div className="absolute bottom-1/4 left-1/4 w-28 h-28 rounded-full bg-vibrant-red/20 blur-xl" />
+          <div className="absolute top-3/4 left-1/3 w-16 h-16 rounded-full bg-vibrant-purple/20 blur-xl" />
         </div>
       )}
 
@@ -230,10 +283,10 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
               viewport={{ once: true }}
               className="text-center mb-12"
             >
-              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-600">
+              <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-vibrant-pink via-vibrant-cyan via-vibrant-yellow via-vibrant-orange to-vibrant-red">
                 {model.title}
               </h2>
-              <div className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-green-400 to-blue-500" />
+              <div className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-vibrant-pink via-vibrant-cyan via-vibrant-yellow to-vibrant-orange" />
             </motion.div>
           ) : (
             <div className="text-center mb-16">
@@ -264,6 +317,7 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                 active={activeTab === index}
                 onClick={() => setActiveTab(index)}
                 playful={isPlayfulMode}
+                index={index}
               />
             ))}
           </motion.div>
@@ -329,7 +383,7 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                           <skill.Icon className="w-6 h-6 text-gray-600 group-hover:text-gray-900 transition-colors duration-300" />
                         </div>
                       </div>
-                      
+
                       {/* Skill name */}
                       <div className="space-y-2">
                         <h4 className="text-sm font-medium text-gray-900 tracking-wide">
@@ -339,11 +393,11 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                           {skill.level}% proficiency
                         </div>
                       </div>
-                      
+
                       {/* Minimalist progress indicator */}
                       <div className="space-y-2">
                         <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
-                          <div 
+                          <div
                             className="h-full bg-gray-900 rounded-full transition-all duration-1000 ease-out"
                             style={{
                               width: `${skill.level}%`,
@@ -351,12 +405,12 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                             }}
                           />
                         </div>
-                        
+
                         {/* Subtle hover effect */}
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                           <div className="text-xs text-gray-400 font-light">
-                            {skill.level >= 90 ? 'Expert' : 
-                             skill.level >= 75 ? 'Advanced' : 
+                            {skill.level >= 90 ? 'Expert' :
+                             skill.level >= 75 ? 'Advanced' :
                              skill.level >= 60 ? 'Proficient' : 'Intermediate'}
                           </div>
                         </div>

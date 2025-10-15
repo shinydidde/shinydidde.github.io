@@ -21,7 +21,7 @@ export function EducationCard({ item, index, playfulMode = false }: EducationCar
     <motion.div
       className={`p-6 rounded-xl border-2 ${
         playfulMode
-          ? 'border-green-500 bg-white shadow-[4px_4px_0_0_rgba(59,130,246,0.3)] hover:shadow-[8px_8px_0_0_rgba(245,158,11,0.5)]'
+          ? 'border-vibrant-purple bg-white shadow-[4px_4px_0_0_rgba(196,69,105,0.3)] hover:shadow-[8px_8px_0_0_rgba(255,212,59,0.5)]'
           : 'border-black bg-white shadow-[4px_4px_0_0_rgba(0,0,0,0.2)] hover:shadow-[8px_8px_0_0_rgba(0,0,0,0.4)]'
       } transition-all`}
       whileHover={{ y: -5 }}
@@ -35,7 +35,7 @@ export function EducationCard({ item, index, playfulMode = false }: EducationCar
         {/* Content */}
         <div className="flex-1">
           <h3 className={`text-lg font-bold mb-1 ${
-            playfulMode ? 'text-blue-600' : 'text-gray-900'
+            playfulMode ? 'text-vibrant-purple' : 'text-gray-900'
           }`}>
             {item.degree}
           </h3>
@@ -52,7 +52,7 @@ export function EducationCard({ item, index, playfulMode = false }: EducationCar
 
       {/* Decorative elements */}
       {playfulMode && (
-        <div className="absolute top-2 right-2 text-xs font-bold px-2 py-1 bg-yellow-400 rounded-full">
+        <div className="absolute top-2 right-2 text-xs font-bold px-2 py-1 bg-vibrant-yellow rounded-full">
           #{index + 1}
         </div>
       )}

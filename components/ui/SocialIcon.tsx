@@ -41,10 +41,10 @@ const NORMAL_COLORS = {
 };
 
 const MEME_COLORS = {
-  github: 'bg-gradient-to-r from-red-500 to-yellow-500 hover:from-red-600 hover:to-yellow-600',
-  linkedin: 'bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600',
-  twitter: 'bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700',
-  instagram: 'bg-gradient-to-r from-yellow-400 to-red-500 hover:from-yellow-500 hover:to-red-600',
+  github: 'bg-gradient-to-r from-vibrant-red to-vibrant-yellow hover:from-vibrant-red hover:to-vibrant-orange',
+  linkedin: 'bg-gradient-to-r from-vibrant-cyan to-vibrant-blue hover:from-vibrant-blue hover:to-vibrant-cyan',
+  twitter: 'bg-gradient-to-r from-vibrant-pink to-vibrant-purple hover:from-vibrant-purple hover:to-vibrant-pink',
+  instagram: 'bg-gradient-to-r from-vibrant-yellow to-vibrant-orange hover:from-vibrant-orange hover:to-vibrant-red',
 };
 
 const MEME_TOOLTIPS = {
@@ -68,7 +68,7 @@ export function SocialIcon({ platform, url, playfulMode: propMemeMode }: SocialI
     >
       {isPlayfulMode && (
         <motion.div
-          className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs font-bold bg-yellow-400 text-black rounded-full shadow-lg"
+          className="absolute -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap px-2 py-1 text-xs font-bold bg-vibrant-yellow text-black rounded-full shadow-lg"
           initial={{ opacity: 0, y: 10 }}
           whileHover={{ opacity: 1, y: 0 }}
           style={{ pointerEvents: 'none' }}

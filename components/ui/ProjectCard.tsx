@@ -17,17 +17,32 @@ interface ProjectCardProps {
   };
   isHovered?: boolean;
   playfulMode?: boolean;
+  index?: number;
 }
 
-export function ProjectCard({ project, isHovered, playfulMode = false }: ProjectCardProps) {
+export function ProjectCard({ project, isHovered, playfulMode = false, index = 0 }: ProjectCardProps) {
   const { isPlayfulMode } = usePlayfulMode();
   const activeMemeMode = playfulMode || isPlayfulMode;
+
+  // Define different colors for each card
+  const cardColors = [
+    { border: 'border-vibrant-pink', overlay: 'bg-vibrant-pink/20', hover: 'bg-vibrant-pink/40', tag: 'bg-vibrant-pink/20 text-vibrant-pink', title: 'text-vibrant-pink', button: 'bg-vibrant-pink text-black hover:bg-vibrant-pink/80' },
+    { border: 'border-vibrant-cyan', overlay: 'bg-vibrant-cyan/20', hover: 'bg-vibrant-cyan/40', tag: 'bg-vibrant-cyan/20 text-vibrant-cyan', title: 'text-vibrant-cyan', button: 'bg-vibrant-cyan text-black hover:bg-vibrant-cyan/80' },
+    { border: 'border-vibrant-green', overlay: 'bg-vibrant-green/20', hover: 'bg-vibrant-green/40', tag: 'bg-vibrant-green/20 text-vibrant-green', title: 'text-vibrant-green', button: 'bg-vibrant-green text-black hover:bg-vibrant-green/80' },
+    { border: 'border-vibrant-yellow', overlay: 'bg-vibrant-yellow/20', hover: 'bg-vibrant-yellow/40', tag: 'bg-vibrant-yellow/20 text-vibrant-yellow', title: 'text-vibrant-yellow', button: 'bg-vibrant-yellow text-black hover:bg-vibrant-yellow/80' },
+    { border: 'border-vibrant-orange', overlay: 'bg-vibrant-orange/20', hover: 'bg-vibrant-orange/40', tag: 'bg-vibrant-orange/20 text-vibrant-orange', title: 'text-vibrant-orange', button: 'bg-vibrant-orange text-black hover:bg-vibrant-orange/80' },
+    { border: 'border-vibrant-red', overlay: 'bg-vibrant-red/20', hover: 'bg-vibrant-red/40', tag: 'bg-vibrant-red/20 text-vibrant-red', title: 'text-vibrant-red', button: 'bg-vibrant-red text-black hover:bg-vibrant-red/80' },
+    { border: 'border-vibrant-purple', overlay: 'bg-vibrant-purple/20', hover: 'bg-vibrant-purple/40', tag: 'bg-vibrant-purple/20 text-vibrant-purple', title: 'text-vibrant-purple', button: 'bg-vibrant-purple text-black hover:bg-vibrant-purple/80' },
+    { border: 'border-vibrant-blue', overlay: 'bg-vibrant-blue/20', hover: 'bg-vibrant-blue/40', tag: 'bg-vibrant-blue/20 text-vibrant-blue', title: 'text-vibrant-blue', button: 'bg-vibrant-blue text-black hover:bg-vibrant-blue/80' }
+  ];
+
+  const colors = cardColors[index % cardColors.length];
 
   return (
     <motion.div
       className={`relative group overflow-hidden rounded-xl border-2 ${
         activeMemeMode
-          ? 'border-green-500 shadow-[4px_4px_0_0_rgba(59,130,246,0.5)]'
+          ? colors.border
           : 'border-black shadow-[4px_4px_0_0_rgba(0,0,0,0.2)]'
       } ${
         project.featured ? 'md:col-span-2' : ''
@@ -35,7 +50,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
       whileHover={{
         y: -5,
         boxShadow: activeMemeMode
-          ? "8px 8px 0 rgba(245, 158, 11, 0.7)"
+          ? "8px 8px 0 rgba(0, 0, 0, 0.1)"
           : "8px 8px 0 rgba(0, 0, 0, 0.3)"
       }}
       initial={{ opacity: 0, y: 20 }}
@@ -55,7 +70,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
         />
         <div className={`absolute inset-0 ${
           activeMemeMode
-            ? 'bg-gradient-to-t from-green-900/60 via-blue-900/30 to-transparent'
+            ? colors.overlay
             : 'bg-gradient-to-t from-black/70 via-black/30 to-transparent'
         }`} />
       </div>
@@ -70,7 +85,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
               key={tag}
               className={`px-3 py-1 rounded-full text-xs font-medium ${
                 activeMemeMode
-                  ? 'bg-blue-100/20 backdrop-blur-sm text-blue-100'
+                  ? `${colors.tag} backdrop-blur-sm`
                   : 'bg-white/20 backdrop-blur-sm text-white'
               }`}
             >
@@ -79,12 +94,12 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
           ))}
         </div>
         <h3 className={`text-xl font-bold mb-2 ${
-          activeMemeMode ? 'text-yellow-300' : ''
+          activeMemeMode ? colors.title : ''
         }`}>
           {project.title}
         </h3>
         <p className={`text-sm mb-4 ${
-          activeMemeMode ? 'text-blue-100' : 'text-gray-200'
+          activeMemeMode ? 'text-vibrant-yellow' : 'text-gray-200'
         }`}>
           {project.description}
         </p>
@@ -103,7 +118,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
             rel="noopener noreferrer"
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold transition-colors ${
               activeMemeMode
-                ? 'bg-yellow-400 text-black hover:bg-yellow-300'
+                ? colors.button
                 : 'bg-white text-black hover:bg-gray-100'
             }`}
           >
@@ -130,7 +145,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
       {project.featured && (
         <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold shadow-md ${
           activeMemeMode
-            ? 'bg-yellow-400 text-black'
+            ? 'bg-vibrant-yellow text-black'
             : 'bg-gray-900 text-white'
         }`}>
           {activeMemeMode ? 'BUGGY' : 'Featured'}
@@ -140,7 +155,7 @@ export function ProjectCard({ project, isHovered, playfulMode = false }: Project
       {/* Hover overlay */}
       <div className={`absolute inset-0 ${
         activeMemeMode
-          ? 'bg-gradient-to-t from-green-900/80 via-blue-900/40 to-transparent'
+          ? colors.hover
           : 'bg-gradient-to-t from-black/80 via-black/40 to-transparent'
       } opacity-0 group-hover:opacity-100 transition-opacity`} />
     </motion.div>

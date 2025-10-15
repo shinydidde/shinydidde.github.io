@@ -28,7 +28,7 @@ export function TimelineItem({ experience, alignment, playfulMode = false }: Tim
           alignment === 'left' ? 'md:-right-6' : 'md:-left-6'
         } w-5 h-5 rounded-full border-3 border-white shadow-lg z-10 ${
           playfulMode
-            ? 'bg-green-500 group-hover:bg-blue-500'
+            ? 'bg-vibrant-red group-hover:bg-vibrant-cyan'
             : 'bg-gray-800 group-hover:bg-gray-900 ring-2 ring-gray-100'
         }`}
       />
@@ -38,11 +38,11 @@ export function TimelineItem({ experience, alignment, playfulMode = false }: Tim
         className={`p-8 rounded-xl transition-all duration-300 ${
           playfulMode
             ? [
-                'border-green-500 bg-white border-2',
-                'shadow-[4px_4px_0_0_rgba(59,130,246,0.5)]',
-                'hover:border-blue-500',
-                'hover:bg-gradient-to-br hover:from-green-50 hover:to-blue-50',
-                'hover:shadow-[8px_8px_0_0_rgba(245,158,11,1)]',
+                'border-vibrant-red bg-white border-2',
+                'shadow-[4px_4px_0_0_rgba(255,107,107,0.5)]',
+                'hover:border-vibrant-cyan',
+                'hover:bg-gradient-to-br hover:from-vibrant-red/10 hover:to-vibrant-cyan/10',
+                'hover:shadow-[8px_8px_0_0_rgba(255,212,59,1)]',
               ].join(' ')
             : [
                 'bg-white border border-gray-200',
@@ -57,13 +57,13 @@ export function TimelineItem({ experience, alignment, playfulMode = false }: Tim
           <h3
             className={`text-2xl font-semibold mb-3 leading-tight ${
               playfulMode
-                ? 'text-blue-600 group-hover:text-blue-700'
+                ? 'text-vibrant-red group-hover:text-vibrant-cyan'
                 : 'text-gray-900 group-hover:text-black'
             }`}
           >
             {experience.role}
           </h3>
-          
+
           {!playfulMode && experience.company && (
             <div className="flex items-center gap-2 mb-2">
               <FaBuilding className="w-4 h-4 text-gray-500" />
@@ -73,10 +73,10 @@ export function TimelineItem({ experience, alignment, playfulMode = false }: Tim
 
           <div className="flex items-center gap-2">
             <FaCalendarAlt className={`w-4 h-4 ${
-              playfulMode ? 'text-blue-500' : 'text-gray-500'
+              playfulMode ? 'text-vibrant-cyan' : 'text-gray-500'
             }`} />
             <p className={`text-sm font-medium ${
-              playfulMode ? 'text-blue-500 tracking-wide uppercase' : 'text-gray-600'
+              playfulMode ? 'text-vibrant-cyan tracking-wide uppercase' : 'text-gray-600'
             }`}>
               {experience.period}
             </p>
@@ -88,7 +88,7 @@ export function TimelineItem({ experience, alignment, playfulMode = false }: Tim
             <li key={i} className="flex items-start">
               <span className="mr-3 mt-1.5">
                 {playfulMode ? (
-                  <FaFire className="w-3 h-3 text-orange-500" />
+                  <FaFire className="w-3 h-3 text-vibrant-yellow" />
                 ) : (
                   <span className="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block" />
                 )}
@@ -108,7 +108,7 @@ export function TimelineItem({ experience, alignment, playfulMode = false }: Tim
               key={tag}
               className={`px-2 py-1 text-xs font-medium rounded-full transition-colors ${
                 playfulMode
-                  ? 'bg-blue-100 text-blue-800 hover:bg-green-100 hover:text-green-800'
+                  ? 'bg-vibrant-cyan/20 text-vibrant-cyan hover:bg-vibrant-yellow/20 hover:text-vibrant-yellow'
                   : 'bg-gray-200 text-gray-800 hover:bg-gray-300 hover:text-gray-900'
               }`}
             >

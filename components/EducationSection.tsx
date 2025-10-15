@@ -63,15 +63,16 @@ export default function EducationSection({ data }: { data: EducationData }) {
       id="education"
       className={`relative ${
         isPlayfulMode
-          ? 'py-16 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden'
-          : 'py-16 bg-white'
+          ? 'py-16 bg-gradient-to-br from-vibrant-purple/10 via-vibrant-cyan/10 to-vibrant-yellow/10 overflow-hidden'
+          : 'py-16 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
       }`}
     >
       {/* Background blobs - only for playful mode */}
       {isPlayfulMode && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-purple/20 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-cyan/20 blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full bg-vibrant-yellow/20 blur-3xl" />
         </div>
       )}
 
@@ -85,10 +86,10 @@ export default function EducationSection({ data }: { data: EducationData }) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-vibrant-purple via-vibrant-cyan to-vibrant-yellow">
               EDU-PLAYFUL-CATION
             </h2>
-            <p className="text-lg text-blue-600 max-w-2xl mx-auto">
+            <p className="text-lg text-vibrant-purple max-w-2xl mx-auto">
               Where I officially learned to Google error messages
             </p>
           </motion.div>
@@ -150,9 +151,9 @@ export default function EducationSection({ data }: { data: EducationData }) {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
             viewport={{ once: true }}
-            className="mt-20 text-center p-6 rounded-xl max-w-2xl mx-auto bg-white border-green-500 border-2 shadow-[6px_6px_0_0_rgba(59,130,246,0.5)]"
+            className="mt-20 text-center p-6 rounded-xl max-w-2xl mx-auto bg-white border-vibrant-purple border-2 shadow-[6px_6px_0_0_rgba(196,69,105,0.5)]"
           >
-            <h3 className="text-xl font-bold mb-2 text-blue-600">
+            <h3 className="text-xl font-bold mb-2 text-vibrant-purple">
               REAL TALK (KINDA):
             </h3>
             <p className="text-gray-800">

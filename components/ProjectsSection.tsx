@@ -93,14 +93,17 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
     <section
       id="projects"
       className={`relative ${
-        isPlayfulMode ? 'py-16 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden' : 'py-20 bg-white'
+        isPlayfulMode ? 'py-16 bg-gradient-to-br from-vibrant-pink/10 via-vibrant-red/10 via-vibrant-orange/10 to-vibrant-yellow/10 overflow-hidden' : 'py-20 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
       }`}
     >
       {/* Background elements - only for playful mode */}
       {isPlayfulMode && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200 blur-3xl" />
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-pink/20 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-red/20 blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full bg-vibrant-orange/20 blur-3xl" />
+          <div className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-vibrant-yellow/20 blur-3xl" />
+          <div className="absolute bottom-1/4 left-1/4 w-40 h-40 rounded-full bg-vibrant-pink/20 blur-3xl" />
         </div>
       )}
 
@@ -114,10 +117,10 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500">
+            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-vibrant-pink via-vibrant-red via-vibrant-orange to-vibrant-yellow">
               BUGGY {title}
             </h2>
-            <p className="text-lg text-blue-600 max-w-2xl mx-auto">
+            <p className="text-lg text-vibrant-pink max-w-2xl mx-auto">
               A collection of my questionable creations and accidents
             </p>
           </motion.div>
@@ -149,8 +152,8 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                   onClick={() => setFilter(tag)}
                   className={`px-4 py-2 text-sm font-medium capitalize transition-all ${
                     filter === tag
-                      ? 'bg-green-400 text-black shadow-md rounded-full'
-                      : 'bg-blue-100 text-blue-800 hover:bg-blue-200 rounded-full'
+                      ? 'bg-vibrant-pink text-black shadow-md rounded-full'
+                      : 'bg-vibrant-red/20 text-vibrant-red hover:bg-vibrant-red/30 rounded-full'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.98 }}
@@ -193,7 +196,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                 onHoverStart={() => setHoveredProject(project.id)}
                 onHoverEnd={() => setHoveredProject(null)}
               >
-                <ProjectCard project={project} isHovered={hoveredProject === project.id} playfulMode={isPlayfulMode} />
+                <ProjectCard project={project} isHovered={hoveredProject === project.id} playfulMode={isPlayfulMode} index={index} />
               </motion.div>
             ))}
           </div>
@@ -210,7 +213,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  
+
                   {/* Hover overlay with project data */}
                   <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <div className="text-center text-white p-4 space-y-2">
@@ -269,12 +272,12 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
             viewport={{ once: true }}
             className="text-center mt-20"
           >
-            <p className="text-lg mb-6 text-blue-600">
+            <p className="text-lg mb-6 text-vibrant-red">
               Want to see more disasters? I&apos;ve got bugs for days!
             </p>
             <motion.a
               href="#contact"
-              className="inline-block px-8 py-3 font-semibold transition-all bg-gradient-to-r from-green-400 to-blue-500 text-black border-yellow-400 border-2 shadow-[4px_4px_0_0_rgba(245,158,11,1)] hover:from-blue-500 hover:to-green-400 hover:shadow-[8px_8px_0_0_rgba(59,130,246,1)] rounded-full"
+              className="inline-block px-8 py-3 font-semibold transition-all bg-gradient-to-r from-vibrant-red to-vibrant-orange text-black border-vibrant-yellow border-2 shadow-[4px_4px_0_0_rgba(255,107,107,1)] hover:from-vibrant-orange hover:to-vibrant-yellow hover:shadow-[8px_8px_0_0_rgba(255,146,43,1)] rounded-full"
               whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
             >

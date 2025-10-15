@@ -60,17 +60,17 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
     <section
       id="experience"
       className={`relative ${isPlayfulMode
-          ? 'py-20 bg-gradient-to-br from-green-100 to-blue-100 overflow-hidden'
-          : 'py-32 bg-white'
+          ? 'py-20 bg-gradient-to-br from-vibrant-red/10 via-vibrant-yellow/10 to-vibrant-cyan/10 overflow-hidden'
+          : 'py-32 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
         }`}
     >
 
       {/* Decorative elements - only for playful mode */}
       {isPlayfulMode && (
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-green-200/50 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-blue-200/50 blur-3xl" />
-          <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-yellow-200/50 blur-3xl" />
+          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-red/20 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-yellow/20 blur-3xl" />
+          <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-vibrant-cyan/20 blur-3xl" />
         </div>
       )}
 
@@ -84,14 +84,14 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-green-500 to-blue-500 font-bold mb-6">
+            <h2 className="text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-vibrant-red via-vibrant-yellow to-vibrant-cyan font-bold mb-6">
               WORK CHAOS
-              <span className="text-yellow-400">EXPERIENCE</span>
+              <span className="text-vibrant-yellow">EXPERIENCE</span>
             </h2>
-            <p className="text-lg text-blue-600 max-w-3xl mx-auto">
+            <p className="text-lg text-vibrant-red max-w-3xl mx-auto">
               <span className="flex items-center justify-center gap-2">
                 My professional journey through the tech chaos
-                <FaSmileWink className="w-5 h-5 text-yellow-500" />
+                <FaSmileWink className="w-5 h-5 text-vibrant-yellow" />
               </span>
             </p>
           </motion.div>
@@ -111,7 +111,7 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
         {isPlayfulMode ? (
           <div className="relative max-w-3xl mx-auto">
             {/* Timeline line */}
-            <div className="absolute left-1/2 -translate-x-1/2 w-1 h-full rounded-full bg-gradient-to-b from-green-300 to-blue-300" />
+            <div className="absolute left-1/2 -translate-x-1/2 w-1 h-full rounded-full bg-gradient-to-b from-vibrant-red to-vibrant-cyan" />
 
             {/* Timeline items */}
             {experiences.map((exp, index) => (
@@ -161,12 +161,12 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
                   <div className="relative md:pl-8">
                     {/* Subtle vertical line */}
                     <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px bg-gray-200 group-hover:bg-gray-400 transition-colors duration-300"></div>
-                    
+
                     <div className="space-y-6">
                       <h3 className="text-2xl font-light text-gray-900 leading-tight">
                         {exp.role.split('@')[0].trim()}
                       </h3>
-                      
+
                       <div className="space-y-4">
                         {exp.highlights.map((highlight, idx) => (
                           <div key={idx} className="flex items-start gap-3 text-gray-600 leading-relaxed">
@@ -192,14 +192,14 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
             viewport={{ once: true }}
             className="text-center mt-20"
           >
-            <p className="text-lg mb-6 text-blue-600">
+            <p className="text-lg mb-6 text-vibrant-red">
               WANT TO SEE MY FULL RESUME WITH ALL THE CHAOS?
             </p>
             <motion.a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-3 font-semibold transition-all bg-gradient-to-r from-green-400 to-blue-500 text-black shadow-[4px_4px_0_0_rgba(245,158,11,1)] hover:from-blue-500 hover:to-green-400 hover:text-black hover:shadow-[8px_8px_0_0_rgba(59,130,246,1)] rounded-full"
+              className="inline-block px-8 py-3 font-semibold transition-all bg-gradient-to-r from-vibrant-red to-vibrant-yellow text-black shadow-[4px_4px_0_0_rgba(255,107,107,1)] hover:from-vibrant-yellow hover:to-vibrant-cyan hover:text-black hover:shadow-[8px_8px_0_0_rgba(34,211,238,1)] rounded-full"
               whileHover={{ y: -4 }}
               whileTap={{ scale: 0.98 }}
             >
