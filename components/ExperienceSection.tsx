@@ -61,7 +61,7 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
       id="experience"
       className={`relative ${isPlayfulMode
           ? 'py-20 overflow-hidden'
-          : 'py-32'
+          : 'pt-12 pb-32'
         }`}
     >
 
@@ -88,11 +88,11 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
             </p>
           </motion.div>
         ) : (
-          <div className="text-center mb-24">
-            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
               Professional Experience
             </h2>
-            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-8"></div>
+            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               A decade of crafting exceptional digital experiences and leading high-performance engineering teams
             </p>

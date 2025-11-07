@@ -93,7 +93,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
     <section
       id="projects"
       className={`relative ${
-        isPlayfulMode ? 'py-16 overflow-hidden' : 'py-20'
+        isPlayfulMode ? 'py-16 overflow-hidden' : 'pt-12 pb-20'
       }`}
     >
 
@@ -115,11 +115,11 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
             </p>
           </motion.div>
         ) : (
-          <div className="text-center mb-16">
-            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
               Featured Projects
             </h2>
-            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-6"></div>
+            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               Selected projects showcasing technical expertise and innovative problem-solving
             </p>

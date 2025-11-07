@@ -327,9 +327,44 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
           <div className="space-y-12">
             {/* Top Section: Intro and Portrait */}
             <div className="flex flex-col lg:grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-start lg:items-center">
-              {/* TEXT */}
-              <div className="space-y-6 text-center lg:text-left">
-                <div className="space-y-3">
+              {/* PORTRAIT - First on mobile */}
+              <div className="order-1 lg:order-2 relative w-full mx-auto lg:mx-0">
+                {/* Mobile: Full seamless portrait */}
+                <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
+                  <Image
+                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
+                    alt={`${name} - Web Developer`}
+                    fill
+                    className="object-cover object-center scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine grayscale"
+                    style={{
+                      WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
+                      maskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
+                    }}
+                    priority
+                  />
+                </div>
+
+                {/* Tablet and up: Full portrait */}
+                <div className="hidden sm:block relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto">
+                  <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
+                    <Image
+                      src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
+                      alt={`${name} - Web Developer`}
+                      fill
+                      className="object-cover object-center scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine grayscale"
+                      style={{
+                        WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
+                        maskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
+                      }}
+                      priority
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* TEXT - Second on mobile */}
+              <div className="order-2 lg:order-1 space-y-4 sm:space-y-6 lg:space-y-8 text-center lg:text-left relative z-20 -mt-32 sm:-mt-16 lg:mt-0">
+                <div className="space-y-2 sm:space-y-3">
                   {/* Name - Bigger than FRONTEND */}
                   <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-slate-900 mb-2">
                     {name}
@@ -386,23 +421,6 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                     <FaGithub className="w-5 h-5" />
                     GitHub →
                   </a>
-                </div>
-              </div>
-
-              {/* PORTRAIT */}
-              <div className="relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto lg:mx-0">
-                <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
-                  <Image
-                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
-                    alt={`${name} - Web Developer`}
-                    fill
-                    className="object-cover object-center scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine grayscale"
-                    style={{
-                      WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
-                      maskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
-                    }}
-                    priority
-                  />
                 </div>
               </div>
             </div>

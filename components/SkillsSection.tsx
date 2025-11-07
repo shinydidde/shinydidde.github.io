@@ -255,7 +255,7 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
       id="skills"
       className={`relative ${isPlayfulMode
           ? 'py-20 overflow-hidden'
-          : 'py-20'
+          : 'pt-12 pb-20'
         }`}
     >
 
@@ -276,11 +276,11 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
               <div className="w-24 h-1 mx-auto rounded-full bg-gradient-to-r from-vibrant-pink via-vibrant-cyan via-vibrant-yellow to-vibrant-orange" />
             </motion.div>
           ) : (
-            <div className="text-center mb-16">
-              <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
+            <div className="text-center mb-12">
+              <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
                 Technical Skills
               </h2>
-              <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-6"></div>
+              <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
               <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 A comprehensive overview of technologies, frameworks, and tools I use to craft exceptional digital experiences
               </p>

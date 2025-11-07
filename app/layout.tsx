@@ -10,29 +10,72 @@ import ClientAnimations from '@/components/ClientAnimations';
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 const patrickHand = Patrick_Hand({ subsets: ["latin"], weight: "400" });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.mruduladidde.com';
+
 export const metadata = {
-  title: "Mrudula Didde • Software Developer",
-  description: "Portfolio of Mrudula Didde - Full-Stack Developer specializing in React, TypeScript, and modern web technologies. Explore my projects and experience.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Mrudula Didde • Frontend Engineer & Software Developer",
+    template: "%s | Mrudula Didde"
+  },
+  description: "Portfolio of Mrudula Didde - Frontend Engineer with 11+ years of experience specializing in React, Next.js, TypeScript, and modern web technologies. Explore my projects, skills, and professional experience.",
+  keywords: [
+    "Mrudula Didde",
+    "Frontend Engineer",
+    "Software Developer",
+    "React Developer",
+    "Next.js Developer",
+    "TypeScript Developer",
+    "Web Developer",
+    "Full Stack Developer",
+    "UI/UX Developer",
+    "Portfolio",
+    "Tech Lead",
+    "JavaScript Developer"
+  ],
+  authors: [{ name: "Mrudula Didde" }],
+  creator: "Mrudula Didde",
+  publisher: "Mrudula Didde",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: "Mrudula Didde • Software Developer",
-    description: "Portfolio of Mrudula Didde - Full-Stack Developer specializing in React, TypeScript, and modern web technologies.",
     type: "website",
     locale: "en_US",
+    url: siteUrl,
+    siteName: "Mrudula Didde Portfolio",
+    title: "Mrudula Didde • Frontend Engineer & Software Developer",
+    description: "Portfolio of Mrudula Didde - Frontend Engineer with 11+ years of experience specializing in React, Next.js, TypeScript, and modern web technologies. Explore my projects, skills, and professional experience.",
     images: [
       {
-        url: "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fme.png?alt=media&token=41732060-f7cd-4b67-b0c3-0cf2beeab18b",
+        url: `${siteUrl}/images/og.jpg`,
         width: 1200,
         height: 630,
-        alt: "Mrudula Didde - Software Developer",
+        alt: "Mrudula Didde - Frontend Engineer & Software Developer Portfolio",
+        type: "image/jpeg",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mrudula Didde • Software Developer",
-    description: "Portfolio of Mrudula Didde - Full-Stack Developer specializing in React, TypeScript, and modern web technologies.",
-    images: ["https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fme.png?alt=media&token=41732060-f7cd-4b67-b0c3-0cf2beeab18b"],
+    title: "Mrudula Didde • Frontend Engineer & Software Developer",
+    description: "Portfolio of Mrudula Didde - Frontend Engineer with 11+ years of experience specializing in React, Next.js, TypeScript, and modern web technologies.",
+    images: [`${siteUrl}/images/og.jpg`],
+    creator: "@shinydidde",
   },
+  alternates: {
+    canonical: siteUrl,
+  },
+  category: "Portfolio",
+  classification: "Personal Portfolio Website",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
