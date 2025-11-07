@@ -7,10 +7,6 @@ import { useEffect, useState } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
 
-interface HeaderProps {
-  initials?: string;
-}
-
 const NAV_ITEMS = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
@@ -25,7 +21,7 @@ const SOCIAL_LINKS = [
   { name: 'Twitter', href: 'https://twitter.com/mruduladidde', icon: FaTwitter },
 ];
 
-export default function Header({ initials = 'MD' }: HeaderProps) {
+export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
