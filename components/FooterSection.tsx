@@ -76,20 +76,9 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
   return (
     <footer
       className={`relative ${
-        isPlayfulMode ? 'py-16 bg-gradient-to-br from-vibrant-pink/20 via-vibrant-cyan/20 via-vibrant-yellow/20 via-vibrant-orange/20 to-vibrant-red/20 overflow-hidden' : 'py-12 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5 text-gray-800'
+        isPlayfulMode ? 'py-16 overflow-hidden' : 'py-12 text-gray-800'
       }`}
     >
-      {/* Background blobs - only for playful mode */}
-      {isPlayfulMode && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-pink/20 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-cyan/20 blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full bg-vibrant-yellow/20 blur-3xl" />
-          <div className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-vibrant-orange/20 blur-3xl" />
-          <div className="absolute bottom-1/4 left-1/4 w-40 h-40 rounded-full bg-vibrant-red/20 blur-3xl" />
-          <div className="absolute top-3/4 right-1/3 w-24 h-24 rounded-full bg-vibrant-purple/20 blur-3xl" />
-        </div>
-      )}
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {isPlayfulMode ? (

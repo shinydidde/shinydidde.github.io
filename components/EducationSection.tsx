@@ -63,18 +63,10 @@ export default function EducationSection({ data }: { data: EducationData }) {
       id="education"
       className={`relative ${
         isPlayfulMode
-          ? 'py-16 bg-gradient-to-br from-vibrant-purple/10 via-vibrant-cyan/10 to-vibrant-yellow/10 overflow-hidden'
-          : 'py-16 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
+          ? 'py-16 overflow-hidden'
+          : 'py-16'
       }`}
     >
-      {/* Background blobs - only for playful mode */}
-      {isPlayfulMode && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-purple/20 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-cyan/20 blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full bg-vibrant-yellow/20 blur-3xl" />
-        </div>
-      )}
 
       <div className={`mx-auto px-6 ${isPlayfulMode ? 'container max-w-7xl' : 'max-w-5xl'}`}>
         {/* Section header */}
@@ -94,10 +86,14 @@ export default function EducationSection({ data }: { data: EducationData }) {
             </p>
           </motion.div>
         ) : (
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-light text-gray-900 mb-2 tracking-tight">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
               Education
             </h2>
+            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-6"></div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Academic achievements and continuous learning journey
+            </p>
           </div>
         )}
 
@@ -123,14 +119,14 @@ export default function EducationSection({ data }: { data: EducationData }) {
               <div key={item.id} className="group border-b border-gray-200 last:border-b-0 pb-4 last:pb-0">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div className="space-y-1">
-                    <h3 className="text-base font-medium text-gray-900">
+                    <h3 className="text-base font-medium text-slate-900">
                       {item.degree}
                     </h3>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-slate-600">
                       {item.institution}
                     </div>
                   </div>
-                  <div className="text-sm text-gray-500 sm:text-right">
+                  <div className="text-sm text-slate-500 sm:text-right">
                     {item.period}
                     {item.description && (
                       <div className="text-xs mt-1">

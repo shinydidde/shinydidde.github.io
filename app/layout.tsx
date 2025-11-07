@@ -49,15 +49,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           '--font-patrick': patrickHand.style.fontFamily
         } as React.CSSProperties}
       >
-        {/* Subtle colorful background elements */}
-        <div className="fixed inset-0 pointer-events-none z-0 opacity-5">
-          <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-vibrant-pink/20 animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-32 h-32 rounded-full bg-vibrant-blue/20 animate-bounce"></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-vibrant-cyan/20 animate-pulse"></div>
-          <div className="absolute top-1/3 right-1/3 w-24 h-24 rounded-full bg-vibrant-green/20 animate-bounce"></div>
-          <div className="absolute bottom-1/3 left-1/3 w-28 h-28 rounded-full bg-vibrant-yellow/20 animate-pulse"></div>
-          <div className="absolute top-2/3 right-1/4 w-20 h-20 rounded-full bg-vibrant-orange/20 animate-bounce"></div>
-        </div>
 
         <PlayfulProvider>
           <ClientAnimations />

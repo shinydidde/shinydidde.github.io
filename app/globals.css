@@ -4,18 +4,7 @@
 
 /* your paper‐grain, etc. */
 body {
-  background-image:
-      linear-gradient(
-        135deg,
-        rgba(255,107,157,0.05) 0%,
-        rgba(196,69,105,0.05) 20%,
-        rgba(77,171,247,0.05) 40%,
-        rgba(34,211,238,0.05) 60%,
-        rgba(81,207,102,0.05) 80%,
-        rgba(255,212,59,0.05) 100%
-      );
-    background-repeat: no-repeat;
-    background-size: cover;
+  background: white;
 }
 
 @keyframes draw {

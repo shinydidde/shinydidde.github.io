@@ -2,6 +2,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
@@ -71,17 +72,22 @@ export default function Header({ initials = 'MD' }: HeaderProps) {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center">
-          {/* Monogram Logo */}
+          {/* Logo */}
           <div className="relative">
             <Link href="#" className="group" aria-label="Home">
-              <div className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-        isPlayfulMode
-          ? 'bg-gradient-to-br from-vibrant-blue to-vibrant-cyan group-hover:from-vibrant-cyan group-hover:to-vibrant-blue shadow-lg group-hover:shadow-xl group-hover:scale-110'
-          : 'bg-black group-hover:bg-gray-700'
+              <div className={`w-12 h-12 flex items-center justify-center transition-all duration-300 ${
+                isPlayfulMode
+                  ? 'group-hover:scale-110'
+                  : 'group-hover:opacity-80'
               }`}>
-                <span className={`font-bold text-lg ${isPlayfulMode ? 'text-white' : 'text-white font-mono'}`}>
-                  {initials}
-                </span>
+                <Image
+                  src="/images/logo.png"
+                  alt="Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                  priority
+                />
                 {isPlayfulMode && (
                   <div className="absolute -top-1 -right-1 w-4 h-4 bg-vibrant-yellow rounded-full flex items-center justify-center animate-bounce">
                     <span className="text-xs">✨</span>

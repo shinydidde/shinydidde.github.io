@@ -60,19 +60,11 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
     <section
       id="experience"
       className={`relative ${isPlayfulMode
-          ? 'py-20 bg-gradient-to-br from-vibrant-red/10 via-vibrant-yellow/10 to-vibrant-cyan/10 overflow-hidden'
-          : 'py-32 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
+          ? 'py-20 overflow-hidden'
+          : 'py-32'
         }`}
     >
 
-      {/* Decorative elements - only for playful mode */}
-      {isPlayfulMode && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-red/20 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-yellow/20 blur-3xl" />
-          <div className="absolute top-1/3 right-1/4 w-48 h-48 rounded-full bg-vibrant-cyan/20 blur-3xl" />
-        </div>
-      )}
 
       <div className="max-w-5xl mx-auto px-6 lg:px-8">
         {/* Section header */}
@@ -97,11 +89,11 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
           </motion.div>
         ) : (
           <div className="text-center mb-24">
-            <h2 className="text-5xl sm:text-6xl font-light text-gray-900 mb-8 tracking-tight">
-              Experience
+            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
+              Professional Experience
             </h2>
-            <div className="w-24 h-0.5 bg-gray-900 mx-auto mb-8"></div>
-            <p className="text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed">
+            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-8"></div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
               A decade of crafting exceptional digital experiences and leading high-performance engineering teams
             </p>
           </div>

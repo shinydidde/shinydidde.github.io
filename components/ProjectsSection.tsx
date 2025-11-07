@@ -93,19 +93,9 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
     <section
       id="projects"
       className={`relative ${
-        isPlayfulMode ? 'py-16 bg-gradient-to-br from-vibrant-pink/10 via-vibrant-red/10 via-vibrant-orange/10 to-vibrant-yellow/10 overflow-hidden' : 'py-20 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
+        isPlayfulMode ? 'py-16 overflow-hidden' : 'py-20'
       }`}
     >
-      {/* Background elements - only for playful mode */}
-      {isPlayfulMode && (
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
-          <div className="absolute top-0 left-0 w-64 h-64 rounded-full bg-vibrant-pink/20 blur-3xl" />
-          <div className="absolute bottom-0 right-0 w-80 h-80 rounded-full bg-vibrant-red/20 blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 w-48 h-48 rounded-full bg-vibrant-orange/20 blur-3xl" />
-          <div className="absolute top-1/4 right-1/4 w-32 h-32 rounded-full bg-vibrant-yellow/20 blur-3xl" />
-          <div className="absolute bottom-1/4 left-1/4 w-40 h-40 rounded-full bg-vibrant-pink/20 blur-3xl" />
-        </div>
-      )}
 
       <div className={`mx-auto px-6 ${isPlayfulMode ? 'container max-w-7xl' : 'max-w-6xl'}`}>
         {/* Section header */}
@@ -125,13 +115,13 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
             </p>
           </motion.div>
         ) : (
-          <div className="text-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-light text-gray-900 mb-4 tracking-tight">
-              Featured Work
+          <div className="text-center mb-16">
+            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
+              Featured Projects
             </h2>
-            <div className="w-16 h-0.5 bg-gray-900 mx-auto mb-4"></div>
-            <p className="text-base text-gray-600 font-light max-w-xl mx-auto leading-relaxed">
-              Selected projects showcasing technical expertise and problem-solving
+            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-6"></div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Selected projects showcasing technical expertise and innovative problem-solving
             </p>
           </div>
         )}
@@ -169,10 +159,10 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                   <button
                     key={tag}
                     onClick={() => setFilter(tag)}
-                    className={`px-6 py-3 text-sm font-medium capitalize transition-all duration-200 ${
+                    className={`px-6 py-2.5 text-sm font-medium capitalize transition-all duration-200 rounded-md ${
                       filter === tag
-                        ? 'text-gray-900 border-b-2 border-gray-900'
-                        : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300'
+                        ? 'bg-slate-900 text-white shadow-sm'
+                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
                     }`}
                   >
                     {tag === 'all' ? 'All Projects' : tag}
@@ -204,9 +194,9 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
           /* Professional Projects Grid */
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (
-              <div key={project.id} className="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300">
+              <div key={project.id} className="group bg-white border border-slate-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-slate-300">
                 {/* Project Image */}
-                <div className="relative aspect-[16/10] bg-gray-100 overflow-hidden">
+                <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -235,7 +225,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                         href={project.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-white text-black rounded hover:bg-gray-100 transition-colors"
+                        className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-white text-slate-900 rounded hover:bg-slate-50 transition-colors font-medium"
                         onClick={(e) => e.stopPropagation()}
                       >
                         View Project

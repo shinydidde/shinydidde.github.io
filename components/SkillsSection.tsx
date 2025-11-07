@@ -116,7 +116,7 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
               index % 6 === 4 ? 'border-vibrant-red shadow-[4px_4px_0_0_rgba(255,107,107,0.3)] hover:shadow-[8px_8px_0_0_rgba(196,69,105,0.4)]' :
               'border-vibrant-purple shadow-[4px_4px_0_0_rgba(196,69,105,0.3)] hover:shadow-[8px_8px_0_0_rgba(255,107,157,0.4)]'
             }`
-          : 'bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-gray-300'
+          : 'bg-white border border-slate-200 rounded-lg shadow-sm hover:shadow-md hover:border-slate-300'
       }`}
     >
       {/* Icon and name */}
@@ -145,9 +145,9 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
           </div>
         )}
         <div className="flex-1">
-          <h4 className="font-semibold text-lg mb-1 text-gray-900">{name}</h4>
+          <h4 className="font-semibold text-lg mb-1 text-slate-900">{name}</h4>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">Proficiency</span>
+            <span className="text-sm text-slate-500">Proficiency</span>
             <span className={`text-base font-semibold ${
               playful ? (
                 index % 6 === 0 ? 'text-vibrant-pink' :
@@ -156,7 +156,7 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
                 index % 6 === 3 ? 'text-vibrant-orange' :
                 index % 6 === 4 ? 'text-vibrant-red' :
                 'text-vibrant-purple'
-              ) : 'text-gray-900'
+              ) : 'text-slate-900'
             }`}>
               {level}%
             </span>
@@ -166,9 +166,7 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
 
       {/* Progress bar */}
       <div className="relative">
-        <div className={`h-2 rounded-full overflow-hidden ${
-          playful ? 'bg-gray-200' : 'bg-gray-200'
-        }`}>
+        <div className="h-2 rounded-full overflow-hidden bg-slate-200">
           <motion.div
             className={`h-full rounded-full ${
               playful
@@ -180,7 +178,7 @@ function SkillCard({ name, Icon, level, playful, index }: { name: string; Icon: 
                   index % 6 === 4 ? 'bg-gradient-to-r from-vibrant-red to-vibrant-purple' :
                   'bg-gradient-to-r from-vibrant-purple to-vibrant-pink'
                 )
-                : 'bg-gray-900'
+                : 'bg-slate-900'
             }`}
             initial={{ width: 0 }}
             animate={{ width: `${level}%` }}
@@ -256,21 +254,10 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
     <section
       id="skills"
       className={`relative ${isPlayfulMode
-          ? 'py-20 bg-gradient-to-br from-vibrant-pink/10 via-vibrant-cyan/10 via-vibrant-yellow/10 via-vibrant-orange/10 to-vibrant-red/10 overflow-hidden'
-          : 'py-20 bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5'
+          ? 'py-20 overflow-hidden'
+          : 'py-20'
         }`}
     >
-      {/* soft background accents - only for playful mode */}
-      {isPlayfulMode && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-6 -left-6 w-32 h-32 rounded-full bg-vibrant-pink/20 blur-xl" />
-          <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-vibrant-cyan/20 blur-xl" />
-          <div className="absolute top-1/2 left-1/2 w-24 h-24 rounded-full bg-vibrant-yellow/20 blur-xl" />
-          <div className="absolute top-1/4 right-1/4 w-20 h-20 rounded-full bg-vibrant-orange/20 blur-xl" />
-          <div className="absolute bottom-1/4 left-1/4 w-28 h-28 rounded-full bg-vibrant-red/20 blur-xl" />
-          <div className="absolute top-3/4 left-1/3 w-16 h-16 rounded-full bg-vibrant-purple/20 blur-xl" />
-        </div>
-      )}
 
       <div className={`mx-auto px-6 ${isPlayfulMode ? 'container max-w-7xl' : 'max-w-6xl'}`}>
         {/* Title */}
@@ -290,11 +277,11 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
             </motion.div>
           ) : (
             <div className="text-center mb-16">
-              <h2 className="text-5xl sm:text-6xl font-light text-gray-900 mb-6 tracking-tight">
+              <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-6 tracking-tight">
                 Technical Skills
               </h2>
-              <div className="w-24 h-0.5 bg-gray-900 mx-auto mb-6"></div>
-              <p className="text-lg text-gray-600 font-light max-w-2xl mx-auto leading-relaxed">
+              <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-6"></div>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
                 A comprehensive overview of technologies, frameworks, and tools I use to craft exceptional digital experiences
               </p>
             </div>
@@ -328,10 +315,10 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                 <button
                   key={category.label}
                   onClick={() => setActiveTab(index)}
-                  className={`px-6 py-3 text-sm font-medium transition-all duration-200 ${
+                  className={`px-6 py-2.5 font-medium text-sm transition-all duration-200 rounded-md ${
                     activeTab === index
-                      ? 'text-gray-900 border-b-2 border-gray-900'
-                      : 'text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300'
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
                   }`}
                 >
                   {category.label}
