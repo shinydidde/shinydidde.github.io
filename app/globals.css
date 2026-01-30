@@ -7,6 +7,89 @@ body {
   background: white;
 }
 
+/* Gold theme: full page black + gold text */
+body[data-theme="gold"] {
+  background: #000 !important;
+  color: #F0C14B;
+  /* Standard scrollbar (Firefox, newer Chrome) */
+  scrollbar-color: #D4AF37 #0a0a0a;
+  scrollbar-width: thin;
+}
+
+body[data-theme="gold"] .min-h-screen {
+  background: #000;
+}
+
+/* Gold theme: force header social icons to be visible gold */
+body[data-theme="gold"] header a[href*="github.com"],
+body[data-theme="gold"] header a[href*="linkedin.com"],
+body[data-theme="gold"] header a[href*="twitter.com"] {
+  color: #D4AF37 !important;
+}
+body[data-theme="gold"] header a[href*="github.com"]:hover,
+body[data-theme="gold"] header a[href*="linkedin.com"]:hover,
+body[data-theme="gold"] header a[href*="twitter.com"]:hover {
+  color: #F0C14B !important;
+}
+body[data-theme="gold"] header a[href*="github.com"] svg,
+body[data-theme="gold"] header a[href*="linkedin.com"] svg,
+body[data-theme="gold"] header a[href*="twitter.com"] svg {
+  color: inherit;
+  fill: currentColor;
+}
+
+
+/* Glittery gold text - scoped to gold theme so it always wins */
+body[data-theme="gold"] .text-gold-glitter {
+  background: linear-gradient(
+    135deg,
+    #8B6914 0%,
+    #9A7B0A 15%,
+    #B8860B 30%,
+    #D4AF37 45%,
+    #F0C14B 55%,
+    #D4AF37 70%,
+    #B8860B 85%,
+    #9A7B0A 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.4)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+body[data-theme="gold"] .text-gold-glitter-soft {
+  background: linear-gradient(
+    135deg,
+    #9A7B0A 0%,
+    #B8860B 25%,
+    #D4AF37 50%,
+    #F0C14B 75%,
+    #D4AF37 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  color: transparent !important;
+  filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.3));
+}
+
+/* Fallback when not in gold theme (e.g. if class used elsewhere) */
+.text-gold-glitter {
+  background: linear-gradient(135deg, #8B6914 0%, #9A7B0A 15%, #B8860B 30%, #D4AF37 45%, #F0C14B 55%, #D4AF37 70%, #B8860B 85%, #9A7B0A 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.4)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+.text-gold-glitter-soft {
+  background: linear-gradient(135deg, #9A7B0A 0%, #B8860B 25%, #D4AF37 50%, #F0C14B 75%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 1px rgba(212, 175, 55, 0.3));
+}
+
 @keyframes draw {
   from { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
   to   { stroke-dasharray: 1000; stroke-dashoffset: 0; }
@@ -37,25 +120,25 @@ body {
   animation: shake 0.5s ease-in-out infinite;
 }
 
-/* Custom scrollbar - Default (Professional Mode) */
-::-webkit-scrollbar {
+/* Custom scrollbar - Default (Professional/Grayscale only, not gold) */
+body:not([data-theme="gold"]) ::-webkit-scrollbar {
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
+body:not([data-theme="gold"]) ::-webkit-scrollbar-track {
   background: linear-gradient(to bottom, #ff6b9d, #4dabf7);
 }
 
-::-webkit-scrollbar-thumb {
+body:not([data-theme="gold"]) ::-webkit-scrollbar-thumb {
   background: linear-gradient(to bottom, #ffd43b, #51cf66);
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+body:not([data-theme="gold"]) ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #ff922b, #ff6b6b);
 }
 
-/* Playful mode scrollbar */
+/* Playful mode scrollbar (only when playful, not gold) */
 body:has([data-playful-mode="true"]) ::-webkit-scrollbar-track {
   background: linear-gradient(to bottom, #ff6b9d, #c44569, #4dabf7);
 }
@@ -67,6 +150,31 @@ body:has([data-playful-mode="true"]) ::-webkit-scrollbar-thumb {
 
 body:has([data-playful-mode="true"]) ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, #ff922b, #ff6b6b, #ff6b9d);
+}
+
+/* Gold theme scrollbar - must come after default/playful so it overrides */
+body[data-theme="gold"] ::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+}
+
+body[data-theme="gold"] ::-webkit-scrollbar-track {
+  background: #0a0a0a !important;
+  border-radius: 5px;
+}
+
+body[data-theme="gold"] ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #9A7B0A 0%, #B8860B 25%, #D4AF37 50%, #F0C14B 75%, #D4AF37 100%) !important;
+  border-radius: 5px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+body[data-theme="gold"] ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #B8860B 0%, #D4AF37 50%, #F0C14B 100%) !important;
+}
+
+body[data-theme="gold"] ::-webkit-scrollbar-corner {
+  background: #0a0a0a !important;
 }
 
 /* Custom selection colors */

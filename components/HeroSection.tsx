@@ -21,7 +21,7 @@ interface HeroData {
 }
 
 export default function HeroSection({ data = {} }: { data?: HeroData }) {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
 
   const name = data.name || 'Mrudula Didde';
 
@@ -52,21 +52,23 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
   };
 
   const experience = calculateExperience();
-  const roles = isPlayfulMode ? (data.memeRoles || [
-    "Bug Creator Extraordinaire",
-    "Stack Overflow Connoisseur",
-    "console.log() Wizard",
-    "CSS Battle Veteran",
-    "Wildlife Coder",
-    "Digital Nomad"
-  ]) : (data.normalRoles || [
-    "Web Developer",
-    "Tech Lead",
-    "Nature Lover",
-    "Animal Advocate",
-    "Travel Enthusiast",
-    "UI/UX Magician"
-  ]);
+  const roles = isPlayfulMode
+    ? (data.memeRoles || [
+        "Bug Creator Extraordinaire",
+        "Stack Overflow Connoisseur",
+        "console.log() Wizard",
+        "CSS Battle Veteran",
+        "Wildlife Coder",
+        "Digital Nomad",
+      ])
+    : (data.normalRoles || [
+        "Web Developer",
+        "Tech Lead",
+        "Nature Lover",
+        "Animal Advocate",
+        "Travel Enthusiast",
+        "UI/UX Magician",
+      ]);
 
   const bio = data.bio;
 
@@ -139,13 +141,25 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
     { label: "Lighthouse Score", value: "90+" },
   ];
 
+  const proNameClass = isGoldMode ? 'text-gold-glitter' : 'text-slate-900';
+  const proMutedClass = isGoldMode ? 'text-gold-glitter' : 'text-slate-600';
+  const proSubClass = isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-500';
+  const proTagClass = isGoldMode
+    ? 'bg-gold/10 border-gold/50 text-gold-glitter hover:bg-gold/20'
+    : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200';
+  const proBodyClass = isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-700';
+  const proButtonBorder = isGoldMode ? 'border-gold text-gold-glitter hover:bg-gold/20 focus:ring-gold/30' : 'border-slate-300 text-slate-800 hover:bg-slate-50 focus:ring-slate-500/20';
+  const proLinkClass = isGoldMode ? 'text-gold-glitter hover:opacity-90' : 'text-slate-600 hover:text-slate-900';
+
   return (
     <section
       id="about"
       className={
         isPlayfulMode
           ? "relative w-full overflow-hidden min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-12 lg:pt-32"
-          : "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32"
+          : isGoldMode
+            ? "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32 bg-black"
+            : "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32"
       }
     >
 
@@ -156,17 +170,17 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             <div className="order-2 lg:order-1 space-y-4 sm:space-y-6 lg:space-y-8 text-center lg:text-left relative z-20 -mt-32 sm:-mt-16 lg:mt-0">
               <div className="space-y-2 sm:space-y-3">
               {/* Name - Bigger than FRONTEND */}
-              <div className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-2 ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-vibrant-pink via-vibrant-green to-vibrant-yellow' : 'text-slate-900'}`}>
+              <div className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-2 ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-vibrant-pink via-vibrant-green to-vibrant-yellow' : proNameClass}`}>
                 {name}
               </div>
-              <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[0.95] ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-vibrant-pink via-vibrant-green to-vibrant-yellow' : 'text-slate-900'}`}>
+              <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-[0.95] ${isPlayfulMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-vibrant-pink via-vibrant-green to-vibrant-yellow' : proNameClass}`}>
                 {isPlayfulMode ? 'CHAOS' : 'FRONTEND'}
               </h1>
-              <h2 className={`text-lg sm:text-xl md:text-3xl lg:text-4xl font-mono ${isPlayfulMode ? 'text-vibrant-yellow' : 'text-slate-600'}`}>
+              <h2 className={`text-lg sm:text-xl md:text-3xl lg:text-4xl font-mono ${isPlayfulMode ? 'text-vibrant-yellow' : proMutedClass}`}>
                 {isPlayfulMode ? '<WIZARD>' : '<ENGINEER>'}
               </h2>
               {/* Experience Display */}
-              <div className={`text-sm sm:text-base md:text-lg font-medium flex items-center justify-center lg:justify-start gap-2 ${isPlayfulMode ? 'text-vibrant-orange' : 'text-slate-500'}`}>
+              <div className={`text-sm sm:text-base md:text-lg font-medium flex items-center justify-center lg:justify-start gap-2 ${isPlayfulMode ? 'text-vibrant-orange' : proSubClass}`}>
                 {isPlayfulMode ? (
                   <>
                     <FaCode className="w-4 h-4" />
@@ -187,7 +201,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                     className={`px-3 py-1 rounded-full border transition-colors duration-200 ${
                       isPlayfulMode
                         ? 'bg-vibrant-pink/20 border-vibrant-pink/40 text-vibrant-pink'
-                        : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
+                        : proTagClass
                     }`}
                   >
                     {role}
@@ -197,7 +211,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             </div>
 
             {/* Bio */}
-            <div className={`space-y-3 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 ${isPlayfulMode ? 'text-vibrant-cyan' : 'text-slate-700'}`}>
+            <div className={`space-y-3 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 ${isPlayfulMode ? 'text-vibrant-cyan' : proBodyClass}`}>
               {isPlayfulMode ? (
                 <>
                   <p>I turn caffeine into chaos-resistant code with React magic and TypeScript wizardry!</p>
@@ -219,7 +233,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 focus:outline-none ${
                   isPlayfulMode
                     ? 'border-2 border-vibrant-yellow text-vibrant-orange hover:bg-vibrant-yellow/20 shadow-[1px_1px_0_0_rgba(255,212,59,1)]'
-                    : 'border border-slate-300 text-slate-800 hover:bg-slate-50'
+                    : `border ${isGoldMode ? 'border-gold text-gold hover:bg-gold/20' : 'border-slate-300 text-slate-800 hover:bg-slate-50'}`
                 }`}
                 title="Download Resume"
               >
@@ -233,7 +247,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 className={`w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-200 ${
                   isPlayfulMode
                     ? 'text-vibrant-cyan hover:text-vibrant-green hover:bg-vibrant-cyan/20'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                    : isGoldMode ? 'text-gold-glitter hover:opacity-90 hover:bg-gold/10' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                 }`}
                 title="GitHub Profile"
               >
@@ -250,7 +264,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 className={`px-6 lg:px-7 py-3 lg:py-3.5 rounded-xl text-base font-semibold transition-all duration-200 flex items-center justify-center gap-2 focus:outline-none ${
                   isPlayfulMode
                     ? 'border-2 border-vibrant-yellow text-vibrant-orange hover:bg-vibrant-yellow/20 shadow-[2px_2px_0_0_rgba(255,212,59,1)] focus:ring-4 focus:ring-vibrant-yellow/30'
-                    : 'border border-slate-300 text-slate-800 hover:bg-slate-50 focus:ring-4 focus:ring-slate-500/20'
+                    : `border ${proButtonBorder} focus:ring-4`
                 }`}
               >
                 <FaDownload className="w-4 h-4" />
@@ -264,7 +278,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 className={`flex items-center justify-center gap-2 text-base font-medium py-3 transition-colors duration-200 ${
                   isPlayfulMode
                     ? 'text-vibrant-cyan hover:text-vibrant-green'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : proLinkClass
                 }`}
               >
                 <FaGithub className="w-5 h-5" />
@@ -278,13 +292,10 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             {/* Mobile: Full seamless portrait */}
             <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
               <Image
-                src={isPlayfulMode
-                  ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fcolor1.png?alt=media&token=670494ad-e1a3-44b1-9301-bb327d951064"
-                  : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
-                }
+                src={isPlayfulMode ? "/images/mcolor.png" : "/images/mblack.png"}
                 alt={`${name} - Web Developer`}
                 fill
-                className={`object-cover object-center scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
+                className={`object-cover object-top scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
                 style={{
                   WebkitMaskImage: isPlayfulMode
                     ? 'linear-gradient(to bottom, black 40%, transparent 95%, transparent 100%)'
@@ -301,13 +312,10 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             <div className="hidden sm:block relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto">
               <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
                 <Image
-                  src={isPlayfulMode
-                    ? "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fcolor1.png?alt=media&token=670494ad-e1a3-44b1-9301-bb327d951064"
-                    : "https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
-                  }
+                  src={isPlayfulMode ? "/images/mcolor.png" : "/images/mblack.png"}
                   alt={`${name} - Web Developer`}
                   fill
-                  className={`object-cover object-center scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
+                  className={`object-cover object-top scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
                   style={{
                     WebkitMaskImage: isPlayfulMode
                       ? 'linear-gradient(to bottom, black 50%, transparent 95%, transparent 100%)'
@@ -323,7 +331,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
           </div>
         </div>
         ) : (
-          /* NORMAL MODE - PROFESSIONAL LAYOUT */
+          /* NORMAL MODE - PROFESSIONAL LAYOUT (gold or grayscale) */
           <div className="space-y-12">
             {/* Top Section: Intro and Portrait */}
             <div className="flex flex-col lg:grid lg:grid-cols-[1.05fr_1fr] gap-8 lg:gap-16 items-start lg:items-center">
@@ -332,10 +340,10 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 {/* Mobile: Full seamless portrait */}
                 <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
                   <Image
-                    src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
+                    src={isGoldMode ? "/images/mcolor.png" : "/images/mblack.png"}
                     alt={`${name} - Web Developer`}
                     fill
-                    className="object-cover object-center scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine grayscale"
+                    className={`object-cover object-top scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine ${isGoldMode ? '' : 'grayscale'}`}
                     style={{
                       WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
                       maskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
@@ -348,10 +356,10 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 <div className="hidden sm:block relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto">
                   <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
                     <Image
-                      src="https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Fblack1.png?alt=media&token=bda1c889-d836-4ffd-840b-0a092d449492"
+                      src={isGoldMode ? "/images/mcolor.png" : "/images/mblack.png"}
                       alt={`${name} - Web Developer`}
                       fill
-                      className="object-cover object-center scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine grayscale"
+                      className={`object-cover object-top scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine ${isGoldMode ? '' : 'grayscale'}`}
                       style={{
                         WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
                         maskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
@@ -366,16 +374,16 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
               <div className="order-2 lg:order-1 space-y-4 sm:space-y-6 lg:space-y-8 text-center lg:text-left relative z-20 -mt-32 sm:-mt-16 lg:mt-0">
                 <div className="space-y-2 sm:space-y-3">
                   {/* Name - Bigger than FRONTEND */}
-                  <div className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight text-slate-900 mb-2">
+                  <div className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold leading-tight mb-2 ${proNameClass}`}>
                     {name}
                   </div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-slate-900">
+                  <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight ${proNameClass}`}>
                     FRONTEND
                   </h1>
-                  <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-mono text-slate-600">
+                  <h2 className={`text-lg sm:text-xl md:text-3xl lg:text-4xl font-mono ${proMutedClass}`}>
                     &lt;ENGINEER&gt;
                   </h2>
-                  <div className="text-base md:text-lg font-medium text-slate-500 flex items-center justify-center lg:justify-start gap-2">
+                  <div className={`text-base md:text-lg font-medium flex items-center justify-center lg:justify-start gap-2 ${proSubClass}`}>
                     <span>{experience} of experience</span>
                   </div>
                 </div>
@@ -385,7 +393,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                   {roles.slice(0, 6).map((role, index) => (
                     <span
                       key={index}
-                      className="px-3 py-1 text-xs rounded-full border bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200 transition-colors"
+                      className={`px-3 py-1 text-xs rounded-full border transition-colors ${proTagClass}`}
                     >
                       {role}
                     </span>
@@ -393,7 +401,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 </div>
 
                 {/* Bio */}
-                <div className="space-y-3 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 text-slate-700">
+                <div className={`space-y-3 text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 ${proBodyClass}`}>
                   {bio ? (
                     <div dangerouslySetInnerHTML={{ __html: bio }} />
                   ) : (
@@ -407,7 +415,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                     href="/resume.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 lg:px-7 py-3 lg:py-3.5 rounded-xl text-base font-semibold transition-all duration-200 flex items-center justify-center gap-2 border border-slate-300 text-slate-800 hover:bg-slate-50 focus:ring-4 focus:ring-slate-500/20 focus:outline-none"
+                    className={`px-6 lg:px-7 py-3 lg:py-3.5 rounded-xl text-base font-semibold transition-all duration-200 flex items-center justify-center gap-2 border focus:ring-4 focus:outline-none ${proButtonBorder}`}
                   >
                     <FaDownload className="w-4 h-4" />
                     <span>Download Resume</span>
@@ -416,7 +424,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                     href="https://github.com/shinydidde"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 text-base font-medium py-3 transition-colors duration-200 text-slate-600 hover:text-slate-900"
+                    className={`flex items-center justify-center gap-2 text-base font-medium py-3 transition-colors duration-200 ${proLinkClass}`}
                   >
                     <FaGithub className="w-5 h-5" />
                     GitHub →
@@ -426,33 +434,33 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             </div>
 
             {/* Professional Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-slate-200">
+            <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t ${isGoldMode ? 'border-gold/40' : 'border-slate-200'}`}>
               {professionalMetrics.map((metric, index) => (
-                <div key={index} className="text-center p-4 bg-slate-50 rounded-lg border border-slate-200 hover:border-slate-300 transition-colors">
-                  <div className="text-2xl md:text-3xl font-bold text-slate-900 mb-1">{metric.value}</div>
-                  <div className="text-xs md:text-sm text-slate-600">{metric.label}</div>
+                <div key={index} className={`text-center p-4 rounded-lg border transition-colors ${isGoldMode ? 'bg-gold/5 border-gold/30 hover:border-gold' : 'bg-slate-50 border-slate-200 hover:border-slate-300'}`}>
+                  <div className={`text-2xl md:text-3xl font-bold mb-1 ${isGoldMode ? 'text-gold-glitter' : 'text-slate-900'}`}>{metric.value}</div>
+                  <div className={`text-xs md:text-sm ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-600'}`}>{metric.label}</div>
                 </div>
               ))}
             </div>
 
             {/* Professional Skills Showcase */}
-            <div className="space-y-6 pt-8 border-t border-slate-200">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Core Competencies</h3>
+            <div className={`space-y-6 pt-8 border-t ${isGoldMode ? 'border-gold/40' : 'border-slate-200'}`}>
+              <h3 className={`text-2xl font-bold mb-6 ${isGoldMode ? 'text-gold-glitter' : 'text-slate-900'}`}>Core Competencies</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {skillCategories.slice(0, 4).map((category, catIndex) => (
                   <div key={catIndex} className="space-y-4">
-                    <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">{category.title}</h4>
+                    <h4 className={`text-sm font-semibold uppercase tracking-wide border-b pb-2 ${isGoldMode ? 'text-gold-glitter-soft border-gold/40' : 'text-slate-700 border-slate-200'}`}>{category.title}</h4>
                     <div className="flex flex-wrap gap-2">
                       {category.skills.map((skill, skillIndex) => {
                         const IconComponent = skill.icon;
                         return (
                           <div
                             key={skillIndex}
-                            className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg hover:border-slate-300 hover:shadow-sm transition-all group"
+                            className={`flex items-center gap-2 px-3 py-2 border rounded-lg transition-all group ${isGoldMode ? 'bg-black/40 border-gold/30 hover:border-gold' : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm'}`}
                           >
-                            <IconComponent className="w-4 h-4 text-slate-600 group-hover:text-slate-900" />
-                            <span className="text-sm font-medium text-slate-700">{skill.name}</span>
-                            <span className="text-xs text-slate-500 ml-1">({skill.level})</span>
+                            <IconComponent className={`w-4 h-4 ${isGoldMode ? 'text-gold group-hover:text-gold-light' : 'text-slate-600 group-hover:text-slate-900'}`} />
+                            <span className={`text-sm font-medium ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-700'}`}>{skill.name}</span>
+                            <span className={`text-xs ml-1 ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-500'}`}>({skill.level})</span>
                           </div>
                         );
                       })}
@@ -462,20 +470,20 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
               </div>
 
               {/* Additional Skills Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 border-t border-slate-200">
+              <div className={`grid grid-cols-1 sm:grid-cols-3 gap-8 pt-8 border-t ${isGoldMode ? 'border-gold/40' : 'border-slate-200'}`}>
                 {skillCategories.slice(4).map((category, catIndex) => (
                   <div key={catIndex} className="space-y-4">
-                    <h4 className="text-sm font-semibold text-slate-700 uppercase tracking-wide border-b border-slate-200 pb-2">{category.title}</h4>
+                    <h4 className={`text-sm font-semibold uppercase tracking-wide border-b pb-2 ${isGoldMode ? 'text-gold-glitter-soft border-gold/40' : 'text-slate-700 border-slate-200'}`}>{category.title}</h4>
                     <div className="flex flex-wrap gap-2">
                       {category.skills.map((skill, skillIndex) => {
                         const IconComponent = skill.icon;
                         return (
                           <div
                             key={skillIndex}
-                            className="flex items-center gap-2 px-3 py-2 bg-white border border-slate-200 rounded-lg hover:border-slate-300 hover:shadow-sm transition-all group"
+                            className={`flex items-center gap-2 px-3 py-2 border rounded-lg transition-all group ${isGoldMode ? 'bg-black/40 border-gold/30 hover:border-gold' : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-sm'}`}
                           >
-                            <IconComponent className="w-4 h-4 text-slate-600 group-hover:text-slate-900" />
-                            <span className="text-sm font-medium text-slate-700">{skill.name}</span>
+                            <IconComponent className={`w-4 h-4 ${isGoldMode ? 'text-gold group-hover:text-gold-light' : 'text-slate-600 group-hover:text-slate-900'}`} />
+                            <span className={`text-sm font-medium ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-700'}`}>{skill.name}</span>
                           </div>
                         );
                       })}

@@ -54,12 +54,21 @@ const MEME_TOOLTIPS = {
   instagram: "Filtered Reality"
 };
 
+const GOLD_STYLE = 'bg-transparent border-2 border-gold text-gold hover:bg-gold/30 hover:border-gold';
+const GRAYSCALE_STYLE = 'bg-transparent border-2 border-gray-800 text-gray-900 hover:bg-gray-100 hover:border-black';
+
 export function SocialIcon({ platform, url, playfulMode: propMemeMode }: SocialIconProps) {
-  const { isPlayfulMode: contextMemeMode } = usePlayfulMode();
+  const { isPlayfulMode: contextMemeMode, isGoldMode, isGrayscaleMode } = usePlayfulMode();
   const isPlayfulMode = propMemeMode ?? contextMemeMode;
+  const useGold = isGoldMode && !isPlayfulMode;
+  const useGrayscale = isGrayscaleMode && !isPlayfulMode;
 
   const icons = isPlayfulMode ? MEME_ICONS : NORMAL_ICONS;
-  const colors = isPlayfulMode ? MEME_COLORS : NORMAL_COLORS;
+  const colors = useGold
+    ? { github: GOLD_STYLE, linkedin: GOLD_STYLE, twitter: GOLD_STYLE, instagram: GOLD_STYLE }
+    : useGrayscale
+      ? { github: GRAYSCALE_STYLE, linkedin: GRAYSCALE_STYLE, twitter: GRAYSCALE_STYLE, instagram: GRAYSCALE_STYLE }
+      : (isPlayfulMode ? MEME_COLORS : NORMAL_COLORS);
 
   return (
     <motion.div
@@ -84,7 +93,8 @@ export function SocialIcon({ platform, url, playfulMode: propMemeMode }: SocialI
         className={`
           w-12 h-12 rounded-full
           ${colors[platform]}
-          text-white text-2xl flex items-center justify-center shadow-md
+          ${useGold ? 'text-2xl' : useGrayscale ? 'text-2xl text-black' : 'text-white text-2xl'}
+          flex items-center justify-center shadow-md
           ${isPlayfulMode ? 'border-2 border-black' : ''}
           relative z-10
         `}

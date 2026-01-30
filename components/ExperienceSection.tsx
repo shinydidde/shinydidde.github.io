@@ -40,7 +40,7 @@ function logoFromCompany(company: string, fullRole: string): string {
 }
 
 export default function ExperienceSection({ data }: { data: ExperienceData }) {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
 
   // Transform Firestore entries → UI model expected by TimelineItem / CompanyLogo
   const experiences = (data.entries ?? []).map((e, idx) => {
@@ -61,7 +61,9 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
       id="experience"
       className={`relative ${isPlayfulMode
           ? 'py-20 overflow-hidden'
-          : 'pt-12 pb-32'
+          : isGoldMode
+            ? 'py-16 pb-32'
+            : 'pt-12 pb-32'
         }`}
     >
 
@@ -89,11 +91,11 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
           </motion.div>
         ) : (
           <div className="text-center mb-12">
-            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className={`text-5xl sm:text-6xl font-bold mb-4 tracking-tight ${isGoldMode ? 'text-gold-glitter' : 'text-slate-900'}`}>
               Professional Experience
             </h2>
-            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <div className={`w-24 h-0.5 mx-auto mb-4 ${isGoldMode ? 'bg-gold' : 'bg-slate-900'}`}></div>
+            <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-600'}`}>
               A decade of crafting exceptional digital experiences and leading high-performance engineering teams
             </p>
           </div>
@@ -141,28 +143,27 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
                 <div className="grid md:grid-cols-[200px_1fr] gap-8 md:gap-12 items-start">
                   {/* Year & Company */}
                   <div className="md:text-right space-y-3">
-                    <div className="text-sm font-medium text-gray-500 tracking-wider uppercase">
+                    <div className={`text-sm font-medium tracking-wider uppercase ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-500'}`}>
                       {exp.period}
                     </div>
-                    <div className="text-lg font-light text-gray-900">
+                    <div className={`text-lg font-light ${isGoldMode ? 'text-gold-glitter' : 'text-gray-900'}`}>
                       {exp.company}
                     </div>
                   </div>
 
                   {/* Role & Details */}
                   <div className="relative md:pl-8">
-                    {/* Subtle vertical line */}
-                    <div className="hidden md:block absolute left-0 top-0 bottom-0 w-px bg-gray-200 group-hover:bg-gray-400 transition-colors duration-300"></div>
+                    <div className={`hidden md:block absolute left-0 top-0 bottom-0 w-px transition-colors duration-300 ${isGoldMode ? 'bg-gold/40 group-hover:bg-gold' : 'bg-gray-200 group-hover:bg-gray-400'}`}></div>
 
                     <div className="space-y-6">
-                      <h3 className="text-2xl font-light text-gray-900 leading-tight">
+                      <h3 className={`text-2xl font-light leading-tight ${isGoldMode ? 'text-gold-glitter' : 'text-gray-900'}`}>
                         {exp.role.split('@')[0].trim()}
                       </h3>
 
                       <div className="space-y-4">
                         {exp.highlights.map((highlight, idx) => (
-                          <div key={idx} className="flex items-start gap-3 text-gray-600 leading-relaxed">
-                            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2.5 flex-shrink-0"></div>
+                          <div key={idx} className={`flex items-start gap-3 leading-relaxed ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-600'}`}>
+                            <div className={`w-1.5 h-1.5 rounded-full mt-2.5 flex-shrink-0 ${isGoldMode ? 'bg-gold' : 'bg-gray-400'}`}></div>
                             <span className="font-light">{highlight}</span>
                           </div>
                         ))}
@@ -200,15 +201,15 @@ export default function ExperienceSection({ data }: { data: ExperienceData }) {
           </motion.div>
         ) : (
           <div className="text-center mt-20">
-            <div className="w-12 h-px bg-gray-300 mx-auto mb-8"></div>
-            <p className="text-base font-light text-gray-500 mb-8 tracking-wide">
+            <div className={`w-12 h-px mx-auto mb-8 ${isGoldMode ? 'bg-gold/50' : 'bg-gray-300'}`}></div>
+            <p className={`text-base font-light mb-8 tracking-wide ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-500'}`}>
               View comprehensive experience details
             </p>
             <a
               href="/resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-8 py-3 text-sm font-medium text-gray-900 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              className={`inline-flex items-center px-8 py-3 text-sm font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black ${isGoldMode ? 'text-gold-glitter bg-transparent border border-gold hover:bg-gold/20 focus:ring-gold' : 'text-gray-900 bg-white border border-gray-300 hover:bg-gray-50 hover:border-gray-400 focus:ring-gray-500'}`}
             >
               Download Resume
             </a>

@@ -42,7 +42,7 @@ function iconAndColorFor(title: string): { icon: JSX.Element; color: string } {
 }
 
 export default function EducationSection({ data }: { data: EducationData }) {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
 
   // Transform Firestore -> UI expected by <EducationCard />
   const items = (data.entries ?? []).map((e, i) => {
@@ -64,7 +64,9 @@ export default function EducationSection({ data }: { data: EducationData }) {
       className={`relative ${
         isPlayfulMode
           ? 'py-16 overflow-hidden'
-          : 'pt-12 pb-16'
+          : isGoldMode
+            ? 'py-16 pb-16'
+            : 'pt-12 pb-16'
       }`}
     >
 
@@ -87,11 +89,11 @@ export default function EducationSection({ data }: { data: EducationData }) {
           </motion.div>
         ) : (
           <div className="text-center mb-12">
-            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className={`text-5xl sm:text-6xl font-bold mb-4 tracking-tight ${isGoldMode ? 'text-gold-glitter' : 'text-slate-900'}`}>
               Education
             </h2>
-            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <div className={`w-24 h-0.5 mx-auto mb-4 ${isGoldMode ? 'bg-gold' : 'bg-slate-900'}`}></div>
+            <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-600'}`}>
               Academic achievements and continuous learning journey
             </p>
           </div>
@@ -108,12 +110,19 @@ export default function EducationSection({ data }: { data: EducationData }) {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 viewport={{ once: true }}
               >
-                <EducationCard item={item} index={index} playfulMode={isPlayfulMode} />
+                <EducationCard item={item} index={index} playfulMode={isPlayfulMode} goldMode={isGoldMode} />
               </motion.div>
             ))}
           </div>
+        ) : isGoldMode ? (
+          /* Gold mode: use cards with gold styling */
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {items.map((item, index) => (
+              <EducationCard key={item.id} item={item} index={index} playfulMode={false} goldMode={true} />
+            ))}
+          </div>
         ) : (
-          /* Minimal Education List */
+          /* Minimal Education List (grayscale) */
           <div className="space-y-4 max-w-2xl mx-auto">
             {items.map((item) => (
               <div key={item.id} className="group border-b border-gray-200 last:border-b-0 pb-4 last:pb-0">

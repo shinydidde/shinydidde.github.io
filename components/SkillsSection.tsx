@@ -232,7 +232,7 @@ const DEFAULT_SQL_LEVEL = 60;
 const clamp01to100 = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 
 export default function SkillsSection({ data }: { data: SkillsData }) {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
   const [activeTab, setActiveTab] = useState(0);
 
   // Build render model from Firestore with safe numeric level
@@ -255,7 +255,9 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
       id="skills"
       className={`relative ${isPlayfulMode
           ? 'py-20 overflow-hidden'
-          : 'pt-12 pb-20'
+          : isGoldMode
+            ? 'py-16'
+            : 'pt-12 pb-20'
         }`}
     >
 
@@ -277,11 +279,11 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
             </motion.div>
           ) : (
             <div className="text-center mb-12">
-              <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
+              <h2 className={`text-5xl sm:text-6xl font-bold mb-4 tracking-tight ${isGoldMode ? 'text-gold-glitter' : 'text-slate-900'}`}>
                 Technical Skills
               </h2>
-              <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              <div className={`w-24 h-0.5 mx-auto mb-4 ${isGoldMode ? 'bg-gold' : 'bg-slate-900'}`}></div>
+              <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-600'}`}>
                 A comprehensive overview of technologies, frameworks, and tools I use to craft exceptional digital experiences
               </p>
             </div>
@@ -317,8 +319,12 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                   onClick={() => setActiveTab(index)}
                   className={`px-6 py-2.5 font-medium text-sm transition-all duration-200 rounded-md ${
                     activeTab === index
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
+                      ? isGoldMode
+                        ? 'bg-gold text-black shadow-sm'
+                        : 'bg-slate-900 text-white shadow-sm'
+                      : isGoldMode
+                        ? 'bg-transparent text-gold-light border border-gold/50 hover:bg-gold/20 hover:text-gold hover:border-gold'
+                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
                   }`}
                 >
                   {category.label}
@@ -363,29 +369,29 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
                 {/* Professional Skills Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
                   {model.cats[activeTab].items.map((skill, index) => (
-                    <div key={skill.name} className="group text-center space-y-4">
+                    <div key={skill.name} className={`group text-center space-y-4 ${isGoldMode ? 'p-4 rounded-lg border border-gold/30 hover:border-gold/60 bg-black/30' : ''}`}>
                       {/* Icon */}
                       <div className="flex justify-center mb-3">
-                        <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-gray-50 group-hover:bg-gray-100 transition-colors duration-300">
-                          <skill.Icon className="w-6 h-6 text-gray-600 group-hover:text-gray-900 transition-colors duration-300" />
+                        <div className={`w-12 h-12 flex items-center justify-center rounded-lg transition-colors duration-300 ${isGoldMode ? 'bg-gold/20 group-hover:bg-gold/30' : 'bg-gray-50 group-hover:bg-gray-100'}`}>
+                          <skill.Icon className={`w-6 h-6 transition-colors duration-300 ${isGoldMode ? 'text-gold group-hover:text-gold-light' : 'text-gray-600 group-hover:text-gray-900'}`} />
                         </div>
                       </div>
 
                       {/* Skill name */}
                       <div className="space-y-2">
-                        <h4 className="text-sm font-medium text-gray-900 tracking-wide">
+                        <h4 className={`text-sm font-medium tracking-wide ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-900'}`}>
                           {skill.name}
                         </h4>
-                        <div className="text-xs text-gray-500 font-light">
+                        <div className={`text-xs font-light ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-500'}`}>
                           {skill.level}% proficiency
                         </div>
                       </div>
 
                       {/* Minimalist progress indicator */}
                       <div className="space-y-2">
-                        <div className="w-full h-1 bg-gray-200 rounded-full overflow-hidden">
+                        <div className={`w-full h-1 rounded-full overflow-hidden ${isGoldMode ? 'bg-gold/20' : 'bg-gray-200'}`}>
                           <div
-                            className="h-full bg-gray-900 rounded-full transition-all duration-1000 ease-out"
+                            className={`h-full rounded-full transition-all duration-1000 ease-out ${isGoldMode ? 'bg-gold' : 'bg-gray-900'}`}
                             style={{
                               width: `${skill.level}%`,
                               transitionDelay: `${index * 50}ms`
@@ -395,7 +401,7 @@ export default function SkillsSection({ data }: { data: SkillsData }) {
 
                         {/* Subtle hover effect */}
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="text-xs text-gray-400 font-light">
+                          <div className={`text-xs font-light ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-400'}`}>
                             {skill.level >= 90 ? 'Expert' :
                              skill.level >= 75 ? 'Advanced' :
                              skill.level >= 60 ? 'Proficient' : 'Intermediate'}

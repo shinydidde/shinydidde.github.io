@@ -5,7 +5,6 @@ import Header            from '@/components/Header'
 import HeroSection       from '@/components/HeroSection'
 import SkillsSection     from '@/components/SkillsSection'
 import ExperienceSection from '@/components/ExperienceSection'
-import ProjectsSection   from '@/components/ProjectsSection'
 import EducationSection  from '@/components/EducationSection'
 import FooterSection     from '@/components/FooterSection'
 
@@ -14,7 +13,6 @@ import {
   fetchAbout,
   fetchSkillsList,
   fetchExperienceList,
-  fetchProjectsList,
   fetchEducationList,
   fetchFooterInfo
 } from '@/lib/firestoreService'
@@ -26,7 +24,6 @@ export default async function Home() {
     aboutData,
     skillsData,
     experienceData,
-    projectsData,
     educationData,
     footerData
   ] = await Promise.all([
@@ -34,7 +31,6 @@ export default async function Home() {
     fetchAbout(),
     fetchSkillsList(),
     fetchExperienceList(),
-    fetchProjectsList(),
     fetchEducationList(),
     fetchFooterInfo()
   ])
@@ -50,7 +46,6 @@ export default async function Home() {
         <HeroSection       data={enhancedHeroData} />
         <SkillsSection     data={skillsData} />
         <ExperienceSection data={experienceData} />
-        <ProjectsSection   data={projectsData} />
         <EducationSection  data={educationData} />
       </main>
 

@@ -71,7 +71,7 @@ function toUIProjects(data?: ProjectsData): UIProject[] {
 }
 
 export default function ProjectsSection({ data }: { data: ProjectsData }) {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
   const [filter, setFilter] = useState('all');
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
@@ -93,7 +93,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
     <section
       id="projects"
       className={`relative ${
-        isPlayfulMode ? 'py-16 overflow-hidden' : 'pt-12 pb-20'
+        isPlayfulMode ? 'py-16 overflow-hidden' : isGoldMode ? 'py-16 pb-20' : 'pt-12 pb-20'
       }`}
     >
 
@@ -116,11 +116,11 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
           </motion.div>
         ) : (
           <div className="text-center mb-12">
-            <h2 className="text-5xl sm:text-6xl font-bold text-slate-900 mb-4 tracking-tight">
+            <h2 className={`text-5xl sm:text-6xl font-bold mb-4 tracking-tight ${isGoldMode ? 'text-gold-glitter' : 'text-slate-900'}`}>
               Featured Projects
             </h2>
-            <div className="w-24 h-0.5 bg-slate-900 mx-auto mb-4"></div>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <div className={`w-24 h-0.5 mx-auto mb-4 ${isGoldMode ? 'bg-gold' : 'bg-slate-900'}`}></div>
+            <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-600'}`}>
               Selected projects showcasing technical expertise and innovative problem-solving
             </p>
           </div>
@@ -161,8 +161,12 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
                     onClick={() => setFilter(tag)}
                     className={`px-6 py-2.5 text-sm font-medium capitalize transition-all duration-200 rounded-md ${
                       filter === tag
-                        ? 'bg-slate-900 text-white shadow-sm'
-                        : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
+                        ? isGoldMode
+                          ? 'bg-gold text-black shadow-sm'
+                          : 'bg-slate-900 text-white shadow-sm'
+                        : isGoldMode
+                          ? 'bg-transparent text-gold-light border border-gold/50 hover:bg-gold/20 hover:text-gold hover:border-gold'
+                          : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300'
                     }`}
                   >
                     {tag === 'all' ? 'All Projects' : tag}
@@ -194,7 +198,7 @@ export default function ProjectsSection({ data }: { data: ProjectsData }) {
           /* Professional Projects Grid */
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((project) => (
-              <div key={project.id} className="group bg-white border border-slate-200 rounded-lg overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-slate-300">
+              <div key={project.id} className={`group rounded-lg overflow-hidden transition-all duration-300 ${isGoldMode ? 'bg-black/40 border border-gold/30 hover:border-gold/60 hover:shadow-lg' : 'bg-white border border-slate-200 hover:shadow-lg hover:border-slate-300'}`}>
                 {/* Project Image */}
                 <div className="relative aspect-[16/10] bg-slate-100 overflow-hidden">
                   <Image

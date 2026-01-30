@@ -47,7 +47,7 @@ function withYear(s?: string, year?: number) {
 }
 
 export default function FooterSection({ contact }: { contact: FooterData }) {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
   const year = new Date().getFullYear();
 
   const name = contact?.name ?? '';
@@ -76,7 +76,7 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
   return (
     <footer
       className={`relative ${
-        isPlayfulMode ? 'py-16 overflow-hidden' : 'py-12 text-gray-800'
+        isPlayfulMode ? 'py-16 overflow-hidden' : isGoldMode ? 'py-12 bg-black text-gold' : 'py-12 text-gray-800'
       }`}
     >
 
@@ -164,12 +164,11 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
             </motion.div>
           </div>
         ) : (
-          /* Minimal Professional Footer - Responsive */
+          /* Minimal Professional Footer - Responsive (gold or grayscale) */
           <div className="text-center space-y-4 md:space-y-6">
-            {/* Contact Info - Stack on mobile, inline on desktop */}
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-sm text-gray-800 px-2">
+            <div className={`flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-sm px-2 ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-800'}`}>
               {c.email && (
-                <a href={`mailto:${c.email}`} className="hover:text-gray-600 transition-colors break-all">
+                <a href={`mailto:${c.email}`} className={`transition-colors break-all ${isGoldMode ? 'text-gold-glitter hover:opacity-90' : 'hover:text-gray-600'}`}>
                   {c.email}
                 </a>
               )}
@@ -177,7 +176,6 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
               {c.location && <span className="whitespace-nowrap">{c.location}</span>}
             </div>
 
-            {/* Social Links - Responsive sizing */}
             {socialLinks.length > 0 && (
               <div className="flex justify-center gap-3 sm:gap-4 px-2">
                 {socialLinks.map((s) => (
@@ -186,9 +184,8 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
               </div>
             )}
 
-            {/* Copyright - Responsive text size */}
-            <div className="pt-3 md:pt-4 border-t border-gray-300">
-              <p className="text-xs sm:text-sm text-gray-600 px-4 text-center">
+            <div className={`pt-3 md:pt-4 border-t ${isGoldMode ? 'border-gold/40' : 'border-gray-300'}`}>
+              <p className={`text-xs sm:text-sm px-4 text-center ${isGoldMode ? 'text-gold-glitter-soft' : 'text-gray-600'}`}>
                 {copyright || `© ${year} ${name}. All rights reserved.`}
               </p>
             </div>

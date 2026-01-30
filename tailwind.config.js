@@ -26,6 +26,12 @@ module.exports = {
           forest: '#51cf66, #22d3ee, #4dabf7',
           rainbow: '#ff6b9d, #c44569, #4dabf7, #22d3ee, #51cf66, #ffd43b',
         },
+        // Rich metallic gold (clearly reads as gold)
+        gold: {
+          DEFAULT: '#D4AF37',  // classic metallic gold
+          light: '#F0C14B',    // bright gold
+          dark: '#B8860B',     // dark goldenrod
+        },
         // Legacy colors for backward compatibility
         teal:    "#2ba99a",
         magenta: "#e24084",

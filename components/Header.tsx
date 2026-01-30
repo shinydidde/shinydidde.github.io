@@ -11,7 +11,6 @@ const NAV_ITEMS = [
   { name: 'About', href: '#about' },
   { name: 'Skills', href: '#skills' },
   { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
 ];
 
@@ -25,7 +24,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isPlayfulMode, togglePlayfulMode } = usePlayfulMode();
+  const { themeMode, isPlayfulMode, isGoldMode, setTheme, cycleGoldGrayscale } = usePlayfulMode();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,15 +59,20 @@ export default function Header() {
               ? 'bg-vibrant-pink/10 backdrop-blur-md shadow-lg py-4 border-b-2 border-vibrant-cyan'
               : 'bg-transparent py-6'
             )
-          : (isScrolled
-              ? 'bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5 backdrop-blur-md shadow-lg py-4 border-b border-gray-200'
-              : 'bg-transparent py-6'
-            )
+          : isGoldMode
+            ? (isScrolled
+                ? 'bg-black backdrop-blur-md shadow-lg py-4 border-b border-gold/50'
+                : 'bg-transparent py-6 border-b border-transparent'
+              )
+            : (isScrolled
+                ? 'bg-gradient-to-br from-vibrant-pink/5 via-vibrant-cyan/5 to-vibrant-yellow/5 backdrop-blur-md shadow-lg py-4 border-b border-gray-200'
+                : 'bg-transparent py-6'
+              )
       }`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-center">
-          {/* Logo */}
+          {/* Logo + playful switch (dot on top) */}
           <div className="relative">
             <Link href="#" className="group" aria-label="Home">
               <div className={`w-12 h-12 flex items-center justify-center transition-all duration-300 ${
@@ -77,20 +81,37 @@ export default function Header() {
                   : 'group-hover:opacity-80'
               }`}>
                 <Image
-                  src="/images/logo.png"
+                  src={isGoldMode ? "/images/gold.png" : "/images/logo.png"}
                   alt="Logo"
                   width={48}
                   height={48}
                   className="object-contain"
                   priority
                 />
-                {isPlayfulMode && (
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-vibrant-yellow rounded-full flex items-center justify-center animate-bounce">
-                    <span className="text-xs">✨</span>
-                  </div>
-                )}
               </div>
             </Link>
+            {/* Dot: switch to/from playful. In playful click → gold; in gold/grayscale click → playful */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setTheme(isPlayfulMode ? 'gold' : 'playful');
+              }}
+              className={`absolute -top-1 -right-1 w-4 h-4 rounded-full flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white z-10 transition-transform hover:scale-110 ${
+                isPlayfulMode ? 'bg-vibrant-yellow animate-bounce' : ''
+              }`}
+              aria-label={isPlayfulMode ? 'Switch to Gold mode' : 'Switch to Playful mode'}
+              title={isPlayfulMode ? 'Go to Gold mode' : 'Go to Playful mode'}
+            >
+              {isPlayfulMode ? (
+                <span className="text-xs">✨</span>
+              ) : isGoldMode ? (
+                <div className="w-3 h-3 bg-gold rounded-full" />
+              ) : (
+                <div className="w-3 h-3 bg-gray-500 rounded-full" />
+              )}
+            </button>
           </div>
 
           {/* Center Navigation */}
@@ -115,16 +136,21 @@ export default function Header() {
                           ? `${color.active} hover:${color.hover} focus:ring-2 ${color.focus} focus:ring-offset-2`
                           : `${color.active} hover:${color.hover} focus:ring-2 ${color.focus} focus:ring-offset-2`
                         )
-                      : (activeSection === item.href.substring(1)
-                          ? 'text-black hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
-                          : 'text-gray-700 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
-                        )
+                      : isGoldMode
+                        ? (activeSection === item.href.substring(1)
+                            ? 'text-gold-glitter hover:opacity-90 focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-black'
+                            : 'text-gold-glitter-soft hover:opacity-100 focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-black'
+                          )
+                        : (activeSection === item.href.substring(1)
+                            ? 'text-black hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                            : 'text-gray-700 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                          )
                   }`}
                 >
                   {isPlayfulMode ? item.name.toUpperCase() : item.name}
                   {activeSection === item.href.substring(1) && (
                     <div className={`absolute -bottom-1 left-0 right-0 h-0.5 ${
-                      isPlayfulMode ? 'bg-gradient-to-r from-vibrant-pink via-vibrant-cyan via-vibrant-yellow to-vibrant-orange' : 'bg-black'
+                      isPlayfulMode ? 'bg-gradient-to-r from-vibrant-pink via-vibrant-cyan via-vibrant-yellow to-vibrant-orange' : isGoldMode ? 'bg-gold' : 'bg-black'
                     }`} />
                   )}
                 </Link>
@@ -152,7 +178,9 @@ export default function Header() {
                   className={`transition-all duration-300 focus:outline-none rounded-sm p-1 ${
                     isPlayfulMode
                       ? `${color.base} hover:${color.hover} hover:scale-110 focus:ring-2 ${color.focus} focus:ring-offset-2`
-                      : 'text-gray-600 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                      : isGoldMode
+                        ? 'text-gold hover:text-gold-light focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-black'
+                        : 'text-gray-600 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
                   }`}
                   aria-label={social.name}
                 >
@@ -161,42 +189,53 @@ export default function Header() {
               );
             })}
 
-            {/* Mode Toggle */}
+            {/* Theme button: cycle Gold ↔ Black & White only */}
             <button
-              onClick={togglePlayfulMode}
+              onClick={cycleGoldGrayscale}
               className={`ml-2 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 isPlayfulMode
                   ? 'bg-gradient-to-r from-vibrant-red via-vibrant-orange via-vibrant-yellow to-vibrant-cyan hover:from-vibrant-orange hover:via-vibrant-yellow hover:to-vibrant-cyan shadow-lg hover:shadow-xl hover:scale-110 focus:ring-vibrant-red'
-                  : 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-500 border-2 border-gray-300 hover:border-gray-400'
+                  : isGoldMode
+                    ? 'bg-gold/30 border-2 border-gold hover:bg-gold/50 focus:ring-gold focus:ring-offset-2 focus:ring-offset-black'
+                    : 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-500 border-2 border-gray-300 hover:border-gray-400'
               }`}
-              aria-label={isPlayfulMode ? 'Switch to professional mode' : 'Switch to playful mode'}
-              title={isPlayfulMode ? 'Go Professional 🎯' : 'Get Playful 🎉'}
+              aria-label="Cycle Gold and Black & White"
+              title={themeMode === 'playful' ? 'Switch to Gold' : themeMode === 'gold' ? 'Switch to Black & White' : 'Switch to Gold'}
             >
-              <div className="w-3 h-3 rounded-full bg-gray-400" />
+              {themeMode === 'gold' && <div className="w-3 h-3 rounded-full bg-gold shadow-sm" />}
+              {themeMode === 'playful' && <div className="w-3 h-3 rounded-full bg-gradient-to-r from-vibrant-pink to-vibrant-cyan" />}
+              {themeMode === 'grayscale' && <div className="w-3 h-3 rounded-full bg-gray-500" />}
             </button>
           </div>
 
           {/* Mobile Menu Button & Toggle */}
           <div className="md:hidden flex items-center gap-3">
-            {/* Mobile Mode Toggle */}
+            {/* Mobile Theme: Gold ↔ Grayscale */}
             <button
-              onClick={togglePlayfulMode}
+              onClick={cycleGoldGrayscale}
               className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 ${
                 isPlayfulMode
                   ? 'bg-gradient-to-r from-vibrant-red via-vibrant-orange via-vibrant-yellow to-vibrant-cyan hover:from-vibrant-orange hover:via-vibrant-yellow hover:to-vibrant-cyan shadow-lg hover:shadow-xl hover:scale-110 focus:ring-vibrant-red'
-                  : 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-500 border-2 border-gray-300 hover:border-gray-400'
+                  : isGoldMode
+                    ? 'bg-gold/20 border-2 border-gold hover:bg-gold/30 focus:ring-gold'
+                    : 'bg-gray-100 hover:bg-gray-200 focus:ring-gray-500 border-2 border-gray-300 hover:border-gray-400'
               }`}
-              aria-label={isPlayfulMode ? 'Switch to professional mode' : 'Switch to playful mode'}
+              aria-label="Cycle theme"
+              title={themeMode === 'gold' ? 'Black & Gold' : themeMode === 'playful' ? 'Playful' : 'Black & White'}
             >
-              <div className="w-3 h-3 rounded-full bg-gray-400" />
+              {themeMode === 'gold' && <div className="w-3 h-3 rounded-full bg-gold" />}
+              {themeMode === 'playful' && <div className="w-3 h-3 rounded-full bg-gradient-to-r from-vibrant-pink to-vibrant-cyan" />}
+              {themeMode === 'grayscale' && <div className="w-3 h-3 rounded-full bg-gray-500" />}
             </button>
 
-            {/* Hamburger Menu */}
+            {/* Hamburger Menu - use solid gold in gold mode (glitter = transparent, hides SVG stroke) */}
             <button
               className={`transition-all duration-300 ${
                 isPlayfulMode
                   ? 'text-vibrant-orange hover:text-vibrant-red hover:scale-110'
-                  : 'text-gray-700 hover:text-black'
+                  : isGoldMode
+                    ? 'text-gold hover:text-gold-light'
+                    : 'text-gray-700 hover:text-black'
               }`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle mobile menu"
@@ -218,7 +257,9 @@ export default function Header() {
         <div className={`md:hidden absolute top-full left-0 right-0 backdrop-blur-sm shadow-lg ${
         isPlayfulMode
           ? 'bg-gradient-to-r from-vibrant-pink/20 via-vibrant-cyan/20 via-vibrant-yellow/20 via-vibrant-orange/20 to-vibrant-red/20 border-t-2 border-vibrant-purple'
-          : 'bg-white/95 border-t border-gray-200'
+          : isGoldMode
+            ? 'bg-black/95 border-t border-gold/50'
+            : 'bg-white/95 border-t border-gray-200'
         }`}>
           <nav className="px-6 py-4">
             <div className="space-y-4">
@@ -243,10 +284,15 @@ export default function Header() {
                           ? `${color.active} hover:${color.hover} focus:ring-2 ${color.focus} focus:ring-offset-2`
                           : `${color.active} hover:${color.hover} focus:ring-2 ${color.focus} focus:ring-offset-2`
                         )
-                      : (activeSection === item.href.substring(1)
-                          ? 'text-black hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
-                          : 'text-gray-700 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
-                        )
+                      : isGoldMode
+                        ? (activeSection === item.href.substring(1)
+                            ? 'text-gold-glitter hover:opacity-90 focus:ring-2 focus:ring-gold focus:ring-offset-2'
+                            : 'text-gold-glitter-soft hover:opacity-100 focus:ring-2 focus:ring-gold focus:ring-offset-2'
+                          )
+                        : (activeSection === item.href.substring(1)
+                            ? 'text-black hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                            : 'text-gray-700 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                          )
                     }`}
                   >
                     {isPlayfulMode ? item.name.toUpperCase() : item.name}
@@ -255,7 +301,7 @@ export default function Header() {
               })}
 
               {/* Mobile Social Links */}
-                <div className={`pt-4 ${isPlayfulMode ? 'border-t-2 border-vibrant-purple' : 'border-t border-gray-200'}`}>
+                <div className={`pt-4 ${isPlayfulMode ? 'border-t-2 border-vibrant-purple' : isGoldMode ? 'border-t border-gold/50' : 'border-t border-gray-200'}`}>
                 <div className="flex justify-center gap-6">
                   {SOCIAL_LINKS.map((social, index) => {
                     const Icon = social.icon;
@@ -275,7 +321,9 @@ export default function Header() {
                         className={`transition-all duration-300 focus:outline-none rounded-sm p-2 ${
                           isPlayfulMode
                             ? `${color.base} hover:${color.hover} hover:scale-110 focus:ring-2 ${color.focus} focus:ring-offset-2`
-                            : 'text-gray-600 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
+                            : isGoldMode
+                              ? 'text-gold hover:text-gold-light focus:ring-2 focus:ring-gold focus:ring-offset-2'
+                              : 'text-gray-600 hover:text-black focus:ring-2 focus:ring-gray-500 focus:ring-offset-2'
                         }`}
                         aria-label={social.name}
                       >
