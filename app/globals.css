@@ -7,17 +7,19 @@ body {
   background: white;
 }
 
-/* Gold theme: full page black + gold text */
+/* Gold theme: full page black + gold text + elegant serif font */
 body[data-theme="gold"] {
   background: #000 !important;
   color: #F0C14B;
+  font-family: var(--font-gold), "Cinzel", serif !important;
   /* Standard scrollbar (Firefox, newer Chrome) */
   scrollbar-color: #D4AF37 #0a0a0a;
   scrollbar-width: thin;
 }
 
+/* Allow starfield to show through in gold mode - body stays black, content is transparent */
 body[data-theme="gold"] .min-h-screen {
-  background: #000;
+  background: transparent;
 }
 
 /* Gold theme: force header social icons to be visible gold */

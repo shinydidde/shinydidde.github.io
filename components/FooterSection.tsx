@@ -76,7 +76,7 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
   return (
     <footer
       className={`relative ${
-        isPlayfulMode ? 'py-16 overflow-hidden' : isGoldMode ? 'py-12 bg-black text-gold' : 'py-12 text-gray-800'
+        isPlayfulMode ? 'py-16 overflow-hidden' : isGoldMode ? 'py-12 bg-transparent text-gold' : 'py-12 text-gray-800'
       }`}
     >
 

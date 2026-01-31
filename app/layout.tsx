@@ -1,14 +1,18 @@
 // app/layout.tsx
 import "./globals.css";
 import type { ReactNode } from "react";
-import { Poppins, Patrick_Hand } from "next/font/google";
+import { Poppins, Patrick_Hand, Cinzel } from "next/font/google";
 import PlayfulPopup from "@/components/PlayfulPopup";
 import { PlayfulProvider } from '@/contexts/PlayfulContext';
+import { StarfieldProvider } from '@/contexts/StarfieldContext';
+import { HeroImageProvider } from '@/contexts/HeroImageContext';
 import ClientAnimations from '@/components/ClientAnimations';
+import StarfieldBackgroundWrapper from '@/components/StarfieldBackgroundWrapper';
 
 // load fonts
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
 const patrickHand = Patrick_Hand({ subsets: ["latin"], weight: "400" });
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.mruduladidde.com';
 
@@ -78,10 +82,23 @@ export const metadata = {
   classification: "Personal Portfolio Website",
 };
 
+const THEME_INIT_SCRIPT = `
+(function(){
+  var s = localStorage.getItem('theme-mode');
+  var t = (s === 'playful' || s === 'grayscale' || s === 'gold') ? s : null;
+  if (!t) {
+    var l = localStorage.getItem('playful-mode');
+    t = (l === '1') ? 'playful' : (l === '0') ? 'gold' : 'gold';
+  }
+  document.body.setAttribute('data-theme', t);
+})();
+`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className="text-gray-900
                    antialiased
                    min-h-screen
@@ -89,14 +106,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                    flex-col"
         style={{
           '--font-poppins': poppins.style.fontFamily,
-          '--font-patrick': patrickHand.style.fontFamily
+          '--font-patrick': patrickHand.style.fontFamily,
+          '--font-gold': cinzel.style.fontFamily
         } as React.CSSProperties}
       >
-
+        <script
+          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
+        />
         <PlayfulProvider>
-          <ClientAnimations />
-          {children}
-          <PlayfulPopup />
+          <HeroImageProvider>
+            <StarfieldProvider>
+              <StarfieldBackgroundWrapper />
+              <ClientAnimations />
+              <div className="relative z-10">{children}</div>
+              <PlayfulPopup />
+            </StarfieldProvider>
+          </HeroImageProvider>
         </PlayfulProvider>
       </body>
     </html>

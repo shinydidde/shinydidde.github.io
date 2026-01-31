@@ -10,6 +10,8 @@ import {
   deleteDoc as deleteDocFromFS,
 } from 'firebase/firestore'
 import { db } from '../lib/firebase'
+import { useStarfield } from '@/contexts/StarfieldContext'
+import { useHeroImage } from '@/contexts/HeroImageContext'
 
 interface DocEntry {
   id: string
@@ -20,6 +22,8 @@ type CollectionsState = Record<string, DocEntry[]>
 
 export default function AdminPage() {
   const [collections, setCollections] = useState<CollectionsState>({})
+  const { starfieldOn, toggleStarfield } = useStarfield()
+  const { heroImageMode, setHeroImageMode } = useHeroImage()
 
   useEffect(() => {
     const names = ['hero', 'about', 'skills', 'experience', 'projects', 'education', 'footer']
@@ -80,6 +84,66 @@ export default function AdminPage() {
   return (
     <div style={{ padding: 24, fontFamily: 'sans-serif' }}>
       <h1 style={{ fontSize: 24, marginBottom: 16 }}>Firestore Admin Console</h1>
+
+      <div style={{ marginBottom: 24, padding: 12, backgroundColor: '#f3f4f6', borderRadius: 8 }}>
+        <span style={{ marginRight: 8, fontWeight: 500 }}>Gold mode starfield:</span>
+        <button
+          type="button"
+          onClick={toggleStarfield}
+          style={{
+            padding: '6px 14px',
+            backgroundColor: starfieldOn ? '#b45309' : '#6b7280',
+            color: 'white',
+            border: 'none',
+            borderRadius: 4,
+            cursor: 'pointer',
+            fontWeight: 500
+          }}
+        >
+          {starfieldOn ? 'On' : 'Off'}
+        </button>
+        <span style={{ marginLeft: 8, color: '#6b7280', fontSize: 14 }}>
+          (takes effect when gold theme is active on the site)
+        </span>
+      </div>
+
+      <div style={{ marginBottom: 24, padding: 12, backgroundColor: '#f3f4f6', borderRadius: 8 }}>
+        <span style={{ marginRight: 8, fontWeight: 500 }}>Hero image:</span>
+        <button
+          type="button"
+          onClick={() => setHeroImageMode('current')}
+          style={{
+            padding: '6px 14px',
+            marginRight: 8,
+            backgroundColor: heroImageMode === 'current' ? '#1f2937' : '#e5e7eb',
+            color: heroImageMode === 'current' ? 'white' : '#374151',
+            border: 'none',
+            borderRadius: 4,
+            cursor: 'pointer',
+            fontWeight: 500
+          }}
+        >
+          Current style
+        </button>
+        <button
+          type="button"
+          onClick={() => setHeroImageMode('full')}
+          style={{
+            padding: '6px 14px',
+            backgroundColor: heroImageMode === 'full' ? '#1f2937' : '#e5e7eb',
+            color: heroImageMode === 'full' ? 'white' : '#374151',
+            border: 'none',
+            borderRadius: 4,
+            cursor: 'pointer',
+            fontWeight: 500
+          }}
+        >
+          Full image
+        </button>
+        <span style={{ marginLeft: 8, color: '#6b7280', fontSize: 14 }}>
+          (current = masked/zoomed, full = whole image visible)
+        </span>
+      </div>
 
       {Object.entries(collections).map(([name, docs]) => (
         <section key={name} style={{ marginBottom: 32 }}>

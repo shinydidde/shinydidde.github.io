@@ -6,6 +6,7 @@ import { FaGithub, FaDownload, FaCode, FaReact, FaJs, FaNode, FaPython, FaDocker
 import { SiTypescript, SiNextdotjs, SiVuedotjs, SiTailwindcss, SiFirebase, SiGit, SiGraphql, SiMongodb, SiPostgresql, SiRedux, SiWebpack, SiJest, SiCypress } from 'react-icons/si';
 import React from 'react';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
+import { useHeroImage } from '@/contexts/HeroImageContext';
 
 interface HeroData {
   name?: string;
@@ -22,6 +23,7 @@ interface HeroData {
 
 export default function HeroSection({ data = {} }: { data?: HeroData }) {
   const { isPlayfulMode, isGoldMode } = usePlayfulMode();
+  const { isFullImage } = useHeroImage();
 
   const name = data.name || 'Mrudula Didde';
 
@@ -158,7 +160,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
         isPlayfulMode
           ? "relative w-full overflow-hidden min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-12 lg:pt-32"
           : isGoldMode
-            ? "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32 bg-black"
+            ? "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32 bg-transparent"
             : "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32"
       }
     >
@@ -292,11 +294,11 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             {/* Mobile: Full seamless portrait */}
             <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
               <Image
-                src={isPlayfulMode ? "/images/mcolor.png" : "/images/mblack.png"}
+                src={isPlayfulMode ? "/images/playful.png" : "/images/mblack.png"}
                 alt={`${name} - Web Developer`}
                 fill
-                className={`object-cover object-top scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
-                style={{
+                className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isPlayfulMode ? '' : 'grayscale'}`}
+                style={isFullImage ? {} : {
                   WebkitMaskImage: isPlayfulMode
                     ? 'linear-gradient(to bottom, black 40%, transparent 95%, transparent 100%)'
                     : 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
@@ -312,11 +314,11 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
             <div className="hidden sm:block relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto">
               <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
                 <Image
-                  src={isPlayfulMode ? "/images/mcolor.png" : "/images/mblack.png"}
+                  src={isPlayfulMode ? "/images/playful.png" : "/images/mblack.png"}
                   alt={`${name} - Web Developer`}
                   fill
-                  className={`object-cover object-top scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine ${isPlayfulMode ? '' : 'grayscale'}`}
-                  style={{
+                  className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.35]'} ${isPlayfulMode ? '' : 'grayscale'}`}
+                  style={isFullImage ? {} : {
                     WebkitMaskImage: isPlayfulMode
                       ? 'linear-gradient(to bottom, black 50%, transparent 95%, transparent 100%)'
                       : 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
@@ -343,8 +345,8 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                     src={isGoldMode ? "/images/mcolor.png" : "/images/mblack.png"}
                     alt={`${name} - Web Developer`}
                     fill
-                    className={`object-cover object-top scale-[1.15] contrast-[1.1] brightness-[0.95] hero-image-shine ${isGoldMode ? '' : 'grayscale'}`}
-                    style={{
+                    className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isGoldMode ? '' : 'grayscale'}`}
+                    style={isFullImage ? {} : {
                       WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
                       maskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
                     }}
@@ -359,8 +361,8 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                       src={isGoldMode ? "/images/mcolor.png" : "/images/mblack.png"}
                       alt={`${name} - Web Developer`}
                       fill
-                      className={`object-cover object-top scale-[1.35] contrast-[1.1] brightness-[0.95] hero-image-shine ${isGoldMode ? '' : 'grayscale'}`}
-                      style={{
+                      className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.35]'} ${isGoldMode ? '' : 'grayscale'}`}
+                      style={isFullImage ? {} : {
                         WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
                         maskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
                       }}

@@ -10,17 +10,19 @@ const FloatingCharacter = dynamic(() => import('@/components/FloatingCharacter')
 const BlinkingFaces = dynamic(() => import('@/components/BlinkingFaces'), { ssr: false });
 
 export default function ClientAnimations() {
-  const { isPlayfulMode } = usePlayfulMode();
+  const { isPlayfulMode, isGoldMode } = usePlayfulMode();
 
   useEffect(() => {
     // Apply conditional font directly to body style
     const body = document.body;
     if (isPlayfulMode) {
       body.style.fontFamily = 'var(--font-patrick), "Patrick Hand", cursive';
+    } else if (isGoldMode) {
+      body.style.fontFamily = 'var(--font-gold), "Cinzel", serif';
     } else {
       body.style.fontFamily = 'var(--font-poppins), "Poppins", sans-serif';
     }
-  }, [isPlayfulMode]);
+  }, [isPlayfulMode, isGoldMode]);
 
   return (
     <>

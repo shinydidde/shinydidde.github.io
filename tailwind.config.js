@@ -43,6 +43,7 @@ module.exports = {
         serif: ["Georgia", "serif"],
         mono: ["JetBrains Mono", "Monaco", "Consolas", "monospace"],
         sketch: ["var(--font-patrick)", "Patrick Hand", "cursive"],
+        gold: ["var(--font-gold)", "Cinzel", "serif"],
       },
     },
   },
