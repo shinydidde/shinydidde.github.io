@@ -1,36 +1,39 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-
-const HERO_IMAGE_STORAGE_KEY = 'hero-image-mode';
+import { fetchSiteSettings, updateSiteSettings } from '@/lib/firestoreService';
 
 export type HeroImageMode = 'current' | 'full';
-
-function readStoredHeroImageMode(): HeroImageMode {
-  if (typeof window === 'undefined') return 'current';
-  const stored = localStorage.getItem(HERO_IMAGE_STORAGE_KEY);
-  if (stored === 'full' || stored === 'current') return stored;
-  return 'current';
-}
 
 interface HeroImageContextType {
   heroImageMode: HeroImageMode;
   setHeroImageMode: (mode: HeroImageMode) => void;
   isFullImage: boolean;
+  loading: boolean;
 }
 
 const HeroImageContext = createContext<HeroImageContextType | undefined>(undefined);
 
 export function HeroImageProvider({ children }: { children: React.ReactNode }) {
   const [heroImageMode, setHeroImageModeState] = useState<HeroImageMode>('current');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setHeroImageModeState(readStoredHeroImageMode());
+    let cancelled = false;
+    fetchSiteSettings()
+      .then((data) => {
+        if (!cancelled) setHeroImageModeState(data.heroImageMode);
+      })
+      .catch(() => { /* keep default */ })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => { cancelled = true; };
   }, []);
 
   const setHeroImageMode = (mode: HeroImageMode) => {
     setHeroImageModeState(mode);
-    localStorage.setItem(HERO_IMAGE_STORAGE_KEY, mode);
+    updateSiteSettings({ heroImageMode: mode }).catch(() => {});
   };
 
   return (
@@ -39,6 +42,7 @@ export function HeroImageProvider({ children }: { children: React.ReactNode }) {
         heroImageMode,
         setHeroImageMode,
         isFullImage: heroImageMode === 'full',
+        loading,
       }}
     >
       {children}

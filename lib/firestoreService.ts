@@ -1,6 +1,6 @@
 // lib/firestoreService.ts
 import { db } from './firebase'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 /** helpers **/
 function getString(x: unknown): string {
@@ -421,4 +421,29 @@ export async function fetchFooterInfo(): Promise<FooterData> {
       dmListMeme:       getStringArray(cp.dmListMeme),
     }
   };
+}
+
+/** Site display settings (starfield, hero image) – global, read by all visitors, written by admin */
+export type SiteSettings = {
+  starfieldEnabled: boolean;
+  heroImageMode: 'current' | 'full';
+};
+
+const SITE_SETTINGS_DEFAULTS: SiteSettings = {
+  starfieldEnabled: true,
+  heroImageMode: 'current',
+};
+
+export async function fetchSiteSettings(): Promise<SiteSettings> {
+  const snap = await getDoc(doc(db, 'settings', 'site'));
+  if (!snap.exists()) return SITE_SETTINGS_DEFAULTS;
+  const d = snap.data() as Record<string, unknown>;
+  return {
+    starfieldEnabled: d.starfieldEnabled === false ? false : true,
+    heroImageMode: (d.heroImageMode === 'full' || d.heroImageMode === 'current') ? d.heroImageMode : 'current',
+  };
+}
+
+export async function updateSiteSettings(partial: Partial<SiteSettings>): Promise<void> {
+  await setDoc(doc(db, 'settings', 'site'), partial, { merge: true });
 }
