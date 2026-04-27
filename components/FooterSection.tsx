@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { SocialIcon } from './ui/SocialIcon';
 import {
   FaEnvelope,
-  FaPhone,
   FaMapMarkerAlt
 } from 'react-icons/fa';
 import { usePlayfulMode } from '@/contexts/PlayfulContext';
@@ -131,12 +130,6 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
                     </a>
                   </li>
                 )}
-                {c.phone && (
-                  <li className="flex items-center justify-center md:justify-start gap-3">
-                    <FaPhone className="text-2xl text-vibrant-red" />
-                    <span>{c.phone}</span>
-                  </li>
-                )}
                 {c.location && (
                   <li className="flex items-center justify-center md:justify-start gap-3">
                     <FaMapMarkerAlt className="text-2xl text-vibrant-purple" />
@@ -172,7 +165,6 @@ export default function FooterSection({ contact }: { contact: FooterData }) {
                   {c.email}
                 </a>
               )}
-              {c.phone && <span className="whitespace-nowrap">{c.phone}</span>}
               {c.location && <span className="whitespace-nowrap">{c.location}</span>}
             </div>
 

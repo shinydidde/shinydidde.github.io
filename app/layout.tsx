@@ -88,7 +88,7 @@ const THEME_INIT_SCRIPT = `
   var t = (s === 'playful' || s === 'grayscale' || s === 'gold') ? s : null;
   if (!t) {
     var l = localStorage.getItem('playful-mode');
-    t = (l === '1') ? 'playful' : (l === '0') ? 'gold' : 'gold';
+    t = (l === '1') ? 'playful' : (l === '0') ? 'gold' : 'grayscale';
   }
   document.body.setAttribute('data-theme', t);
 })();

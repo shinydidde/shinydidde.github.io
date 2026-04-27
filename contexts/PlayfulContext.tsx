@@ -23,18 +23,18 @@ const THEME_STORAGE_KEY = 'theme-mode';
 const MODES: ThemeMode[] = ['gold', 'playful', 'grayscale'];
 
 function readStoredTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'gold';
+  if (typeof window === 'undefined') return 'grayscale';
   const stored = localStorage.getItem(THEME_STORAGE_KEY);
   if (stored === 'playful' || stored === 'grayscale' || stored === 'gold') return stored;
   // Migrate old playful-mode key
   const legacy = localStorage.getItem('playful-mode');
   if (legacy === '1') return 'playful';
   if (legacy === '0') return 'gold';
-  return 'gold';
+  return 'grayscale';
 }
 
 export function PlayfulProvider({ children }: { children: React.ReactNode }) {
-  const [themeMode, setThemeModeState] = useState<ThemeMode>('gold');
+  const [themeMode, setThemeModeState] = useState<ThemeMode>('grayscale');
 
   useEffect(() => {
     const saved = readStoredTheme();

@@ -28,6 +28,7 @@ export default function BlinkingFaces({
   floatEffect = true,
 }: BlinkingFaceProps) {
   const [isBlinking, setIsBlinking] = useState(false);
+  const [hasImageError, setHasImageError] = useState(false);
   const { isPlayfulMode } = usePlayfulMode();
 
   useEffect(() => {
@@ -39,7 +40,11 @@ export default function BlinkingFaces({
     return () => clearInterval(interval);
   }, [blinkInterval]);
 
-  if (playfulOnly && !isPlayfulMode) return null;
+  useEffect(() => {
+    setHasImageError(false);
+  }, [src]);
+
+  if ((playfulOnly && !isPlayfulMode) || hasImageError) return null;
 
   return (
     <motion.div
@@ -76,6 +81,7 @@ export default function BlinkingFaces({
         width={size}
         height={size}
         className="object-contain w-full h-full hover:brightness-110 transition-all"
+        onError={() => setHasImageError(true)}
       />
     </motion.div>
   );

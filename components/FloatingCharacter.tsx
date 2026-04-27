@@ -68,6 +68,7 @@ export default function FloatingCharacter({
 
   const [mounted, setMounted] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hasImageError, setHasImageError] = useState(false);
   useEffect(() => {
     setMounted(true);
     const mq = window.matchMedia('(max-width: 767px)');
@@ -87,6 +88,10 @@ export default function FloatingCharacter({
   const effSize = isMobile ? (mobileSize ?? baseSize) : baseSize;
   const effInitialY = isMobile ? (mobileInitialY ?? baseInitialY) : baseInitialY;
   const effMotionRange = isMobile ? mobileMotionRange : baseMotionRange;
+
+  useEffect(() => {
+    setHasImageError(false);
+  }, [baseSrc]);
 
   // Motion values (unconditional)
   const rawY = useTransform(scrollYProgress, scrollRange, effMotionRange);
@@ -117,7 +122,7 @@ export default function FloatingCharacter({
   );
 
   // Render gate AFTER hooks
-  if (!mounted || (playfulOnly && !isPlayfulMode) || (hideOnMobile && isMobile)) return null;
+  if (!mounted || (playfulOnly && !isPlayfulMode) || (hideOnMobile && isMobile) || hasImageError) return null;
 
   return (
     <div
@@ -139,6 +144,7 @@ export default function FloatingCharacter({
           loading="lazy"
           draggable={false}
           priority={false}
+          onError={() => setHasImageError(true)}
         />
       </motion.div>
     </div>
