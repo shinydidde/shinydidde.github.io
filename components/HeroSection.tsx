@@ -24,6 +24,9 @@ interface HeroData {
 export default function HeroSection({ data = {} }: { data?: HeroData }) {
   const { isPlayfulMode, isGoldMode } = usePlayfulMode();
   const { isFullImage } = useHeroImage();
+  const normalHeroImage = isGoldMode
+    ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Flogo-latest.color.png?alt=media&token=6269c6ae-a22f-4b75-b450-6b36f6e69795'
+    : 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Flogo-latest-black.png?alt=media&token=b2f0e490-a79b-4a48-bbed-f639d1446f1d';
 
   const name = data.name || 'Mrudula Didde';
 
@@ -152,6 +155,11 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
   const proBodyClass = isGoldMode ? 'text-gold-glitter-soft' : 'text-slate-700';
   const proButtonBorder = isGoldMode ? 'border-gold text-gold-glitter hover:bg-gold/20 focus:ring-gold/30' : 'border-slate-300 text-slate-800 hover:bg-slate-50 focus:ring-slate-500/20';
   const proLinkClass = isGoldMode ? 'text-gold-glitter hover:opacity-90' : 'text-slate-600 hover:text-slate-900';
+  const heroStickerClass = isPlayfulMode
+    ? 'hero-sticker-image-playful'
+    : isGoldMode
+      ? 'hero-sticker-image-gold'
+      : 'hero-sticker-image-gray';
 
   return (
     <section
@@ -160,8 +168,8 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
         isPlayfulMode
           ? "relative w-full overflow-hidden min-h-screen flex items-center pt-24 pb-16 sm:pt-28 sm:pb-12 lg:pt-32"
           : isGoldMode
-            ? "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32 bg-transparent"
-            : "relative w-full overflow-hidden py-24 sm:py-28 lg:py-32"
+            ? "relative w-full overflow-hidden py-24 sm:py-28 lg:pt-24 lg:pb-32 bg-transparent"
+            : "relative w-full overflow-hidden py-24 sm:py-28 lg:pt-24 lg:pb-32"
       }
     >
 
@@ -297,7 +305,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 src={isPlayfulMode ? "/images/playful.png" : "/images/mblack.png"}
                 alt={`${name} - Web Developer`}
                 fill
-                className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isPlayfulMode ? '' : 'grayscale'}`}
+                className={`relative z-10 contrast-[1.1] brightness-[0.95] hero-image-shine hero-sticker-image ${heroStickerClass} ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isPlayfulMode ? '' : 'grayscale'}`}
                 style={isFullImage ? {} : {
                   WebkitMaskImage: isPlayfulMode
                     ? 'linear-gradient(to bottom, black 40%, transparent 95%, transparent 100%)'
@@ -317,7 +325,7 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                   src={isPlayfulMode ? "/images/playful.png" : "/images/mblack.png"}
                   alt={`${name} - Web Developer`}
                   fill
-                  className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.35]'} ${isPlayfulMode ? '' : 'grayscale'}`}
+                  className={`relative z-10 contrast-[1.1] brightness-[0.95] hero-image-shine hero-sticker-image ${heroStickerClass} ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.35]'} ${isPlayfulMode ? '' : 'grayscale'}`}
                   style={isFullImage ? {} : {
                     WebkitMaskImage: isPlayfulMode
                       ? 'linear-gradient(to bottom, black 50%, transparent 95%, transparent 100%)'
@@ -342,10 +350,11 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 {/* Mobile: Full seamless portrait */}
                 <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
                   <Image
-                    src={isGoldMode ? "/images/mcolor.png" : "/images/mblack.png"}
+                    src={normalHeroImage}
                     alt={`${name} - Web Developer`}
                     fill
-                    className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isGoldMode ? '' : 'grayscale'}`}
+                    unoptimized
+                    className={`relative z-10 contrast-[1.1] brightness-[0.95] hero-image-shine hero-sticker-image ${heroStickerClass} ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isGoldMode ? '' : 'grayscale'}`}
                     style={isFullImage ? {} : {
                       WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
                       maskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
@@ -358,10 +367,11 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 <div className="hidden sm:block relative w-full max-w-[400px] md:max-w-[480px] lg:max-w-[520px] xl:max-w-[600px] mx-auto">
                   <div className="relative w-full aspect-[3/4] md:aspect-[4/5]">
                     <Image
-                      src={isGoldMode ? "/images/mcolor.png" : "/images/mblack.png"}
+                      src={normalHeroImage}
                       alt={`${name} - Web Developer`}
                       fill
-                      className={`contrast-[1.1] brightness-[0.95] hero-image-shine ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.35]'} ${isGoldMode ? '' : 'grayscale'}`}
+                      unoptimized
+                      className={`relative z-10 contrast-[1.1] brightness-[0.95] hero-image-shine hero-sticker-image ${heroStickerClass} ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.35]'} ${isGoldMode ? '' : 'grayscale'}`}
                       style={isFullImage ? {} : {
                         WebkitMaskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',
                         maskImage: 'linear-gradient(to bottom, black 40%, transparent 85%, transparent 100%)',

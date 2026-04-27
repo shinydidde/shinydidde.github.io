@@ -16,7 +16,7 @@ export default function ClientAnimations() {
     // Apply conditional font directly to body style
     const body = document.body;
     if (isPlayfulMode) {
-      body.style.fontFamily = 'var(--font-patrick), "Patrick Hand", cursive';
+      body.style.fontFamily = 'var(--font-playful), "Kalam", cursive';
     } else if (isGoldMode) {
       body.style.fontFamily = 'var(--font-gold), "Cinzel", serif';
     } else {

@@ -335,3 +335,52 @@ body[data-theme="gold"] ::-webkit-scrollbar-corner {
 .hero-image-shine:hover::after {
   animation: shine 4s ease-in-out;
 }
+
+.hero-sticker-image {
+  will-change: auto;
+}
+
+.hero-sticker-image-playful {
+  filter:
+    drop-shadow(0 0 0 white)
+    drop-shadow(3px 0 0 white)
+    drop-shadow(-3px 0 0 white)
+    drop-shadow(0 3px 0 white)
+    drop-shadow(0 -3px 0 white)
+    drop-shadow(2px 2px 0 white)
+    drop-shadow(-2px 2px 0 white)
+    drop-shadow(2px -2px 0 white)
+    drop-shadow(-2px -2px 0 white)
+    drop-shadow(0 0 8px rgba(140, 219, 255, 0.72))
+    drop-shadow(0 0 16px rgba(140, 219, 255, 0.42));
+}
+
+.hero-sticker-image-gold {
+  filter:
+    drop-shadow(0 0 0 white)
+    drop-shadow(3px 0 0 white)
+    drop-shadow(-3px 0 0 white)
+    drop-shadow(0 3px 0 white)
+    drop-shadow(0 -3px 0 white)
+    drop-shadow(2px 2px 0 white)
+    drop-shadow(-2px 2px 0 white)
+    drop-shadow(2px -2px 0 white)
+    drop-shadow(-2px -2px 0 white)
+    drop-shadow(0 0 8px rgba(212, 175, 55, 0.72))
+    drop-shadow(0 0 16px rgba(212, 175, 55, 0.42));
+}
+
+.hero-sticker-image-gray {
+  filter:
+    drop-shadow(0 0 0 white)
+    drop-shadow(3px 0 0 white)
+    drop-shadow(-3px 0 0 white)
+    drop-shadow(0 3px 0 white)
+    drop-shadow(0 -3px 0 white)
+    drop-shadow(2px 2px 0 white)
+    drop-shadow(-2px 2px 0 white)
+    drop-shadow(2px -2px 0 white)
+    drop-shadow(-2px -2px 0 white)
+    drop-shadow(0 0 8px rgba(55, 65, 81, 0.45))
+    drop-shadow(0 0 16px rgba(15, 23, 42, 0.28));
+}

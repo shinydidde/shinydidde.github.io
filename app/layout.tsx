@@ -1,7 +1,7 @@
 // app/layout.tsx
 import "./globals.css";
 import type { ReactNode } from "react";
-import { Poppins, Patrick_Hand, Cinzel } from "next/font/google";
+import { Poppins, Kalam, Cinzel } from "next/font/google";
 import PlayfulPopup from "@/components/PlayfulPopup";
 import { PlayfulProvider } from '@/contexts/PlayfulContext';
 import { StarfieldProvider } from '@/contexts/StarfieldContext';
@@ -11,7 +11,7 @@ import StarfieldBackgroundWrapper from '@/components/StarfieldBackgroundWrapper'
 
 // load fonts
 const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
-const patrickHand = Patrick_Hand({ subsets: ["latin"], weight: "400" });
+const kalam = Kalam({ subsets: ["latin"], weight: ["300", "400", "700"] });
 const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.mruduladidde.com';
@@ -106,7 +106,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                    flex-col"
         style={{
           '--font-poppins': poppins.style.fontFamily,
-          '--font-patrick': patrickHand.style.fontFamily,
+          '--font-playful': kalam.style.fontFamily,
           '--font-gold': cinzel.style.fontFamily
         } as React.CSSProperties}
       >

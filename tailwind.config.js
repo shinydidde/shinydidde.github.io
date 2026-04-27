@@ -42,7 +42,7 @@ module.exports = {
         sans: ["var(--font-poppins)", "Poppins", "Inter", "system-ui", "sans-serif"],
         serif: ["Georgia", "serif"],
         mono: ["JetBrains Mono", "Monaco", "Consolas", "monospace"],
-        sketch: ["var(--font-patrick)", "Patrick Hand", "cursive"],
+        sketch: ["var(--font-playful)", "Kalam", "cursive"],
         gold: ["var(--font-gold)", "Cinzel", "serif"],
       },
     },
