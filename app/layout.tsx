@@ -3,6 +3,7 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import { Poppins, Kalam, Cinzel } from "next/font/google";
 import PlayfulPopup from "@/components/PlayfulPopup";
+import ScrollToTop from "@/components/ScrollToTop";
 import { PlayfulProvider } from '@/contexts/PlayfulContext';
 import { StarfieldProvider } from '@/contexts/StarfieldContext';
 import { HeroImageProvider } from '@/contexts/HeroImageContext';
@@ -119,6 +120,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               <StarfieldBackgroundWrapper />
               <ClientAnimations />
               <div className="relative z-10">{children}</div>
+              <ScrollToTop />
               <PlayfulPopup />
             </StarfieldProvider>
           </HeroImageProvider>

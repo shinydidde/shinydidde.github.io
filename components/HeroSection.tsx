@@ -24,9 +24,10 @@ interface HeroData {
 export default function HeroSection({ data = {} }: { data?: HeroData }) {
   const { isPlayfulMode, isGoldMode } = usePlayfulMode();
   const { isFullImage } = useHeroImage();
+  const mobileNormalHeroImage = isGoldMode ? '/images/mcolor.png' : '/images/mblack.png';
   const normalHeroImage = isGoldMode
-    ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Flogo-latest.color.png?alt=media&token=6269c6ae-a22f-4b75-b450-6b36f6e69795'
-    : 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Flogo-latest-black.png?alt=media&token=b2f0e490-a79b-4a48-bbed-f639d1446f1d';
+    ? 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Flogo-latest.color.png?alt=media&token=2c7a1dab-efb0-4ffc-99ec-97a8b7437092'
+    : 'https://firebasestorage.googleapis.com/v0/b/portfolio-4ad8b.appspot.com/o/images%2Flogo-latest-black.png?alt=media&token=5b01d658-84b7-4152-999b-13ff23c22a73';
 
   const name = data.name || 'Mrudula Didde';
 
@@ -350,10 +351,9 @@ export default function HeroSection({ data = {} }: { data?: HeroData }) {
                 {/* Mobile: Full seamless portrait */}
                 <div className="block sm:hidden relative w-full max-w-[280px] mx-auto h-[350px]">
                   <Image
-                    src={normalHeroImage}
+                    src={mobileNormalHeroImage}
                     alt={`${name} - Web Developer`}
                     fill
-                    unoptimized
                     className={`relative z-10 contrast-[1.1] brightness-[0.95] hero-image-shine hero-sticker-image ${heroStickerClass} ${isFullImage ? 'object-contain' : 'object-cover object-top scale-[1.15]'} ${isGoldMode ? '' : 'grayscale'}`}
                     style={isFullImage ? {} : {
                       WebkitMaskImage: 'linear-gradient(to bottom, black 30%, transparent 85%, transparent 100%)',
