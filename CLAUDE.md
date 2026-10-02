@@ -27,7 +27,7 @@ This is a personal portfolio website built with Next.js 15. It has a dark, neon 
 - **Shared UI**: `components/site/primitives.tsx` (client: `Reveal`, `TiltCard`, `SectionHeading`); `components/site/format.ts` (server-safe: `PRISM` palette, `prismAt`, text helpers). Keep plain helpers in `format.ts` — functions exported from a `'use client'` module can't be called from server components.
 
 ### Splash
-- `components/site/Splash.tsx` — loading screen (sketch portrait painted in colour by a rising wave, progress ring, status lines); coloured-pencil portraits (`public/images/site/me/`) pop in at random spots via `SplashPortraits.tsx`. Shown once per session (`SPLASH_INIT_SCRIPT` in `app/layout.tsx`); add `?splash` to the URL to replay. `useSplashDone()` lets sections start intros after it lifts.
+- `components/site/Splash.tsx` — loading screen (sketch portrait painted in colour by a rising wave, progress ring, status lines). Shown once per session (`SPLASH_INIT_SCRIPT` in `app/layout.tsx`); add `?splash` to the URL to replay. `useSplashDone()` lets sections start intros after it lifts.
 - Images live in `public/images/site/` as WebP with lossless alpha (lossy alpha leaves a faint haze that glow filters turn into a visible box)
 
 ### 3D Scene

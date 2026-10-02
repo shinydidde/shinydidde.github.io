@@ -1,14 +1,13 @@
 'use client'
 
 // Loading splash: the sketch portrait gets "painted" in colour by a rising
-// wave as the page loads, while coloured-pencil portraits pop in around the screen.
+// wave as the page loads.
 // Shown once per browser session (see SPLASH_INIT_SCRIPT in app/layout.tsx).
 
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { PRISM, prismAt } from './format'
-import SplashPortraits, { SPLASH_PORTRAIT_SRCS } from './SplashPortraits'
 
 export const SPLASH_DONE_EVENT = 'splash:done'
 
@@ -98,7 +97,7 @@ export default function Splash({ name }: { name: string }) {
 
     document.fonts?.ready.then(bump, bump)
     Promise.all(
-      [...SPLASH_PORTRAIT_SRCS, '/images/site/face-color.webp', '/images/site/face-sketch.webp'].map(
+      ['/images/site/face-color.webp', '/images/site/face-sketch.webp'].map(
         src => new Promise<void>(res => { const im = new window.Image(); im.onload = im.onerror = () => res(); im.src = src })
       )
     ).then(bump)
@@ -182,9 +181,6 @@ export default function Splash({ name }: { name: string }) {
               }}
             />
           ))}
-
-          {/* portraits of me pop in around the edges of the screen */}
-          <SplashPortraits progress={shown} reduced={!!reduced} />
 
           {/* portrait + ring */}
           <motion.div
