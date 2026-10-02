@@ -1,19 +1,11 @@
 // app/layout.tsx
 import "./globals.css";
 import type { ReactNode } from "react";
-import { Poppins, Kalam, Cinzel } from "next/font/google";
-import PlayfulPopup from "@/components/PlayfulPopup";
-import ScrollToTop from "@/components/ScrollToTop";
-import { PlayfulProvider } from '@/contexts/PlayfulContext';
-import { StarfieldProvider } from '@/contexts/StarfieldContext';
-import { HeroImageProvider } from '@/contexts/HeroImageContext';
-import ClientAnimations from '@/components/ClientAnimations';
-import StarfieldBackgroundWrapper from '@/components/StarfieldBackgroundWrapper';
+import { Unbounded, Manrope, JetBrains_Mono } from "next/font/google";
 
-// load fonts
-const poppins = Poppins({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"] });
-const kalam = Kalam({ subsets: ["latin"], weight: ["300", "400", "700"] });
-const cinzel = Cinzel({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const display = Unbounded({ subsets: ["latin"], weight: ["400", "600", "800"], variable: "--font-display" });
+const body    = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-body" });
+const mono    = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono" });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.mruduladidde.com';
 
@@ -83,48 +75,20 @@ export const metadata = {
   classification: "Personal Portfolio Website",
 };
 
-const THEME_INIT_SCRIPT = `
-(function(){
-  var s = localStorage.getItem('theme-mode');
-  var t = (s === 'playful' || s === 'grayscale' || s === 'gold') ? s : null;
-  if (!t) {
-    var l = localStorage.getItem('playful-mode');
-    t = (l === '1') ? 'playful' : (l === '0') ? 'gold' : 'grayscale';
-  }
-  document.body.setAttribute('data-theme', t);
-})();
-`;
+// Runs before first paint: skip the splash if it was already shown this session
+// (add ?splash to the URL to replay it)
+const SPLASH_INIT_SCRIPT = `try{if(sessionStorage.getItem('splash-seen')&&!/[?&]splash\\b/.test(location.search))document.documentElement.dataset.splashSeen='1'}catch(e){}`;
+
+export const viewport = {
+  themeColor: "#0a0618",
+};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body
-        suppressHydrationWarning
-        className="text-gray-900
-                   antialiased
-                   min-h-screen
-                   flex
-                   flex-col"
-        style={{
-          '--font-poppins': poppins.style.fontFamily,
-          '--font-playful': kalam.style.fontFamily,
-          '--font-gold': cinzel.style.fontFamily
-        } as React.CSSProperties}
-      >
-        <script
-          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
-        />
-        <PlayfulProvider>
-          <HeroImageProvider>
-            <StarfieldProvider>
-              <StarfieldBackgroundWrapper />
-              <ClientAnimations />
-              <div className="relative z-10">{children}</div>
-              <ScrollToTop />
-              <PlayfulPopup />
-            </StarfieldProvider>
-          </HeroImageProvider>
-        </PlayfulProvider>
+    <html lang="en" suppressHydrationWarning className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body className="grain min-h-screen antialiased">
+        <script dangerouslySetInnerHTML={{ __html: SPLASH_INIT_SCRIPT }} />
+        {children}
       </body>
     </html>
   );

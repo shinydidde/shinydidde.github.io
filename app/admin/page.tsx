@@ -51,7 +51,7 @@ export default function AdminRoute() {
     }
 
     return (
-      <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded-lg shadow">
+      <div className="max-w-md mx-auto mt-20 p-8 bg-white text-gray-900 rounded-lg shadow">
         <h1 className="text-2xl mb-4">Admin Sign-In</h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>

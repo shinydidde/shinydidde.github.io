@@ -8,42 +8,46 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Coldplay-inspired multi-color palette
-        vibrant: {
-          pink: '#ff6b9d',
-          purple: '#c44569',
-          blue: '#4dabf7',
-          cyan: '#22d3ee',
-          green: '#51cf66',
-          yellow: '#ffd43b',
-          orange: '#ff922b',
-          red: '#ff6b6b',
+        ink: {
+          DEFAULT: '#0a0618', // page background
+          900: '#0a0618',
+          800: '#120a2a',
+          700: '#1b1240',
+          600: '#2a1f5c',
         },
-        gradient: {
-          sunset: '#ff6b9d, #c44569, #4dabf7',
-          ocean: '#22d3ee, #4dabf7, #51cf66',
-          fire: '#ff922b, #ff6b6b, #ff6b9d',
-          forest: '#51cf66, #22d3ee, #4dabf7',
-          rainbow: '#ff6b9d, #c44569, #4dabf7, #22d3ee, #51cf66, #ffd43b',
+        // Neon "prism" palette
+        prism: {
+          pink:   '#ff3d9a',
+          violet: '#8b5cf6',
+          blue:   '#3b82f6',
+          cyan:   '#22d3ee',
+          lime:   '#b8f53a',
+          yellow: '#ffd23f',
+          orange: '#ff8a3d',
         },
-        // Rich metallic gold (clearly reads as gold)
-        gold: {
-          DEFAULT: '#D4AF37',  // classic metallic gold
-          light: '#F0C14B',    // bright gold
-          dark: '#B8860B',     // dark goldenrod
-        },
-        // Legacy colors for backward compatibility
-        teal:    "#2ba99a",
-        magenta: "#e24084",
-        mustard: "#f2bc57",
-        lime:    "#a6d552",
       },
       fontFamily: {
-        sans: ["var(--font-poppins)", "Poppins", "Inter", "system-ui", "sans-serif"],
-        serif: ["Georgia", "serif"],
-        mono: ["JetBrains Mono", "Monaco", "Consolas", "monospace"],
-        sketch: ["var(--font-playful)", "Kalam", "cursive"],
-        gold: ["var(--font-gold)", "Cinzel", "serif"],
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        sans:    ["var(--font-body)", "system-ui", "sans-serif"],
+        mono:    ["var(--font-mono)", "ui-monospace", "monospace"],
+      },
+      keyframes: {
+        marquee: {
+          from: { transform: 'translateX(0)' },
+          to:   { transform: 'translateX(-50%)' },
+        },
+        'spin-slow': {
+          to: { transform: 'rotate(360deg)' },
+        },
+        shimmer: {
+          from: { backgroundPosition: '0% 50%' },
+          to:   { backgroundPosition: '200% 50%' },
+        },
+      },
+      animation: {
+        marquee:     'marquee 40s linear infinite',
+        'spin-slow': 'spin-slow 8s linear infinite',
+        shimmer:     'shimmer 6s linear infinite',
       },
     },
   },
