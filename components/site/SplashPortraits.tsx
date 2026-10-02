@@ -19,11 +19,10 @@ export const SPLASH_PORTRAIT_SRCS = PORTRAITS.map(([f]) => `/images/site/me/${f}
 
 type Placed = { src: string; w: number; h: number; x: number; y: number; size: number; rotate: number; at: number }
 
-const sticker =
-  '[filter:drop-shadow(0_0_1.5px_#fff)_drop-shadow(0_0_1.5px_#fff)_drop-shadow(0_10px_16px_rgba(0,0,0,0.45))]'
+const sticker = '[filter:drop-shadow(0_0_1px_rgba(255,255,255,0.7))_saturate(0.85)]'
 
-// a little see-through so they sit behind the main portrait and text
-const OPACITY = 0.55
+// very light, like a watermark behind the main portrait and text
+const OPACITY = 0.07
 const GAP = 10 // px between neighbours
 
 type Box = { l: number; t: number; r: number; b: number }
