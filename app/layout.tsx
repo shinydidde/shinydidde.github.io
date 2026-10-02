@@ -53,7 +53,7 @@ export const metadata = {
     description: "Portfolio of Mrudula Didde - Frontend Engineer with 11+ years of experience specializing in React, Next.js, TypeScript, and modern web technologies. Explore my projects, skills, and professional experience.",
     images: [
       {
-        url: `${siteUrl}/images/og.jpg`,
+        url: `${siteUrl}/images/og.jpg?v=2`,
         width: 1200,
         height: 630,
         alt: "Mrudula Didde - Frontend Engineer & Software Developer Portfolio",
@@ -65,7 +65,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Mrudula Didde • Frontend Engineer & Software Developer",
     description: "Portfolio of Mrudula Didde - Frontend Engineer with 11+ years of experience specializing in React, Next.js, TypeScript, and modern web technologies.",
-    images: [`${siteUrl}/images/og.jpg`],
+    images: [`${siteUrl}/images/og.jpg?v=2`],
     creator: "@shinydidde",
   },
   alternates: {
